@@ -1,0 +1,109 @@
+﻿@{
+    ViewData["Title"] = "Room List";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@using System.Data
+@model DataTable
+
+
+
+
+<!-- Page header start -->
+<div class="page-header">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item">Home</li>
+        <li class="breadcrumb-item">Tables</li>
+        <li class="breadcrumb-item active">Table Hover</li>
+    </ol>
+
+    <ul class="app-actions">
+        <li>
+            <a href="#" id="reportrange">
+                <span class="range-text"></span>
+                <i class="icon-chevron-down"></i>
+            </a>
+        </li>
+        <li>
+            <a href="#">
+                <i class="icon-export"></i>
+            </a>
+        </li>
+    </ul>
+</div>
+<!-- Page header end -->
+<!-- Main container start -->
+<div class="main-container">
+
+    <!-- Row start -->
+    <div class="row gutters">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-10">
+                            <h4><i class="fa-solid fa-gears"></i> Rooms List</h4>
+                        </div>
+                        <div class="col-2">
+                            <a class="btn btn-primary px-5" asp-area="MST_Room" asp-controller="MST_Room" asp-action="Add"><i class="fa-solid fa-plus"></i>  Add Room</a>
+                        </div>
+                    </div>
+                    <hr />
+
+                    @if (TempData["MST_Room_AlertMessage"] != null)
+                    {
+                        <div class="alert alert-success alert-dismissible fade show" role="alert">
+                            @TempData["MST_Room_AlertMessage"]
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>
+                    } 
+
+                    <div class="table-responsive">
+                        <table class="table table-hover">
+                            <thead>
+                                <tr>
+                                    @* <th>RoomID</th> *@
+                                    <th>Room No</th>
+                                    <th>Status</th>
+                                    <th>Created</th>
+                                    <th>Modified</th>
+                                    <th>Delete</th>
+                                    <th>Edit</th>
+
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (DataRow dr in Model.Rows)
+                                {
+                                    <tr>
+                                        @* <td>@dr["RoomId"]</td> *@
+                                        <td>@dr["RoomNo"]</td>
+                                        <td>@dr["Status"]</td>
+                                        <td>@Convert.ToDateTime(dr["Created"]).ToString("dd-MM-yyyy")</td>
+                                        <td>@Convert.ToDateTime(dr["Modified"]).ToString("dd-MM-yyyy")</td>
+                                        <td>
+                                            <form method="post" asp-area="MST_Room" asp-controller="MST_Room" , asp-action="Delete">
+                                                <input type="hidden" name="RoomId" value="@Convert.ToInt32(dr["RoomId"])" />
+                                                <button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete this?')"><i class="fa fa-trash"></i></button>
+                                            </form>
+                                        </td>
+                                        <td>
+                                            <form method="get" asp-area="MST_Room" asp-controller="MST_Room" asp-action="Add">
+                                                <input type="hidden" name="RoomId" value="@Convert.ToInt32(dr["RoomId"].ToString())">
+                                                <button type="submit" class="btn btn-warning"><i class="fa fa-pen-to-square"></i></button>
+                                            </form>
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <!-- Row end -->
+
+</div>
+<!-- Main container end -->

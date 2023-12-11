@@ -1,0 +1,74 @@
+﻿﻿@{
+    ViewData["Title"] = "Room Add/Edit";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@using System.Data;
+@model Hostel_Management_System.Areas.MST_Room.Models.MST_RoomModel;
+
+
+<!-- Page header start -->
+<div class="page-header">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item">Home</li>
+        <li class="breadcrumb-item">Forms</li>
+        <li class="breadcrumb-item active">Input Fields</li>
+    </ol>
+
+    <ul class="app-actions">
+        <li>
+            <a href="#" id="reportrange">
+                <span class="range-text"></span>
+                <i class="icon-chevron-down"></i>
+            </a>
+        </li>
+        <li>
+            <a href="#">
+                <i class="icon-export"></i>
+            </a>
+        </li>
+    </ul>
+</div>
+<!-- Page header end -->
+
+<div class="main-container">
+
+    <!-- Row start -->
+    <div class="row gutters">
+        <div class="col-6">
+            <div class="card">
+                <div class="card-body">
+                    <form role="form" method="post" asp-area="MST_Room" asp-controller="MST_Room" asp-action="Save">
+                        @Html.HiddenFor(x => x.RoomId)
+
+                        <div class="form-row">
+                            <div class="form-group col-10">
+                                <label for="inputState"><span class="text-danger">*</span>Room No</label>
+                                <input type="text" class="form-control" placeholder="Enter Room No." asp-for="RoomNo">
+                                <span asp-validation-for="RoomNo" class="text-danger"></span>
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group col-10">
+                                <label for="inputState"><span class="text-danger">*</span>Status</label>
+                                <input type="text" class="form-control" placeholder="Enter Room No." asp-for="Status">
+                                <span asp-validation-for="Status" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <br />
+                        <button type="submit" class="btn btn-success px-4">Save</button>
+                        <a class="btn btn-danger px-4" asp-controller="MST_Room" asp-action="Cancle">Cancel</a>
+                    </form>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <!-- Row end -->
+
+</div>
+<!-- Main container end -->
+@section Scripts {
+    <partial name="_ValidationScriptsPartial.cshtml" />
+}

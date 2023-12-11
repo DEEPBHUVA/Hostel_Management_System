@@ -1,0 +1,202 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Meta -->
+    <meta name="description" content="Admin Templates - Dashboard Templates">
+    <meta name="author" content="Bootstrap Gallery" />
+    <link rel="canonical" href="https://www.bootstrap.gallery/">
+    <meta property="og:url" content="https://www.bootstrap.gallery">
+    <meta property="og:title" content="Admin Templates - Dashboard Templates | Bootstrap Gallery">
+    <meta property="og:description" content="Marketplace for Bootstrap Admin Dashboards">
+    <meta property="og:type" content="Website">
+    <meta property="og:site_name" content="Bootstrap Gallery">
+    <link rel="shortcut icon" href="~/assets/img/favicon.svg" />
+
+    <!-- Title -->
+    <title>Admin Dashboard Templates Admin Dashboards - Admin Dashboard</title>
+
+
+    <!-- *************
+        ************ Common Css Files *************
+    ************ -->
+    <!-- Bootstrap css -->
+    <link rel="stylesheet" href="~/assets/css/bootstrap.min.css">
+    <!-- Icomoon Font Icons css -->
+    <link rel="stylesheet" href="~/assets/fonts/style.css">
+    <!-- Main css -->
+    <link rel="stylesheet" href="~/assets/css/main.min.css">
+
+
+    <!-- *************
+        ************ Vendor Css Files *************
+    ************ -->
+    <!-- DateRange css -->
+    <link rel="stylesheet" href="~/assets/vendor/daterange/daterange.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+</head>
+<body>
+    <!-- Loading starts -->
+    @* <div id="loading-wrapper">
+        <div class="spinner-border"></div>
+        Loading...
+    </div> *@
+    <!-- Loading ends -->
+    <!-- Page wrapper start -->
+    <div class="page-wrapper">
+
+        <!-- Sidebar wrapper start -->
+        <nav id="sidebar" class="sidebar-wrapper">
+
+            <!-- Sidebar brand start  -->
+            <div class="sidebar-brand ">
+                <a asp-controller="Home" asp-action="index" class="logo">
+                    <img src="~/assets/img/logo.svg" alt="Bootstrap Gallery" />
+                </a>
+            </div>
+            <!-- Sidebar brand end  -->
+            <!-- Sidebar content start -->
+            <div class="sidebar-content">
+
+                <!-- sidebar menu start -->
+                <div class="sidebar-menu">
+                    <ul>
+                        <li class="header-menu">General</li>
+                        <li class="active">
+                            <a href="#">
+                                <i class="icon-devices_other"></i>
+                                <span class="menu-text">Dashboards</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a asp-area="MST_Student" asp-controller="MST_Student" asp-action="Index">
+                                <i class="icon-user1"></i>
+                                <span class="menu-text">Student</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a asp-area="MST_Room" asp-controller="MST_Room" asp-action="Index" >
+                                <i class="icon-phone1"></i>
+                                <span class="menu-text">Rooms</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a asp-area="MST_Room" asp-controller="MST_Room" asp-action="Demo">
+                                <i class="icon-documents"></i>
+                                <span class="menu-text">Demo</span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+                <!-- sidebar menu end -->
+            </div>
+            <!-- Sidebar content end -->
+        </nav>
+        <!-- Sidebar wrapper end -->
+        <!-- Page content start  -->
+        <div class="page-content">
+
+            <!-- Header start -->
+            <header class="header">
+                <div class="toggle-btns">
+                    <a id="toggle-sidebar" href="#">
+                        <i class="icon-list"></i>
+                    </a>
+                    <a id="pin-sidebar" href="#">
+                        <i class="icon-list"></i>
+                    </a>
+                </div>
+                <div class="header-items">
+                    <!-- Custom search start -->
+                    <div class="custom-search">
+                        <input type="text" class="search-query" placeholder="Search here ...">
+                        <i class="icon-search1"></i>
+                    </div>
+                    <!-- Custom search end -->
+                    <!-- Header actions start -->
+                    <ul class="header-actions">
+                        <li class="dropdown">
+                            <a href="#" id="userSettings" class="user-settings" data-bs-toggle="dropdown" aria-haspopup="true">
+                                <span class="user-name">Nina Griffin</span>
+                                <span class="avatar">
+                                    <img src="~/assets/img/user7.png" alt="Admin Dashboards">
+                                    <span class="status busy"></span>
+                                </span>
+                            </a>
+                            <div class="dropdown-menu dropdown-menu-end" aria-labelledby="userSettings">
+                                <div class="header-profile-actions">
+                                    <div class="header-user-profile">
+                                        <div class="header-user">
+                                            <img src="~/assets/img/user7.png" alt="Admin Templates">
+                                        </div>
+                                        <h5>Nina Griffin</h5>
+                                        <p>Admin</p>
+                                    </div>
+                                    <a href="user-profile.html"><i class="icon-user1"></i> My Profile</a>
+                                    <a href="account-settings.html"><i class="icon-settings1"></i> Account Settings</a>
+                                    <a href="login.html"><i class="icon-log-out1"></i> Sign Out</a>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                    <!-- Header actions end -->
+                </div>
+            </header>
+            <!-- Header end -->
+            <!-- Page header start -->
+            
+            <!-- Page header end -->
+            <main id="main" class="main">
+                @RenderBody()
+            </main>
+
+        </div>
+    </div>
+    <!-- Page content end -->
+
+
+    <!--**************************
+             **************************
+                 **************************
+                             Required JavaScript Files
+                 **************************
+             **************************
+         **************************-->
+    <!-- Required jQuery first, then Bootstrap Bundle JS -->
+
+    <script src="~/assets/js/jquery.min.js"></script>
+    <script src="~/assets/js/bootstrap.bundle.min.js"></script>
+    <script src="~/assets/js/moment.js"></script>
+
+
+    <!-- *************
+        ************ Vendor Js Files *************
+    ************* -->
+    <!-- Slimscroll JS -->
+    <script src="~/assets/vendor/slimscroll/slimscroll.min.js"></script>
+    <script src="~/assets/vendor/slimscroll/custom-scrollbar.js"></script>
+
+    <!-- Daterange -->
+    <script src="~/assets/vendor/daterange/daterange.js"></script>
+    <script src="~/assets/vendor/daterange/custom-daterange.js"></script>
+
+    <!-- Polyfill JS -->
+    <script src="~/assets/vendor/polyfill/polyfill.min.js"></script>
+
+    <!-- Apex Charts -->
+    <script src="~/assets/vendor/apex/apexcharts.min.js"></script>
+    <script src="~/assets/vendor/apex/admin/visitors.js"></script>
+    <script src="~/assets/vendor/apex/admin/deals.js"></script>
+    <script src="~/assets/vendor/apex/admin/income.js"></script>
+    <script src="~/assets/vendor/apex/admin/customers.js"></script>
+
+    
+    <!-- Main JS -->
+    <script src="~/assets/js/main.js"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

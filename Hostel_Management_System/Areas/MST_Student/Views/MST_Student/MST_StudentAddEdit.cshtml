@@ -1,0 +1,148 @@
+﻿﻿@{
+    ViewData["Title"] = "Student Add/Edit";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@using System.Data;
+@model Hostel_Management_System.Areas.MST_Student.Models.MST_StudentModel;
+
+
+<!-- Page header start -->
+<div class="page-header">
+	<ol class="breadcrumb">
+		<li class="breadcrumb-item"><a asp-controller="Home" asp-action="Index">Home</a></li>
+		<li class="breadcrumb-item"><a asp-controller="MST_Student" asp-action="Index">Student List</a></li>
+		<li class="breadcrumb-item active"><a asp-controller="MST_Student" asp-action="Add">Add From</a></li>
+	</ol>
+
+	<ul class="app-actions">
+		<li>
+			<a href="#" id="reportrange">
+				<span class="range-text"></span>
+				<i class="icon-chevron-down"></i>
+			</a>
+		</li>
+		<li>
+			<a href="#">
+				<i class="icon-export"></i>
+			</a>
+		</li>
+	</ul>
+</div>
+<!-- Page header end -->
+<!-- Main container start -->
+<div class="main-container">
+
+	<div class="row gutters">
+		<div class="col-12">
+			
+			<!-- Row start -->
+			<div class="card">
+
+				<div class="card-body">
+					<h4><i class="fa-solid fa-gears"></i> Student Add From</h4>
+					<hr />
+					<form role="form" method="post" asp-area="MST_Student" asp-controller="MST_Student" asp-action="Save">
+						@Html.HiddenFor(x => x.SId)
+
+						<div class="row">
+							<div class="form-group col-6">
+									<label class="my-1">Image</label>
+									<input type="file" class="form-control" placeholder="Upload Image Here..." />
+							</div>
+							<div class="form-group col-6">
+								<label for="inputState"><span class="text-danger">*</span>Status</label>
+								<select class="form-control" asp-for="Status">
+									<option selected>Choose...</option>
+									<option value="1">Active</option>
+									<option value="0">Inactive</option>
+								</select>
+								<span asp-validation-for="Status" class="text-danger"></span>
+							</div>
+						</div>
+
+						<div class="form-row">
+							<div class="form-group col-12">
+								<label for="inputState"><span class="text-danger">*</span>Name</label>
+								<input type="text" class="form-control" placeholder="Enter your name" asp-for="FullName">
+								<span asp-validation-for="FullName" class="text-danger"></span>
+							</div>
+						</div>
+
+						<div class="row">
+							<div class="form-group col-6">
+								<label for="inputState"><span class="text-danger">*</span>Email</label>
+								<input type="text" class="form-control" placeholder="Enter your email" asp-for="Email">
+								<span asp-validation-for="Email" class="text-danger"></span>
+							</div>
+							
+							<div class="form-group col-6">
+								<label for="inputState"><span class="text-danger">*</span>Contact No.</label>
+								<input type="text" class="form-control" placeholder="Enter your contact no." asp-for="ContactNo">
+								<span asp-validation-for="ContactNo" class="text-danger"></span>
+							</div>
+						</div>
+
+						<div class="row">
+							<div class="form-group col-6">
+								<label for="inputState"><span class="text-danger">*</span>Date of Birth</label>
+								<input type="datetime" class="form-control" placeholder="Enter your birth date" asp-for="Dob">
+								<span asp-validation-for="Dob" class="text-danger"></span>
+							</div>
+
+							<div class="form-group col-6">
+								<label for="inputState"><span class="text-danger">*</span>Age</label>
+								<input type="text" class="form-control" placeholder="Enter your age" asp-for="Age">
+								<span asp-validation-for="Age" class="text-danger"></span>
+							</div>
+						</div>
+
+						<div class="row">
+							<div class="form-group col-6">
+								<label for="inputState"><span class="text-danger">*</span>Father Name</label>
+								<input type="text" class="form-control" placeholder="Enter father name" asp-for="FatherName">
+								<span asp-validation-for="FatherName" class="text-danger"></span>
+							</div>
+
+							<div class="form-group col-6">
+								<label for="inputState"><span class="text-danger">*</span>Father`s Contact No.</label>
+								<input type="text" class="form-control" placeholder="Enter father mobile no." asp-for="FatherContactNo">
+								<span asp-validation-for="FatherContactNo" class="text-danger"></span>
+							</div>
+						</div>
+
+						<div class="row">
+							<div class="form-group col-6">
+								<label for="inputState"><span class="text-danger">*</span>Mother Name</label>
+								<input type="text" class="form-control" placeholder="Enter Mother name" asp-for="MotherName">
+								<span asp-validation-for="MotherName" class="text-danger"></span>
+							</div>
+
+							<div class="form-group col-6">
+								<label for="inputState"><span class="text-danger">*</span>Mother`s Contact No.</label>
+								<input type="text" class="form-control" placeholder="Enter mother mobile no." asp-for="MotherContactNo">
+								<span asp-validation-for="MotherContactNo" class="text-danger"></span>
+							</div>
+						</div>
+
+						<div class="form-group">
+							<label for="exampleFormControlTextarea1">Address</label>
+							<textarea class="form-control" placeholder="Enter your address" rows="3" asp-for="Address"></textarea>
+							<span asp-validation-for="Address" class="text-danger"></span>
+						</div>
+
+						<br />
+						<button type="submit" class="btn btn-success px-4">Save</button>
+						<button type="submit" class="btn btn-warning px-3">Room Allocation</button>
+						<a class="btn btn-secondary px-4" asp-controller="MST_Room" asp-action="Cancle">Cancel</a>
+					</form>
+
+				</div>
+			</div>
+			<!-- Row end -->
+
+		</div>
+	</div>
+
+</div>
+<!-- Main container end -->
