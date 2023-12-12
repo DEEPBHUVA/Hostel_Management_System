@@ -108,9 +108,6 @@ namespace Hostel_Management_System.Areas.MST_Room.Controllers
             return RedirectToAction("Index");
         }
 
-        public IActionResult Demo()
-        {
-            return View("Demo");
-        }
+    
     }
 }
