@@ -34,7 +34,14 @@
                         </div>
                     </div>
                     <hr />
-                
+                    @if (TempData["MST_Room_AlertMessage"] != null)
+                    {
+                        <div class="alert alert-success alert-dismissible fade show" role="alert">
+                            @TempData["MST_Room_AlertMessage"]
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>
+                    }
+
                     <table class="table table-hover">
                         <thead>
                             <tr>

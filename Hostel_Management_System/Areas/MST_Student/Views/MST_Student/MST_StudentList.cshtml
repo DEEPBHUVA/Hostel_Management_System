@@ -37,13 +37,14 @@
                     <table id="sample_1" class="table table-hover">
                         <thead>
                             <tr>
+                             
                                 <th>Name</th>
                                 <th>Email</th>
                                 <th>Contact No.</th>
-                                <th>DOB</th>
+                                <th>Birth Date</th>
                                 <th>Age</th>
-                                <th>Addresh</th>
-                                <th>Room NO.</th>
+                                <th>Nationlity</th>
+                                <th>Aadharcard No.</th>
                                 <th>Status</th>
                                 <th>Delete</th>
                                 <th>Edit</th>
@@ -53,23 +54,23 @@
                             @foreach (DataRow dr in Model.Rows)
                             {
                                 <tr>
-                                    <td>@dr["FullName"]</td>
+                                    <td>@dr["StudentName"]</td>
                                     <td>@dr["Email"]</td>
-                                    <td>@dr["ContactNo"]</td>
-                                    <td>@Convert.ToDateTime(dr["Dob"]).ToString("dd-MM-yyyy")</td>
+                                    <td>@dr["MobileNo"]</td>
+                                    <td>@Convert.ToDateTime(dr["BirthDate"]).ToString("dd-MM-yyyy")</td>
                                     <td>@dr["Age"]</td>
-                                    <td>@dr["Address"]</td>
-                                    <td>@dr["RoomNo"]</td>
-                                    <td>@dr["Status"]</td>
+                                    <td>@dr["Nationlity"]</td>
+                                    <td>@dr["AadharCardNo"]</td>
+                                    <td>@dr["isActive"]</td>
                                     <td>
                                         <form method="post" asp-area="MST_Student" asp-controller="MST_Student" , asp-action="Delete">
-                                            <input type="hidden" name="SId" value="@Convert.ToInt32(dr["SId"])" />
+                                            <input type="hidden" name="StudentID" value="@Convert.ToInt32(dr["StudentID"])" />
                                             <button type="submit" class="btn btn-danger btn-rounded" onclick="return confirm('Are you sure you want to delete this?')"><i class="fa fa-trash"></i></button>
                                         </form>
                                     </td>
                                     <td>
                                         <form method="get" asp-area="MST_Student" asp-controller="MST_Student" asp-action="Add">
-                                            <input type="hidden" name="SId" value="@Convert.ToInt32(dr["SId"].ToString())">
+                                            <input type="hidden" name="StudentID" value="@Convert.ToInt32(dr["StudentID"].ToString())">
                                             <button type="submit" class="btn btn-primary btn-rounded"><i class="fa fa-pen-to-square"></i></button>
                                         </form>
                                     </td>

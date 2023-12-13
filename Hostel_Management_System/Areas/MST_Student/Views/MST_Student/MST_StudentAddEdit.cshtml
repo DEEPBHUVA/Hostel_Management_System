@@ -23,29 +23,30 @@
 		<h5 class="card-title"><i class="fa-solid fa-gears"></i> Student Registration Form</h5>
 		<hr />
 		<form role="form" method="post" asp-area="MST_Student" asp-controller="MST_Student" asp-action="Save">
-			@Html.HiddenFor(x => x.SId)
+			@Html.HiddenFor(x => x.StudentID)
 
-			<div class="row my-2">
+			<div class="col-md-12 my-2">
 				<div class="form-group col-6">
-						<label class="my-1">Image</label>
-						<input type="file" class="form-control" placeholder="Upload Image Here..." />
+					<label class="my-1">Image</label>
+					<input type="file" class="form-control" placeholder="Upload Image Here..." asp-for="PhotoPath" />
 				</div>
+
 				<div class="form-group col-6">
 					<label for="inputState"><span class="text-danger">*</span>Status</label>
-					<select class="form-control" asp-for="Status">
+					<select class="form-control" asp-for="isActive">
 						<option selected>Choose...</option>
-						<option value="1">Active</option>
-						<option value="0">Inactive</option>
+						<option value="True">Active</option>
+						<option value="False">Inactive</option>
 					</select>
-					<span asp-validation-for="Status" class="text-danger"></span>
+					<span asp-validation-for="isActive" class="text-danger"></span>
 				</div>
 			</div>
 
 			<div class="form-row my-2">
 				<div class="form-group col-12">
-					<label for="inputState"><span class="text-danger">*</span>Name</label>
-					<input type="text" class="form-control" placeholder="Enter your name" asp-for="FullName">
-					<span asp-validation-for="FullName" class="text-danger"></span>
+					<label for="inputState"><span class="text-danger">*</span>Full Name</label>
+					<input type="text" class="form-control" placeholder="Enter your name" asp-for="StudentName">
+					<span asp-validation-for="StudentName" class="text-danger"></span>
 				</div>
 			</div>
 
@@ -58,22 +59,58 @@
 							
 				<div class="form-group col-6">
 					<label for="inputState"><span class="text-danger">*</span>Contact No.</label>
-					<input type="text" class="form-control" placeholder="Enter your contact no." asp-for="ContactNo">
-					<span asp-validation-for="ContactNo" class="text-danger"></span>
+					<input type="text" class="form-control" placeholder="Enter your contact no." asp-for="MobileNo">
+					<span asp-validation-for="MobileNo" class="text-danger"></span>
+				</div>
+			</div>
+
+			<div class="row my-2">
+				<div class="form-group col-3">
+					<label for="inputState"><span class="text-danger">*</span>Date of Birth</label>
+					<input type="date" class="form-control" placeholder="Enter your birth date" asp-for="BirthDate">
+					<span asp-validation-for="BirthDate" class="text-danger"></span>
+				</div>
+
+				<div class="form-group col-3">
+					<label for="inputState"><span class="text-danger">*</span>Age</label>
+					<input type="text" class="form-control" placeholder="Enter your age" asp-for="Age">
+					<span asp-validation-for="Age" class="text-danger"></span>
+				</div>
+
+				<div class="form-group col-3">
+					<label for="inputState"><span class="text-danger">*</span>Blood Group</label>
+					<select class="form-control" asp-for="BloodGroup">
+						<option selected>Choose Blood Group</option>
+						<option value="A+">A RhD positive (A+)</option>
+						<option value="A-">A RhD negative (A-)</option>
+						<option value="B+">B RhD positive (B+)</option>
+						<option value="B-">B RhD negative (B-)</option>
+						<option value="O+">O RhD positive (O+)</option>
+						<option value="O-">O RhD negative (O-)</option>
+						<option value="AB+">AB RhD positive (AB+)</option>
+						<option value="AB-">AB RhD negative (AB-)</option>
+					</select>
+					<span asp-validation-for="BloodGroup" class="text-danger"></span>
+				</div>
+
+				<div class="form-group col-3">
+					<label for="inputState"><span class="text-danger">*</span>Course</label>
+					<input type="text" class="form-control" placeholder="Enter Your Course" asp-for="CourseID">
+					<span asp-validation-for="CourseID" class="text-danger"></span>
 				</div>
 			</div>
 
 			<div class="row my-2">
 				<div class="form-group col-6">
-					<label for="inputState"><span class="text-danger">*</span>Date of Birth</label>
-					<input type="date" class="form-control" placeholder="Enter your birth date" asp-for="Dob">
-					<span asp-validation-for="Dob" class="text-danger"></span>
+					<label for="inputState"><span class="text-danger">*</span>Nationality</label>
+					<input type="text" class="form-control" placeholder="Enter Nationality" asp-for="Nationlity">
+					<span asp-validation-for="Nationlity" class="text-danger"></span>
 				</div>
 
 				<div class="form-group col-6">
-					<label for="inputState"><span class="text-danger">*</span>Age</label>
-					<input type="text" class="form-control" placeholder="Enter your age" asp-for="Age">
-					<span asp-validation-for="Age" class="text-danger"></span>
+					<label for="inputState"><span class="text-danger">*</span>Aadhar Card NO</label>
+					<input type="text" class="form-control" placeholder="Enter AadharCard Number" asp-for="AadharCardNo">
+					<span asp-validation-for="AadharCardNo" class="text-danger"></span>
 				</div>
 			</div>
 
@@ -86,8 +123,8 @@
 
 				<div class="form-group col-6">
 					<label for="inputState"><span class="text-danger">*</span>Father`s Contact No.</label>
-					<input type="text" class="form-control" placeholder="Enter father mobile no." asp-for="FatherContactNo">
-					<span asp-validation-for="FatherContactNo" class="text-danger"></span>
+					<input type="text" class="form-control" placeholder="Enter father mobile no." asp-for="FatherMobileNo">
+					<span asp-validation-for="FatherMobileNo" class="text-danger"></span>
 				</div>
 			</div>
 
@@ -100,15 +137,37 @@
 
 				<div class="form-group col-6">
 					<label for="inputState"><span class="text-danger">*</span>Mother`s Contact No.</label>
-					<input type="text" class="form-control" placeholder="Enter mother mobile no." asp-for="MotherContactNo">
-					<span asp-validation-for="MotherContactNo" class="text-danger"></span>
+					<input type="text" class="form-control" placeholder="Enter mother mobile no." asp-for="MotherMobileNo">
+					<span asp-validation-for="MotherMobileNo" class="text-danger"></span>
 				</div>
 			</div>
 
-			<div class="form-group my-2">
-				<label for="exampleFormControlTextarea1">Address</label>
-				<textarea class="form-control" placeholder="Enter your address" rows="3" asp-for="Address"></textarea>
-				<span asp-validation-for="Address" class="text-danger"></span>
+			<div class="row my-2">
+				<div class="form-group col-6">
+					<label for="inputState"><span class="text-danger">*</span>Guardian Name</label>
+					<input type="text" class="form-control" placeholder="Enter Guardian name" asp-for="LocalGurdianName">
+					<span asp-validation-for="LocalGurdianName" class="text-danger"></span>
+				</div>
+
+				<div class="form-group col-6">
+					<label for="inputState"><span class="text-danger">*</span>Guardian`s Contact No.</label>
+					<input type="text" class="form-control" placeholder="Enter guardian mobile no." asp-for="LocalGurdianNo">
+					<span asp-validation-for="LocalGurdianNo" class="text-danger"></span>
+				</div>
+			</div>
+
+			<div class="row my-2">
+				<div class="form-group col-6">
+					<label for="exampleFormControlTextarea1">Current Address</label>
+					<textarea class="form-control" placeholder="Enter current address" rows="3" asp-for="PresentAddress"></textarea>
+					<span asp-validation-for="PresentAddress" class="text-danger"></span>
+				</div>
+
+				<div class="form-group col-6">
+					<label for="exampleFormControlTextarea1">Address</label>
+					<textarea class="form-control" placeholder="Enter Parement address" rows="3" asp-for="PermentAddress"></textarea>
+					<span asp-validation-for="PermentAddress" class="text-danger"></span>
+				</div>
 			</div>
 
 			<hr />
