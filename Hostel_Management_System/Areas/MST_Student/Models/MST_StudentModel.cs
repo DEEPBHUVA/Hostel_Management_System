@@ -27,4 +27,10 @@
         public DateTime Created { get; set;}
         public DateTime Modified { get; set;}
     }
+
+    public class MST_StudentDropdown
+    {
+        public int StudentID { get; set; }
+        public string StudentName { get; set; }
+    }
 }

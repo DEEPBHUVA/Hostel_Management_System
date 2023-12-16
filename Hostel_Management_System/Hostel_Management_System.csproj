@@ -17,6 +17,7 @@
     <Folder Include="Areas\MST_Course\Data\" />
     <Folder Include="Areas\MST_Room\Data\" />
     <Folder Include="Areas\MST_Student\Data\" />
+    <Folder Include="Areas\Room_Allocate\Data\" />
   </ItemGroup>
 
   <ItemGroup>

@@ -187,6 +187,5 @@ namespace Hostel_Management_System.Areas.MST_Student.Controllers
 			return RedirectToAction("Index");
 		}
 
-
 	}
 }

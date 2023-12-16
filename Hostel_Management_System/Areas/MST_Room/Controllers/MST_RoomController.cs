@@ -49,7 +49,9 @@ namespace Hostel_Management_System.Areas.MST_Room.Controllers
                     while (objSDR.Read())
                     {
                         modelMST_Room.RoomNo = Convert.ToInt32(objSDR["RoomNo"]);
-                        modelMST_Room.Status = (bool)objSDR["Status"];
+						modelMST_Room.SeatCount = Convert.ToInt32(objSDR["SeatCount"]);
+						modelMST_Room.Capacity = Convert.ToInt32(objSDR["Capacity"]);
+						modelMST_Room.Status = (bool)objSDR["Status"];
                     }
                 }
                 return View("MST_RoomAddEdit", modelMST_Room);
@@ -73,11 +75,12 @@ namespace Hostel_Management_System.Areas.MST_Room.Controllers
             {
                 cmd.CommandText = "PR_MST_Room_Update";
                 cmd.Parameters.AddWithValue("@RoomId", modelMST_Room.RoomId);
-
             }
             cmd.Parameters.AddWithValue("@RoomNo", modelMST_Room.RoomNo);
             cmd.Parameters.AddWithValue("@Status", modelMST_Room.Status);
-            if (Convert.ToBoolean(cmd.ExecuteNonQuery()))
+			cmd.Parameters.AddWithValue("@Capacity", modelMST_Room.Capacity);
+			cmd.Parameters.AddWithValue("@SeatCount", modelMST_Room.SeatCount);
+			if (Convert.ToBoolean(cmd.ExecuteNonQuery()))
             {
                 if (modelMST_Room.RoomId == null)
                     TempData["MST_Room_AlertMessage"] = "Record Inserted Successfully!!";

@@ -29,8 +29,24 @@
             </div>
             
             <div class="form-group">
+                <label for="inputState"><span class="text-danger">*</span>Capacity</label>
+                <input type="text" class="form-control" placeholder="Enter Capacity" asp-for="Capacity">
+                <span asp-validation-for="Capacity" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label for="inputState"><span class="text-danger">*</span>Seat Count</label>
+                <input type="text" class="form-control" placeholder="Enter Seat Count" asp-for="SeatCount">
+                <span asp-validation-for="SeatCount" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
                 <label for="inputState"><span class="text-danger">*</span>Status</label>
-                <input type="text" class="form-control" placeholder="Enter Room No." asp-for="Status">
+                <select class="form-control" asp-for="Status">
+                    <option selected>Choose...</option>
+                    <option value="True">Active</option>
+                    <option value="False">Inactive</option>
+                </select>
                 <span asp-validation-for="Status" class="text-danger"></span>
             </div>
            
