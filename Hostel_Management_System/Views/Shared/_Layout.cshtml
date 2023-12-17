@@ -29,6 +29,10 @@
     <link href="~/assets/css/style.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
+
+
+    @* <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.19.0/font/bootstrap-icons.css" rel="stylesheet"> *@
+
 </head>
 <body>
     <!-- ======= Header ======= -->
@@ -265,7 +269,7 @@
         <ul class="sidebar-nav" id="sidebar-nav">
 
             <li class="nav-item">
-                <a class="nav-link " href="index.html">
+                <a class="nav-link" asp-controller="Home" asp-action="Index">
                     <i class="bi bi-grid"></i>
                     <span>Dashboard</span>
                 </a>
@@ -278,17 +282,22 @@
                 <ul id="components-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
                     <li>
                         <a asp-area="MST_Student" asp-controller="MST_Student" asp-action="Add">
-                            <i class="bi bi-circle"></i><span>Add Student</span>
+                            <i class="bi bi-person-fill-add"></i><span>Add Student</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a asp-area="Room_Allocate" asp-controller="Room_Allocate" asp-action="Add">
+                            <i class="bi bi-clipboard-plus-fill"></i><span>Room Allocation</span>
                         </a>
                     </li>
                     <li>
                         <a asp-area="Room_Allocate" asp-controller="Room_Allocate" asp-action="Index">
-                            <i class="bi bi-circle"></i><span>Allocated Rooms List</span>
+                            <i class="bi bi-view-list"></i></i><span>Allocated Rooms List</span>
                         </a>
                     </li>
                     <li>
                         <a asp-area="MST_Student" asp-controller="MST_Student" asp-action="Index">
-                            <i class="bi bi-circle"></i><span>Student List</span>
+                            <i class="bi bi-view-list"></i><span>Student List</span>
                         </a>
                     </li>
                     
@@ -302,12 +311,12 @@
                 <ul id="forms-nav" class="nav-content collapse" data-bs-parent="#sidebar-nav">
                     <li>
                         <a asp-area="MST_Room" asp-controller="MST_Room" asp-action="Add">
-                            <i class="bi bi-circle"></i><span>Add Room</span>
+                            <i class="bi bi-circle"></i>Add Room
                         </a>
                     </li>
                     <li>
                         <a asp-area="MST_Room" asp-controller="MST_Room" asp-action="Index">
-                            <i class="bi bi-circle"></i><span>Rooms</span>
+                            <i class="bi bi-circle aria-hidden="true"></i><span>Room List</span>
                         </a>
                     </li>
                 </ul>
@@ -315,7 +324,7 @@
       
             <li class="nav-item">
                 <a class="nav-link text-dark" asp-area="MST_Course" asp-controller="MST_Course" asp-action="Index">
-                    <span>Add Course</span>
+                    <i class="bi bi-list"></i><span>Add Course</span>
                 </a>
             </li>
         </ul>

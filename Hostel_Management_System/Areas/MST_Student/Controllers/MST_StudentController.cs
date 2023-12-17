@@ -26,9 +26,24 @@ namespace Hostel_Management_System.Areas.MST_Student.Controllers
             cmd.CommandType = CommandType.StoredProcedure;
             cmd.CommandText = "PR_MST_Student_SelectAll";
             SqlDataReader dr = cmd.ExecuteReader();
-            dt.Load(dr);
+            dt.Load(dr);    
             conn.Close();
             return View("MST_StudentList", dt);
+        }
+
+        public IActionResult GetAllStudent()
+        {
+            string MyConnectionStr = this.Configuration.GetConnectionString("ConStr");
+            DataTable dt = new DataTable();
+            SqlConnection conn = new SqlConnection(MyConnectionStr);
+            conn.Open();
+            SqlCommand cmd = conn.CreateCommand();
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.CommandText = "PR_MST_Student_GetAllStudent";
+            SqlDataReader dr = cmd.ExecuteReader();
+            dt.Load(dr);
+            conn.Close();
+            return View("MST_AllStudentList", dt);
         }
 
         public IActionResult Delete(int StudentID)
@@ -43,6 +58,21 @@ namespace Hostel_Management_System.Areas.MST_Student.Controllers
             cmd.Parameters.AddWithValue("@StudentID", StudentID);
             cmd.ExecuteNonQuery();
             TempData["MST_Student_Delete_AlertMessage"] = "Record Deleted Successfully";
+            return RedirectToAction("GetAllStudent");
+        }
+
+        public IActionResult UpdateStatus(int StudentID)
+        {
+            string MyConnectionStr = this.Configuration.GetConnectionString("ConStr");
+            DataTable dt = new DataTable();
+            SqlConnection conn = new SqlConnection(MyConnectionStr);
+            conn.Open();
+            SqlCommand cmd = conn.CreateCommand();
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.CommandText = "PR_Mst_StudentUpdateStatus";
+            cmd.Parameters.AddWithValue("@StudentID", StudentID);
+            cmd.ExecuteNonQuery();
+            TempData["MST_Student_Remove_AlertMessage"] = "Record removed form this list successfully!!";
             return RedirectToAction("Index");
         }
 
@@ -187,5 +217,21 @@ namespace Hostel_Management_System.Areas.MST_Student.Controllers
 			return RedirectToAction("Index");
 		}
 
-	}
+        public IActionResult ViewProfile(int StudentID)
+        {
+            string MyConnectionStr = this.Configuration.GetConnectionString("ConStr");
+            DataTable dt = new DataTable();
+            SqlConnection conn = new SqlConnection(MyConnectionStr);
+            conn.Open();
+            SqlCommand cmd = conn.CreateCommand();
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.CommandText = "PR_MST_Student_SelectByPk";
+            cmd.Parameters.AddWithValue("@StudentID", StudentID);
+            SqlDataReader objSDR = cmd.ExecuteReader();
+            dt.Load(objSDR);
+            conn.Close();
+            return View("MST_Student_ViewProfile", dt);
+        }
+
+    }
 }

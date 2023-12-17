@@ -3,7 +3,6 @@ using System.Data.SqlClient;
 using System.Data;
 using Hostel_Management_System.Areas.MST_Room.Models;
 using Hostel_Management_System.Areas.Room_Allocate.Models;
-using Hostel_Management_System.Areas.MST_Course.Models;
 using Hostel_Management_System.Areas.MST_Student.Models;
 
 namespace Hostel_Management_System.Areas.Room_Allocate.Controllers
@@ -142,6 +141,20 @@ namespace Hostel_Management_System.Areas.Room_Allocate.Controllers
         }
 
         public IActionResult Delete(int RoomAllocateID)
+        {
+            string MyConnectionStr = this.Configuration.GetConnectionString("ConStr");
+            DataTable dt = new DataTable();
+            SqlConnection conn = new SqlConnection(MyConnectionStr);
+            conn.Open();
+            SqlCommand cmd = conn.CreateCommand();
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.CommandText = "PR_RoomAllocationDelete";
+            cmd.Parameters.AddWithValue("@RoomAllocateID", RoomAllocateID);
+            cmd.ExecuteNonQuery();
+            return RedirectToAction("Index");
+        }
+
+        public IActionResult Deallocate(int RoomAllocateID)
         {
             string MyConnectionStr = this.Configuration.GetConnectionString("ConStr");
             DataTable dt = new DataTable();
