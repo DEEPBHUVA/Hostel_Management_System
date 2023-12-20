@@ -1,4 +1,4 @@
-﻿@{
+﻿@{ 
     ViewData["Title"] = "Student List";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
@@ -24,6 +24,17 @@
             <div class="card">
                 <div class="card-body">
                     <h5 class="card-title"><i class="fa-solid fa-gears"></i> All Students</h5>
+                    <div class="row">
+                        
+                        <div class="col-md-9">
+                            <button class="btn btn-danger">Generate Pdf</button>
+                        </div>
+                        <div class="pull-right col-md-3 my-2">
+                            <div id="sample_1_filter" class="dataTables_filter">
+                                <input type="text" class="form-control input-group-sm input-small input-inline" id="sample_1" placeholder="Search" aria-controls="sample_1">
+                            </div>
+                        </div>
+                    </div>
                    
                     @if (TempData["MST_Student_Delete_AlertMessage"] != null)
                     {
@@ -47,9 +58,8 @@
                                     <th>Nationlity</th>
                                     <th>Aadharcard No.</th>
                                     <th>Status</th>
-                                    <th>View</th>
-                                    <th>Delete</th>
-                                    <th>Edit</th>
+                                    <th class="text-center">Action</th>
+                                    
                                 </tr>
                             </thead>
                             <tbody id="sample_2">
@@ -65,19 +75,17 @@
                                         <td>@dr["Nationlity"]</td>
                                         <td>@dr["AadharCardNo"]</td>
                                         <td>@dr["isActive"]</td>
-                                        <td>
+                                        <td class="d-flex justify-content-between">
                                             <form method="get" asp-area="MST_Student" asp-controller="MST_Student" asp-action="ViewProfile">
                                                 <input type="hidden" name="StudentID" value="@Convert.ToInt32(dr["StudentID"].ToString())">
                                                 <button type="submit" class="btn btn-warning"><i class="bi bi-eye-fill"></i></button>
                                             </form>
-                                        </td>
-                                        <td>
-                                            <form method="post" asp-area="MST_Student" asp-controller="MST_Student" , asp-action="Delete">
+
+                                            <form method="post" asp-area="MST_Student" asp-controller="MST_Student" , asp-action="UpdateStatus">
                                                 <input type="hidden" name="StudentID" value="@Convert.ToInt32(dr["StudentID"])" />
-                                                <button type="submit" class="btn btn-danger btn-rounded" onclick="return confirm('Are you sure you want to delete this?')"><i class="fa fa-trash"></i></button>
+                                                <button type="submit" class="btn btn-danger btn-rounded" onclick="return confirm('Are you sure you want to remove this?')"><i class="fa fa-trash"></i></button>
                                             </form>
-                                        </td>
-                                        <td>
+
                                             <form method="get" asp-area="MST_Student" asp-controller="MST_Student" asp-action="Add">
                                                 <input type="hidden" name="StudentID" value="@Convert.ToInt32(dr["StudentID"].ToString())">
                                                 <button type="submit" class="btn btn-primary btn-rounded"><i class="fa fa-pen-to-square"></i></button>
@@ -107,3 +115,17 @@
         </div>
     </div>
 </section>
+
+@section Scripts
+{
+    <script>
+        $(document).ready(function () {
+            $("#sample_1").on("keyup", function () {
+                var value = $(this).val().toLowerCase();
+                $("#sample_2 tr").filter(function () {
+                    $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+                });
+            });
+        });
+    </script>
+}

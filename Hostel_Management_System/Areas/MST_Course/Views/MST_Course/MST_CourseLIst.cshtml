@@ -3,6 +3,7 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
+
 @using System.Data
 @model DataTable
 
@@ -24,9 +25,9 @@
                     <h5 class="card-title"><i class="fa-solid fa-gears"></i> Course</h5>
                     <div class="row">
                         <div class="col-md-9">
-                            <a class="btn btn-primary" asp-area="MST_Course" asp-controller="MST_Course" asp-action="Add"><i class="fa-solid fa-plus"></i>  Add Course</a>
+                            <a class="btn btn-secondary" asp-area="MST_Course" asp-controller="MST_Course" asp-action="Add"><i class="fa-solid fa-plus"></i>  Add Course</a>
                         </div>
-                        <div class="col-md-3">
+                        <div class="pull-right col-md-3">
                             <div id="sample_1_filter" class="dataTables_filter">
                                 <input type="text" class="form-control input-group-sm input-small input-inline" id="sample_1" placeholder="Search" aria-controls="sample_1">
                             </div>
@@ -49,7 +50,7 @@
                         </div>
                     }
 
-                    <table class="table table-hover">
+                    <table  class="table table-hover">
                         <thead>
                             <tr>
                                 <th>Course Name</th>
@@ -60,7 +61,7 @@
 
                             </tr>
                         </thead>
-                        <tbody>
+                        <tbody id="sample_2">
                             @foreach (DataRow dr in Model.Rows)
                             {
                                 <tr>
@@ -88,3 +89,17 @@
         </div>
     </div>
 </section>
+
+@section Scripts
+{
+    <script>
+        $(document).ready(function () {
+            $("#sample_1").on("keyup", function () {
+                var value = $(this).val().toLowerCase();
+                $("#sample_2 tr").filter(function () {
+                    $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+                });
+            });
+        });
+    </script>
+}

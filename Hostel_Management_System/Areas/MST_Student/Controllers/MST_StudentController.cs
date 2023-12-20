@@ -1,5 +1,4 @@
 ﻿using Hostel_Management_System.Areas.MST_Course.Models;
-using Hostel_Management_System.Areas.MST_Room.Models;
 using Hostel_Management_System.Areas.MST_Student.Models;
 using Microsoft.AspNetCore.Mvc;
 using System.Data;
@@ -137,7 +136,8 @@ namespace Hostel_Management_System.Areas.MST_Student.Controllers
                         modelMST_Student.PhotoPath = objSDR["PhotoPath"].ToString();
                         modelMST_Student.isActive = objSDR["isActive"].ToString();
                         modelMST_Student.CourseID = Convert.ToInt32(objSDR["CourseID"]);
-                    }
+						modelMST_Student.Remarks = objSDR["Remarks"].ToString();
+					}
                 }
                 return View("MST_StudentAddEdit", modelMST_Student);
             }
@@ -178,7 +178,8 @@ namespace Hostel_Management_System.Areas.MST_Student.Controllers
             {
                 cmd.CommandText = "PR_MST_Student_Update";
                 cmd.Parameters.AddWithValue("@StudentID", modelMST_Student.StudentID);
-            }
+				cmd.Parameters.AddWithValue("@Remarks", modelMST_Student.Remarks);
+			}
             
             cmd.Parameters.AddWithValue("@StudentName", modelMST_Student.StudentName);
             cmd.Parameters.AddWithValue("@Email", modelMST_Student.Email);
@@ -199,8 +200,9 @@ namespace Hostel_Management_System.Areas.MST_Student.Controllers
 			cmd.Parameters.AddWithValue("@PermentAddress", modelMST_Student.PermentAddress);
 			cmd.Parameters.AddWithValue("@isActive", modelMST_Student.isActive);
 			cmd.Parameters.AddWithValue("@PhotoPath", modelMST_Student.PhotoPath);
+			
 
-            if (Convert.ToBoolean(cmd.ExecuteNonQuery()))
+			if (Convert.ToBoolean(cmd.ExecuteNonQuery()))
             {
                 if (modelMST_Student.StudentID == null)
                     TempData["MST_Student_AlertMessage"] = "Record Inserted Successfully!!";

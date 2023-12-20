@@ -6,6 +6,16 @@
 @using System.Data
 @model DataTable
 
+<style>
+    .roombutton {
+        background-color: cornflowerblue;
+    }
+
+    .roombutton:hover {
+        background-color: cornflowerblue;
+    }
+</style>
+
 <div class="pagetitle">
     <h1>Allocate List</h1>
     <nav>
@@ -25,10 +35,10 @@
                     <h5 class="card-title"><i class="fa-solid fa-gears"></i> Allocation List</h5>
                     <div class="row">
                         <div class="col-md-9">
-                            <a class="btn btn-warning" asp-area="Room_Allocate" asp-controller="Room_Allocate" asp-action="Add"><i class="bi bi-clipboard-plus-fill"></i>  Allocate Room</a>
-                            <a class="btn btn-primary" asp-area="MST_Room" asp-controller="MST_Room" asp-action="Index"><i class="bi bi-list"></i>  Room List</a>
+                            <a class="btn text-light roombutton" asp-area="Room_Allocate" asp-controller="Room_Allocate" asp-action="Add"><i class="bi bi-clipboard-plus-fill text-light"></i>  Allocate Room</a>
+                            <a class="btn btn-secondary" asp-area="MST_Room" asp-controller="MST_Room" asp-action="Index"><i class="bi bi-list"></i>  Room List</a>
                         </div>
-                        <div class="col-md-3">
+                        <div class="pull-right col-md-3">
                             <div id="sample_1_filter" class="dataTables_filter">
                                 <input type="text" class="form-control input-group-sm input-small input-inline" id="sample_1" placeholder="Search" aria-controls="sample_1">
                             </div>
@@ -43,22 +53,30 @@
                         </div>
                     }
 
+                    @if (TempData["RoomAllocation_Delete_AlertMessage"] != null)
+                    {
+                        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                            @TempData["RoomAllocation_Delete_AlertMessage"]
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>
+                    }
+
+
                     @if (Model.Rows.Count > 0)
                     {
-                        <table class="table table-hover">
+                        <table id="sample_1" class="table table-hover">
                             <thead>
                                 <tr>
                                     <th>Student Name</th>
                                     <th>Room No.</th>
                                     <th>Created</th>
                                     <th>Modified</th>
-                                    <th>Deallocate</th>
+                                    @* <th>Deallocate</th> *@
                                     <th>Delete</th>
                                     <th>Edit</th>
                                 </tr>
                             </thead>
-                            <tbody>
-
+                            <tbody id="sample_2">
                                 @foreach (DataRow dr in Model.Rows)
                                 {
                                     <tr>
@@ -66,12 +84,7 @@
                                         <td>@dr["RoomNo"]</td>
                                         <td>@Convert.ToDateTime(dr["Created"]).ToString("dd-MM-yyyy")</td>
                                         <td>@Convert.ToDateTime(dr["Modified"]).ToString("dd-MM-yyyy")</td>
-                                        <td>
-                                            <form method="post" asp-area="Room_Allocate" asp-controller="Room_Allocate" , asp-action="Deallocate">
-                                                <input type="hidden" name="RoomAllocateID" value="@Convert.ToInt32(dr["RoomAllocateID"])" />
-                                                <button type="submit" class="btn btn-secondary"><i class="bi bi-clipboard-x-fill"></i></button>
-                                            </form>
-                                        </td>
+                                        
                                         <td>
                                             <form method="post" asp-area="Room_Allocate" asp-controller="Room_Allocate" , asp-action="Delete">
                                                 <input type="hidden" name="RoomAllocateID" value="@Convert.ToInt32(dr["RoomAllocateID"])" />
@@ -104,3 +117,17 @@
         </div>
     </div>
 </section>
+
+@section Scripts
+{
+    <script>
+        $(document).ready(function () {
+            $("#sample_1").on("keyup", function () {
+                var value = $(this).val().toLowerCase();
+                $("#sample_2 tr").filter(function () {
+                    $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+                });
+            });
+        });
+    </script>
+}

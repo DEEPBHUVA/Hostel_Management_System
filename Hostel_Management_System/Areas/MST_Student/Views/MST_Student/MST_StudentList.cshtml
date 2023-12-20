@@ -5,6 +5,15 @@
 
 @using System.Data
 @model DataTable
+<style>
+    .roombutton {
+        background-color: cornflowerblue;
+    }
+
+    .roombutton:hover {
+        background-color: cornflowerblue;
+    }
+</style>
 
 <div class="pagetitle">
     <h1>Student List</h1>
@@ -24,10 +33,10 @@
                     <h5 class="card-title"><i class="fa-solid fa-gears"></i> Students</h5>
                     <div class="row">
                         <div class="col-md-9">
-                            <a class="btn btn-primary" asp-area="MST_Student" asp-controller="MST_Student" asp-action="Add"><i class="bi bi-person-plus-fill"></i>  Add Student</a>
-                            <a class="btn btn-warning" asp-area="Room_Allocate" asp-controller="Room_Allocate" asp-action="Add"><i class="bi bi-clipboard-plus-fill"></i>  Room Allocation</a>
+                            <a class="btn text-light roombutton" asp-area="Room_Allocate" asp-controller="Room_Allocate" asp-action="Add"><i class="bi bi-clipboard-plus-fill text-light"></i>  Allocate Room</a>
+                             <a class="btn btn-secondary" asp-area="MST_Student" asp-controller="MST_Student" asp-action="Add"><i class="bi bi-person-plus-fill"></i>  Add Student</a>
                         </div>
-                        <div class="col-md-3">
+                        <div class="pull-right col-md-3">
                             <div id="sample_1_filter" class="dataTables_filter">
                                 <input type="text" class="form-control input-group-sm input-small input-inline" id="sample_1" placeholder="Search" aria-controls="sample_1">
                             </div>
@@ -63,9 +72,8 @@
                                     <th>Age</th>
                                     <th>Course</th>
                                     <th>Status</th>
-                                    <th>View</th>
-                                    <th>Delete</th>
-                                    <th>Edit</th>
+                                    <th class="text-center">Action</th>
+                                    
                                 </tr>
                             </thead>
                             <tbody id="sample_2">
@@ -81,24 +89,23 @@
                                         <td>@dr["Age"]</td>
                                         <td>@dr["CourseName"]</td>
                                         <td>@dr["isActive"]</td>
-                                        <td>
+                                        <td class="d-flex justify-content-between">
                                             <form method="get" asp-area="MST_Student" asp-controller="MST_Student" asp-action="ViewProfile">
                                                 <input type="hidden" name="StudentID" value="@Convert.ToInt32(dr["StudentID"].ToString())">
                                                 <button type="submit" class="btn btn-warning"><i class="bi bi-eye-fill"></i></button>
                                             </form>
-                                        </td>
-                                        <td>
+
                                             <form method="post" asp-area="MST_Student" asp-controller="MST_Student" , asp-action="UpdateStatus">
                                                 <input type="hidden" name="StudentID" value="@Convert.ToInt32(dr["StudentID"])" />
                                                 <button type="submit" class="btn btn-danger btn-rounded" onclick="return confirm('Are you sure you want to remove this?')"><i class="fa fa-trash"></i></button>
                                             </form>
-                                        </td>
-                                        <td>
+
                                             <form method="get" asp-area="MST_Student" asp-controller="MST_Student" asp-action="Add">
                                                 <input type="hidden" name="StudentID" value="@Convert.ToInt32(dr["StudentID"].ToString())">
                                                 <button type="submit" class="btn btn-primary btn-rounded"><i class="fa fa-pen-to-square"></i></button>
                                             </form>
                                         </td>
+
                                     </tr>
                                 }
 

@@ -1,8 +1,11 @@
-﻿namespace Hostel_Management_System.Areas.MST_Course.Models
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace Hostel_Management_System.Areas.MST_Course.Models
 {
     public class MST_CourseModel
     {
         public int? CourseID {  get; set; }
+        [Required(ErrorMessage ="Enter Course Name!")]
         public string CourseName { get; set; }
         public DateTime Created { get; set; }
         public DateTime Modified { get; set; }

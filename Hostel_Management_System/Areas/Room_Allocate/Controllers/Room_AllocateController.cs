@@ -151,22 +151,23 @@ namespace Hostel_Management_System.Areas.Room_Allocate.Controllers
             cmd.CommandText = "PR_RoomAllocationDelete";
             cmd.Parameters.AddWithValue("@RoomAllocateID", RoomAllocateID);
             cmd.ExecuteNonQuery();
+            TempData["RoomAllocation_Delete_AlertMessage"] = "Record Deleted Successfully!!";
             return RedirectToAction("Index");
         }
 
-        public IActionResult Deallocate(int RoomAllocateID)
-        {
-            string MyConnectionStr = this.Configuration.GetConnectionString("ConStr");
-            DataTable dt = new DataTable();
-            SqlConnection conn = new SqlConnection(MyConnectionStr);
-            conn.Open();
-            SqlCommand cmd = conn.CreateCommand();
-            cmd.CommandType = CommandType.StoredProcedure;
-            cmd.CommandText = "PR_RoomAllocationDelete";
-            cmd.Parameters.AddWithValue("@RoomAllocateID", RoomAllocateID);
-            cmd.ExecuteNonQuery();
-            return RedirectToAction("Index");
-        }
+        //public IActionResult Deallocate(int RoomAllocateID)
+        //{
+        //    string MyConnectionStr = this.Configuration.GetConnectionString("ConStr");
+        //    DataTable dt = new DataTable();
+        //    SqlConnection conn = new SqlConnection(MyConnectionStr);
+        //    conn.Open();
+        //    SqlCommand cmd = conn.CreateCommand();
+        //    cmd.CommandType = CommandType.StoredProcedure;
+        //    cmd.CommandText = "PR_RoomAllocationDelete";
+        //    cmd.Parameters.AddWithValue("@RoomAllocateID", RoomAllocateID);
+        //    cmd.ExecuteNonQuery();
+        //    return RedirectToAction("Index");
+        //}
 
         public IActionResult Cancle()
         {

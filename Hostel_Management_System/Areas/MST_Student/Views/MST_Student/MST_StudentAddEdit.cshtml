@@ -5,7 +5,15 @@
 
 @using System.Data;
 @model Hostel_Management_System.Areas.MST_Student.Models.MST_StudentModel;
+<style>
+	.roombutton{
+		background-color: cornflowerblue;
+	}
 
+	.roombutton:hover {
+			background-color: cornflowerblue;
+	}
+</style>
 
 <div class="pagetitle">
 	<h1>Student Registration</h1>
@@ -27,12 +35,12 @@
 			@Html.HiddenFor(x => x.PhotoPath)
 
 			<div class="row my-2">
-				<div class="form-group col-6">
+				<div class="form-group col-md-6">
 					<label class="my-1">Image</label>
 					<input type="file" class="form-control" placeholder="Upload Image Here..." asp-for="File" />
 				</div>
 
-				<div class="form-group col-6">
+				<div class="form-group col-md-6">
 					<label for="inputState"><span class="text-danger">*</span>Status</label>
 					<select class="form-control" asp-for="isActive">
 						<option selected>Choose...</option>
@@ -80,13 +88,13 @@
 			<div class="row my-2">
 				<div class="form-group col-3">
 					<label for="inputState"><span class="text-danger">*</span>Date of Birth</label>
-					<input type="date" class="form-control" placeholder="Enter your birth date" asp-for="BirthDate">
+					<input type="date" class="form-control" placeholder="Enter your birth date" asp-for="BirthDate" id="birthDate">
 					<span asp-validation-for="BirthDate" class="text-danger"></span>
 				</div>
 
 				<div class="form-group col-3">
 					<label for="inputState"><span class="text-danger">*</span>Age</label>
-					<input type="text" class="form-control" placeholder="Enter your age" asp-for="Age">
+					<input type="text" class="form-control ageInput" placeholder="Enter your age" asp-for="Age">
 					<span asp-validation-for="Age" class="text-danger"></span>
 				</div>
 
@@ -94,7 +102,7 @@
 					<label for="inputState"><span class="text-danger">*</span>Blood Group</label>
 					<select class="form-control" asp-for="BloodGroup">
 						<option selected>Choose Blood Group</option>
-						<option value="A+">None</option>
+						<option value="None">None</option>
 						<option value="A+">A RhD positive (A+)</option>
 						<option value="A-">A RhD negative (A-)</option>
 						<option value="B+">B RhD positive (B+)</option>
@@ -111,6 +119,7 @@
 					<label for="inputState"><span class="text-danger">*</span>Course</label>
 					<select class="form-control" asp-for="CourseID" asp-items="@(new SelectList(ViewBag.CourseList,"CourseID","CourseName"))">
 						<option value="">Select Course</option>
+						
 					</select>
 					<span asp-validation-for="CourseID" class="text-danger"></span>
 				</div>
@@ -176,9 +185,14 @@
 				</div>
 			</div>
 
+			<div class="form-group my-2">
+				<label for="exampleFormControlTextarea1">Remarks</label>
+				<textarea class="form-control" placeholder="Enter Remarks.." rows="3" asp-for="Remarks"></textarea>
+			</div>
+
 			<hr />
 			<button type="submit" class="btn btn-success btn-rounded px-4"><i class="fa-solid fa-floppy-disk mx-1"></i> Save</button>
-			<a class="btn btn-warning" asp-area="Room_Allocate" asp-controller="Room_Allocate" asp-action="Add"><i class="bi bi-clipboard-plus-fill"></i>  Allocate Room</a>
+			<a class="btn text-light roombutton" asp-area="Room_Allocate" asp-controller="Room_Allocate" asp-action="Add"><i class="bi bi-clipboard-plus-fill text-light"></i>  Allocate Room</a>
 			<a class="btn btn-secondary btn-rounded px-4" asp-controller="MST_Student" asp-action="Cancle"><i class="bi bi-caret-left-fill"></i>Back</a>
 		</form>
 	</div>
@@ -186,4 +200,22 @@
 
 @section Scripts {
 	<partial name="_ValidationScriptsPartial" />
+	<script>
+		$(document).ready(function () {
+			$('#birthDate').change(function () {
+				var birthDate = new Date($(this).val());
+				var today = new Date();
+				var age = today.getFullYear() - birthDate.getFullYear();
+				var monthDiff = today.getMonth() - birthDate.getMonth();
+
+				if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < birthDate.getDate())) {
+					age--;
+				}
+
+				$('.ageInput').val(age);
+			});
+		});
+	</script>
+
 }
+
