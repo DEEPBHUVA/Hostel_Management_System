@@ -4,6 +4,7 @@ using System.Data;
 using Hostel_Management_System.Areas.MST_Room.Models;
 using Hostel_Management_System.Areas.Room_Allocate.Models;
 using Hostel_Management_System.Areas.MST_Student.Models;
+using Hostel_Management_System.DAL;
 
 namespace Hostel_Management_System.Areas.Room_Allocate.Controllers
 {
@@ -11,26 +12,24 @@ namespace Hostel_Management_System.Areas.Room_Allocate.Controllers
     [Route("Room_Allocate/{Controller}/{action}")]
     public class Room_AllocateController : Controller
     {
+        Room_Allocation_DAL dalRoom_Allocation = new Room_Allocation_DAL();
+        #region Configuration
         public IConfiguration Configuration;
         public Room_AllocateController(IConfiguration configuration)
         {
             Configuration = configuration;
         }
+        #endregion
+
+        #region SelectAllRoom
         public IActionResult Index()
         {
-            string MyConnectionStr = this.Configuration.GetConnectionString("ConStr");
-            DataTable dt = new DataTable();
-            SqlConnection conn = new SqlConnection(MyConnectionStr);
-            conn.Open();
-            SqlCommand cmd = conn.CreateCommand();
-            cmd.CommandType = CommandType.StoredProcedure;
-            cmd.CommandText = "PR_Room_AllocationSelectAll";
-            SqlDataReader dr = cmd.ExecuteReader();
-            dt.Load(dr);
-            conn.Close();
+            DataTable dt = dalRoom_Allocation.PR_Room_AllocationSelectAll();
             return View("Room_AllocateList", dt);
         }
+        #endregion
 
+        #region Add
         public IActionResult Add(int? RoomAllocateID)
         {
             #region Student Dropdown
@@ -57,7 +56,7 @@ namespace Hostel_Management_System.Areas.Room_Allocate.Controllers
 
             //===============================
 
-            #region Student Dropdown
+            #region Room Dropdown
             string MyConnectionStr2 = this.Configuration.GetConnectionString("ConStr");
             SqlConnection connection3 = new SqlConnection(MyConnectionStr2);
             DataTable dt3 = new DataTable();
@@ -79,81 +78,51 @@ namespace Hostel_Management_System.Areas.Room_Allocate.Controllers
             ViewBag.RoomList = list2;
             #endregion
 
-
             if (RoomAllocateID != null)
             {
-                string MyConnectionStr = this.Configuration.GetConnectionString("ConStr");
-                DataTable dt = new DataTable();
-                SqlConnection conn = new SqlConnection(MyConnectionStr);
-                conn.Open();
-                SqlCommand cmd = conn.CreateCommand();
-                cmd.CommandType = CommandType.StoredProcedure;
-                cmd.CommandText = "PR_Room_AllocationSelectByPk";
-                cmd.Parameters.AddWithValue("@RoomAllocateID", RoomAllocateID);
-                SqlDataReader objSDR = cmd.ExecuteReader();
+                DataTable dt = dalRoom_Allocation.PR_Room_AllocationSelectByPk(RoomAllocateID);
                 Room_AllocateModel modelRoom_Allocate = new Room_AllocateModel();
 
-                if (objSDR.HasRows)
+                foreach (DataRow row in dt.Rows)
                 {
-                    while (objSDR.Read())
-                    {
-                        modelRoom_Allocate.RoomAllocateID = Convert.ToInt32(objSDR["RoomAllocateID"]);
-                        modelRoom_Allocate.StudentID = Convert.ToInt32(objSDR["StudentID"]);
-                        modelRoom_Allocate.RoomId = Convert.ToInt32(objSDR["RoomId"]);
-                    }
+                    modelRoom_Allocate.RoomAllocateID = Convert.ToInt32(row["RoomAllocateID"]);
+                    modelRoom_Allocate.StudentID = Convert.ToInt32(row["StudentID"]);
+                    modelRoom_Allocate.RoomId = Convert.ToInt32(row["RoomId"]);
                 }
                 return View("Room_AllocateAddEdit", modelRoom_Allocate);
             }
             return View("Room_AllocateAddEdit");
         }
+        #endregion
 
-
+        #region Save(Insert/Update)
         public IActionResult Save(Room_AllocateModel modelRoom_Allocate)
         {
-            string MyConnectionStr = this.Configuration.GetConnectionString("ConStr");
-            DataTable dt = new DataTable();
-            SqlConnection conn = new SqlConnection(MyConnectionStr);
-            conn.Open();
-            SqlCommand cmd = conn.CreateCommand();
-            cmd.CommandType = CommandType.StoredProcedure;
-            if (modelRoom_Allocate.RoomAllocateID== null)
+            if (modelRoom_Allocate.RoomAllocateID == null)
             {
-                cmd.CommandText = "PR_RoomAllocationInsert";
+                DataTable dt = dalRoom_Allocation.PR_RoomAllocationInsert(modelRoom_Allocate.StudentID,modelRoom_Allocate.RoomId);
+                TempData["RoomAllocation_AlertMessage"] = "Record Inserted Successfully!!";
             }
             else
             {
-                cmd.CommandText = "PR_RoomAllocationUpdate";
-                cmd.Parameters.AddWithValue("@RoomAllocateID", modelRoom_Allocate.RoomAllocateID);
-            }
-            cmd.Parameters.AddWithValue("@StudentID", modelRoom_Allocate.StudentID);
-            cmd.Parameters.AddWithValue("@RoomId", modelRoom_Allocate.RoomId);
-         
-            if (Convert.ToBoolean(cmd.ExecuteNonQuery()))
-            {
-                if (modelRoom_Allocate.RoomAllocateID == null)
-                    TempData["RoomAllocation_AlertMessage"] = "Record Inserted Successfully!!";
-                else
-                {
-                    TempData["RoomAllocation_AlertMessage"] = "Record Updated Successfully!!";
-                }
+                DataTable dt = dalRoom_Allocation.PR_RoomAllocationUpdate((int)modelRoom_Allocate.RoomAllocateID,modelRoom_Allocate.StudentID, modelRoom_Allocate.RoomId);
+                TempData["RoomAllocation_AlertMessage"] = "Record Updated Successfully!!";
             }
             return RedirectToAction("Index");
         }
+        #endregion
 
+        #region Delete
         public IActionResult Delete(int RoomAllocateID)
         {
-            string MyConnectionStr = this.Configuration.GetConnectionString("ConStr");
-            DataTable dt = new DataTable();
-            SqlConnection conn = new SqlConnection(MyConnectionStr);
-            conn.Open();
-            SqlCommand cmd = conn.CreateCommand();
-            cmd.CommandType = CommandType.StoredProcedure;
-            cmd.CommandText = "PR_RoomAllocationDelete";
-            cmd.Parameters.AddWithValue("@RoomAllocateID", RoomAllocateID);
-            cmd.ExecuteNonQuery();
-            TempData["RoomAllocation_Delete_AlertMessage"] = "Record Deleted Successfully!!";
+            if (Convert.ToBoolean(dalRoom_Allocation.PR_RoomAllocationDelete(RoomAllocateID)))
+            {
+                TempData["RoomAllocation_Delete_AlertMessage"] = "Record Deleted Successfully!!";
+                return RedirectToAction("Index");
+            }
             return RedirectToAction("Index");
         }
+        #endregion
 
         //public IActionResult Deallocate(int RoomAllocateID)
         //{
@@ -169,9 +138,11 @@ namespace Hostel_Management_System.Areas.Room_Allocate.Controllers
         //    return RedirectToAction("Index");
         //}
 
+        #region Cancle
         public IActionResult Cancle()
         {
             return RedirectToAction("Index");
         }
+        #endregion
     }
 }

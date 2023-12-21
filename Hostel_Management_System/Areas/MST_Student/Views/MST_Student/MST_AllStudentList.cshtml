@@ -81,7 +81,7 @@
                                                 <button type="submit" class="btn btn-warning"><i class="bi bi-eye-fill"></i></button>
                                             </form>
 
-                                            <form method="post" asp-area="MST_Student" asp-controller="MST_Student" , asp-action="UpdateStatus">
+                                            <form method="post" asp-area="MST_Student" asp-controller="MST_Student" , asp-action="Delete">
                                                 <input type="hidden" name="StudentID" value="@Convert.ToInt32(dr["StudentID"])" />
                                                 <button type="submit" class="btn btn-danger btn-rounded" onclick="return confirm('Are you sure you want to remove this?')"><i class="fa fa-trash"></i></button>
                                             </form>

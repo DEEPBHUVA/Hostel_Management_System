@@ -2,114 +2,87 @@
 using System.Data.SqlClient;
 using System.Data;
 using Hostel_Management_System.Areas.MST_Room.Models;
+using Hostel_Management_System.DAL;
 
 namespace Hostel_Management_System.Areas.MST_Room.Controllers
 {
     [Area("MSt_Room")]
     [Route("MST_Room/{Controller}/{action}")]
     public class MST_RoomController : Controller
-    { 
+    {
+        MST_Room_DAL dalMST_Room = new MST_Room_DAL();
+        #region Configuration
         public IConfiguration Configuration;
         public MST_RoomController(IConfiguration configuration)
         {
             Configuration = configuration;
         }
+        #endregion
+
+        #region SelectAllRooms
         public IActionResult Index()
         {
-            string MyConnectionStr = this.Configuration.GetConnectionString("ConStr");
-            DataTable dt = new DataTable();
-            SqlConnection conn = new SqlConnection(MyConnectionStr);
-            conn.Open();
-            SqlCommand cmd = conn.CreateCommand();
-            cmd.CommandType = CommandType.StoredProcedure;
-            cmd.CommandText = "PR_MST_Room_SelectAll";
-            SqlDataReader dr = cmd.ExecuteReader();
-            dt.Load(dr);
-            conn.Close();
+            DataTable dt = dalMST_Room.PR_MST_Room_SelectAll();
             return View("MST_RoomList", dt);
         }
+        #endregion
 
+        #region Add
         public IActionResult Add(int? RoomId)
         {
             if (RoomId != null)
             {
-                string MyConnectionStr = this.Configuration.GetConnectionString("ConStr");
-                DataTable dt = new DataTable();
-                SqlConnection conn = new SqlConnection(MyConnectionStr);
-                conn.Open();
-                SqlCommand cmd = conn.CreateCommand();
-                cmd.CommandType = CommandType.StoredProcedure;
-                cmd.CommandText = "PR_MST_Room_SelectByPk";
-                cmd.Parameters.AddWithValue("@RoomId", RoomId);
-                SqlDataReader objSDR = cmd.ExecuteReader();
+                DataTable dt = dalMST_Room.PR_MST_Room_SelectByPk(RoomId);
                 MST_RoomModel modelMST_Room = new MST_RoomModel();
 
-                if (objSDR.HasRows)
+                foreach (DataRow row in dt.Rows)
                 {
-                    while (objSDR.Read())
-                    {
-                        modelMST_Room.RoomNo = Convert.ToInt32(objSDR["RoomNo"]);
-						modelMST_Room.SeatCount = Convert.ToInt32(objSDR["SeatCount"]);
-						modelMST_Room.Capacity = Convert.ToInt32(objSDR["Capacity"]);
-						modelMST_Room.Status = (bool)objSDR["Status"];
-                    }
+                    modelMST_Room.RoomNo = Convert.ToInt32(row["RoomNo"]);
+                    modelMST_Room.SeatCount = Convert.ToInt32(row["SeatCount"]);
+                    modelMST_Room.Capacity = Convert.ToInt32(row["Capacity"]);
+                    modelMST_Room.Status = (bool)row["Status"];
                 }
                 return View("MST_RoomAddEdit", modelMST_Room);
             }
             return View("MST_RoomAddEdit");
         }
+        #endregion
 
+        #region Save(Insert/Update)
         public IActionResult Save(MST_RoomModel modelMST_Room)
         {
-            string MyConnectionStr = this.Configuration.GetConnectionString("ConStr");
-            DataTable dt = new DataTable();
-            SqlConnection conn = new SqlConnection(MyConnectionStr);
-            conn.Open();
-            SqlCommand cmd = conn.CreateCommand();
-            cmd.CommandType = CommandType.StoredProcedure;
-            if(modelMST_Room.RoomId == null)
+            if (modelMST_Room.RoomId== null)
             {
-                cmd.CommandText = "PR_MST_Room_Insert";
+                DataTable dt = dalMST_Room.PR_MST_Room_Insert(modelMST_Room.RoomNo,modelMST_Room.Status,modelMST_Room.Capacity,modelMST_Room.SeatCount);
+                TempData["MST_Room_AlertMessage"] = "Record Inserted Successfully!!";
             }
             else
             {
-                cmd.CommandText = "PR_MST_Room_Update";
-                cmd.Parameters.AddWithValue("@RoomId", modelMST_Room.RoomId);
-            }
-            cmd.Parameters.AddWithValue("@RoomNo", modelMST_Room.RoomNo);
-            cmd.Parameters.AddWithValue("@Status", modelMST_Room.Status);
-			cmd.Parameters.AddWithValue("@Capacity", modelMST_Room.Capacity);
-			cmd.Parameters.AddWithValue("@SeatCount", modelMST_Room.SeatCount);
-			if (Convert.ToBoolean(cmd.ExecuteNonQuery()))
-            {
-                if (modelMST_Room.RoomId == null)
-                    TempData["MST_Room_AlertMessage"] = "Record Inserted Successfully!!";
-                else
-                {
-                    TempData["MST_Room_AlertMessage"] = "Record Updated Successfully!!";
-                }
+                DataTable dt = dalMST_Room.PR_MST_Room_Update((int)modelMST_Room.RoomId,modelMST_Room.RoomNo, modelMST_Room.Status, modelMST_Room.Capacity, modelMST_Room.SeatCount);
+                TempData["MST_Room_AlertMessage"] = "Record Updated Successfully!!";
             }
             return RedirectToAction("Index");
         }
+        #endregion
 
+        #region Delete
         public IActionResult Delete(int RoomId) 
         {
-            string MyConnectionStr = this.Configuration.GetConnectionString("ConStr");
-            DataTable dt = new DataTable();
-            SqlConnection conn = new SqlConnection(MyConnectionStr);
-            conn.Open();
-            SqlCommand cmd = conn.CreateCommand();
-            cmd.CommandType = CommandType.StoredProcedure;
-            cmd.CommandText = "PR_MST_Room_DeleteByRoomId";
-            cmd.Parameters.AddWithValue("@RoomId", RoomId);
-            cmd.ExecuteNonQuery();
+            if (Convert.ToBoolean(dalMST_Room.PR_MST_Room_DeleteByRoomId(RoomId)))
+            {
+                TempData["MST_Room_DeleteAlertMessage"] = "Record Deleted Successfully";
+                return RedirectToAction("Index");
+            }
             return RedirectToAction("Index");
         }
+        #endregion
 
+        #region Cancle
         public IActionResult Cancle()
         {
             return RedirectToAction("Index");
         }
+        #endregion
 
     }
 }
