@@ -1,0 +1,95 @@
+﻿﻿@{
+	ViewData["Title"] = "Payment Add/Edit";
+	Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@using System.Data;
+@model Hostel_Management_System.Areas.MST_Payment.Models.MST_PaymentModel;
+
+<div class="pagetitle">
+	<h1>Payment Add/Edit</h1>
+	<nav>
+		<ol class="breadcrumb">
+			<li class="breadcrumb-item"><a asp-controller="Home" asp-action="Index">Home</a></li>
+			<li class="breadcrumb-item"><a asp-controller="MST_Payment" asp-action="Index">Payment List</a></li>
+			<li class="breadcrumb-item active"><a asp-controller="MST_Payment" asp-action="Add">Add Payment</a></li>
+		</ol>
+	</nav>
+</div>
+
+<div class="card col-md-8">
+    <div class="card-body p-3">
+		<div class="d-flex align-items-center justify-content-between">
+			<a asp-controller="Home" asp-action="Index" class="logo d-flex align-items-center">
+				<img src="~/assets/img/logo.png" alt="">
+				<span class="d-none d-lg-block">Skyline</span>
+			</a>
+		</div>
+		<hr />
+        <form role="form" method="post" asp-area="MST_Payment" asp-controller="MST_Payment" asp-action="Save">
+            @Html.HiddenFor(x => x.PaymentID)
+
+			
+
+			<div class="row my-2">
+				<div class="form-group col-8">
+					<label for="inputState"><span class="text-danger">*</span>Student Name</label>
+					<input type="text" class="form-control" placeholder="Enter Student name" asp-for="StudentID">
+					<span asp-validation-for="StudentID" class="text-danger"></span>
+				</div>
+
+				<div class="form-group col-4">
+					<label for="inputState"><span class="text-danger">*</span>Date</label>
+					<input type="date" class="form-control" placeholder="Enter Date" asp-for="PaymentDate">
+					<span asp-validation-for="PaymentDate" class="text-danger"></span>
+				</div>
+			</div>
+
+			<div class="row my-2">
+				<div class="form-group col-6">
+					<label for="inputState"><span class="text-danger">*</span>Mobile No.</label>
+					<input type="text" class="form-control" placeholder="Enter Mobile No." asp-for="MobileNo">
+					<span asp-validation-for="MobileNo" class="text-danger"></span>
+				</div>
+
+				<div class="form-group col-md-6">
+					<label for="inputState"><span class="text-danger">*</span>Paid By</label>
+					<select class="form-control" asp-for="PaidBY" id="paidByDropdown">
+						<option selected>Choose...</option>
+						<option value="Cash">Cash</option>
+						<option value="Cheque">Cheque</option>
+					</select>
+					<span asp-validation-for="PaidBY" class="text-danger"></span>
+				</div>
+			</div>
+
+			<div class="row my-2" id="chequeNoSection" style="display: none;">
+				<div class="form-group col-6">
+					<label for="inputState"><span class="text-danger">*</span>Cheque No.</label>
+					<input type="text" class="form-control" placeholder="Enter Cheque No.">
+					
+				</div>
+			</div>
+			<hr />
+
+            <br />
+            <button type="submit" class="btn btn-success"><i class="fa-solid fa-floppy-disk mx-1"></i> Save</button>
+            <a class="btn btn-secondary" asp-controller="MST_Payment" asp-action="Cancle"><i class="bi bi-caret-left-fill"></i> Back</a>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial.cshtml" />
+	<script>
+		// Add a script to show/hide the Cheque No section based on the selected option
+		document.getElementById('paidByDropdown').addEventListener('change', function () {
+			var chequeNoSection = document.getElementById('chequeNoSection');
+			if (this.value === 'Cheque') {
+				chequeNoSection.style.display = 'block';
+			} else {
+				chequeNoSection.style.display = 'none';
+			}
+		});
+	</script>
+}

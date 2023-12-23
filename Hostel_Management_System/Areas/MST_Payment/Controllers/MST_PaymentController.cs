@@ -1,0 +1,92 @@
+﻿using Hostel_Management_System.Areas.MST_Payment.Models;
+using Hostel_Management_System.Areas.MST_Room.Models;
+using Hostel_Management_System.DAL;
+using Microsoft.AspNetCore.Mvc;
+using System.Data;
+
+namespace Hostel_Management_System.Areas.MST_Payment.Controllers
+{
+    [Area("MST_Payment")]
+    [Route("MST_Payment/{Controller}/{action}")]
+    public class MST_PaymentController : Controller
+    {
+        MST_Payment_DAL dalMST_Payment = new MST_Payment_DAL();
+
+        #region Configuration
+        public IConfiguration Configuration;
+        public MST_PaymentController(IConfiguration configuration)
+        {
+            Configuration = configuration;
+        }
+        #endregion
+
+        #region SelectAllPayment
+        public IActionResult Index()
+        {
+            DataTable dt = dalMST_Payment.PR_MST_Payment_SelectAll();
+            return View("MST_PaymentList",dt);
+        }
+        #endregion
+
+        #region Add
+        public IActionResult Add(int? PaymentID)
+        {
+            if (PaymentID != null)
+            {
+                DataTable dt = dalMST_Payment.PR_MST_Payment_SelectByPK(PaymentID);
+                MST_PaymentModel modelMST_Payment = new MST_PaymentModel();
+
+                foreach (DataRow row in dt.Rows)
+                {
+                    modelMST_Payment.StudentID = Convert.ToInt32(row["StudentID"]);
+                    modelMST_Payment.Amount = Convert.ToDecimal(row["Amount"]);
+                    modelMST_Payment.PaidBY = row["PaidBY"].ToString();
+                    modelMST_Payment.MobileNo = row["MobileNo"].ToString();
+                    modelMST_Payment.Remark = row["Remark"].ToString();
+                    modelMST_Payment.PaymentDate = Convert.ToDateTime(row["PaymentDate"]);
+
+                }
+                return View("MST_PaymentAddEdit", modelMST_Payment);
+            }
+            return View("MST_PaymentAddEdit");
+        }
+        #endregion
+
+        #region Save(Insert/Update)
+        public IActionResult Save(MST_PaymentModel modelMST_Payment)
+        {
+            if (modelMST_Payment.PaymentID == null)
+            {
+                DataTable dt = dalMST_Payment.PR_MST_Payment_Insert(modelMST_Payment.StudentID, modelMST_Payment.Remark, modelMST_Payment.PaymentDate, modelMST_Payment.MobileNo, modelMST_Payment.PaidBY, modelMST_Payment.Amount);
+                TempData["MST_Payment_AlertMessage"] = "Record Inserted Successfully!!";
+            }
+            else
+            {
+                DataTable dt = dalMST_Payment.PR_MST_Payment_Update((int)modelMST_Payment.PaymentID,modelMST_Payment.StudentID, modelMST_Payment.Remark, modelMST_Payment.PaymentDate, modelMST_Payment.MobileNo, modelMST_Payment.PaidBY, modelMST_Payment.Amount);
+                TempData["MST_Payment_AlertMessage"] = "Record Updated Successfully!!";
+            }
+            return RedirectToAction("Index");
+        }
+        #endregion
+
+        #region Delete
+        public IActionResult Delete(int PaymentID)
+        {
+            if (Convert.ToBoolean(dalMST_Payment.PR_MST_Payment_Delete(PaymentID)))
+            {
+                TempData["MST_Payment_Delete_AlertMessage"] = "Record Deleted Successfully";
+                return RedirectToAction("Index");
+            }
+            return RedirectToAction("Index");
+        }
+        #endregion
+
+        #region Cancle
+        public IActionResult Cancle()
+        {
+            return RedirectToAction("Index");
+        }
+        #endregion
+
+    }
+}

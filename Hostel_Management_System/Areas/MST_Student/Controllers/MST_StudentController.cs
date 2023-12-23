@@ -1,6 +1,8 @@
 ﻿using Hostel_Management_System.Areas.MST_Course.Models;
 using Hostel_Management_System.Areas.MST_Student.Models;
+using Hostel_Management_System.DAL;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.RazorPages;
 using System.Data;
 using System.Data.SqlClient;
 
@@ -10,71 +12,57 @@ namespace Hostel_Management_System.Areas.MST_Student.Controllers
     [Route("MST_Student/{Controller}/{action}")]
     public class MST_StudentController : Controller
     {
+        MST_Student_DAL dalMST_Student = new MST_Student_DAL();
+
+        #region Configuration
         public IConfiguration Configuration;
         public MST_StudentController(IConfiguration configuration)
         {
             Configuration = configuration;
         }
+        #endregion
+
+        #region SelectOnlyActiveStudent
         public IActionResult Index()
         {
-            string MyConnectionStr = this.Configuration.GetConnectionString("ConStr");
-            DataTable dt = new DataTable();
-            SqlConnection conn = new SqlConnection(MyConnectionStr);
-            conn.Open();
-            SqlCommand cmd = conn.CreateCommand();
-            cmd.CommandType = CommandType.StoredProcedure;
-            cmd.CommandText = "PR_MST_Student_SelectAll";
-            SqlDataReader dr = cmd.ExecuteReader();
-            dt.Load(dr);    
-            conn.Close();
+            DataTable dt = dalMST_Student.PR_MST_Student_SelectAll();
             return View("MST_StudentList", dt);
         }
+        #endregion
 
+        #region SelectAllStudent
         public IActionResult GetAllStudent()
         {
-            string MyConnectionStr = this.Configuration.GetConnectionString("ConStr");
-            DataTable dt = new DataTable();
-            SqlConnection conn = new SqlConnection(MyConnectionStr);
-            conn.Open();
-            SqlCommand cmd = conn.CreateCommand();
-            cmd.CommandType = CommandType.StoredProcedure;
-            cmd.CommandText = "PR_MST_Student_GetAllStudent";
-            SqlDataReader dr = cmd.ExecuteReader();
-            dt.Load(dr);
-            conn.Close();
+            DataTable dt = dalMST_Student.PR_MST_Student_GetAllStudent();
             return View("MST_AllStudentList", dt);
         }
+        #endregion
 
+        #region Delete
         public IActionResult Delete(int StudentID)
         {
-            string MyConnectionStr = this.Configuration.GetConnectionString("ConStr");
-            DataTable dt = new DataTable();
-            SqlConnection conn = new SqlConnection(MyConnectionStr);
-            conn.Open();
-            SqlCommand cmd = conn.CreateCommand();
-            cmd.CommandType = CommandType.StoredProcedure;
-            cmd.CommandText = "PR_MST_Student_DeleteByPk";
-            cmd.Parameters.AddWithValue("@StudentID", StudentID);
-            cmd.ExecuteNonQuery();
-            TempData["MST_Student_Delete_AlertMessage"] = "Record Deleted Successfully";
+            if (Convert.ToBoolean(dalMST_Student.PR_MST_Student_DeleteByPk(StudentID)))
+            {
+                TempData["MST_Student_Delete_AlertMessage"] = "Record Deleted Successfully";
+                return RedirectToAction("GetAllStudent");
+            }
             return RedirectToAction("GetAllStudent");
         }
+        #endregion
 
+        #region UpdateStatus
         public IActionResult UpdateStatus(int StudentID)
         {
-            string MyConnectionStr = this.Configuration.GetConnectionString("ConStr");
-            DataTable dt = new DataTable();
-            SqlConnection conn = new SqlConnection(MyConnectionStr);
-            conn.Open();
-            SqlCommand cmd = conn.CreateCommand();
-            cmd.CommandType = CommandType.StoredProcedure;
-            cmd.CommandText = "PR_Mst_StudentUpdateStatus";
-            cmd.Parameters.AddWithValue("@StudentID", StudentID);
-            cmd.ExecuteNonQuery();
-            TempData["MST_Student_Remove_AlertMessage"] = "Record removed form this list successfully!!";
+            if (Convert.ToBoolean(dalMST_Student.PR_Mst_StudentUpdateStatus(StudentID)))
+            {
+                TempData["MST_Student_Remove_AlertMessage"] = "Record removed form this list successfully!!";
+                return RedirectToAction("Index");
+            }
             return RedirectToAction("Index");
         }
+        #endregion
 
+        #region Add
         public IActionResult Add(int? StudentID) 
         {
 			#region Course Dropdown
@@ -101,51 +89,44 @@ namespace Hostel_Management_System.Areas.MST_Student.Controllers
 
             if (StudentID != null)
             {
-                string MyConnectionStr = this.Configuration.GetConnectionString("ConStr");
-                DataTable dt = new DataTable();
-                SqlConnection conn = new SqlConnection(MyConnectionStr);
-                conn.Open();
-                SqlCommand cmd = conn.CreateCommand();
-                cmd.CommandType = CommandType.StoredProcedure;
-                cmd.CommandText = "PR_MST_Student_SelectByPk";
-                cmd.Parameters.AddWithValue("@StudentID", StudentID);
-                SqlDataReader objSDR = cmd.ExecuteReader();
+                DataTable dt = dalMST_Student.PR_MST_Student_SelectByPk(StudentID);
                 MST_StudentModel modelMST_Student= new MST_StudentModel();
 
-                if (objSDR.HasRows)
+                foreach (DataRow row in dt.Rows)
                 {
-                    while (objSDR.Read())
-                    {
-                        //modelMST_Student.StudentID = Convert.ToInt32(objSDR["StudentID"]);
-                        modelMST_Student.StudentName = objSDR["StudentName"].ToString();
-                        modelMST_Student.MobileNo = objSDR["MobileNo"].ToString();
-                        modelMST_Student.Email = objSDR["Email"].ToString();
-                        modelMST_Student.Age = Convert.ToInt32(objSDR["Age"]);
-                        modelMST_Student.BirthDate = Convert.ToDateTime(objSDR["BirthDate"]);
-                        modelMST_Student.BloodGroup = objSDR["BloodGroup"].ToString();
-                        modelMST_Student.FatherMobileNo = objSDR["FatherMobileNo"].ToString();
-                        modelMST_Student.FatherName = objSDR["FatherName"].ToString();
-                        modelMST_Student.MotherMobileNo = objSDR["MotherMobileNo"].ToString();
-                        modelMST_Student.MotherName = objSDR["MotherName"].ToString();
-                        modelMST_Student.LocalGurdianName = objSDR["LocalGurdianName"].ToString();
-                        modelMST_Student.LocalGurdianNo = objSDR["LocalGurdianNo"].ToString();
-                        modelMST_Student.Nationlity = objSDR["Nationlity"].ToString();
-                        modelMST_Student.AadharCardNo = objSDR["AadharCardNo"].ToString();
-                        modelMST_Student.PermentAddress = objSDR["PermentAddress"].ToString();
-                        modelMST_Student.PresentAddress = objSDR["PresentAddress"].ToString();
-                        modelMST_Student.PhotoPath = objSDR["PhotoPath"].ToString();
-                        modelMST_Student.isActive = objSDR["isActive"].ToString();
-                        modelMST_Student.CourseID = Convert.ToInt32(objSDR["CourseID"]);
-						modelMST_Student.Remarks = objSDR["Remarks"].ToString();
-					}
-                }
+                    //modelMST_Student.StudentID = Convert.ToInt32(row["StudentID"]);
+                    modelMST_Student.StudentName = row["StudentName"].ToString();
+                    modelMST_Student.MobileNo = row["MobileNo"].ToString();
+                    modelMST_Student.Email = row["Email"].ToString();
+                    modelMST_Student.Age = Convert.ToInt32(row["Age"]);
+                    modelMST_Student.BirthDate = Convert.ToDateTime(row["BirthDate"]);
+                    modelMST_Student.BloodGroup = row["BloodGroup"].ToString();
+                    modelMST_Student.FatherMobileNo = row["FatherMobileNo"].ToString();
+                    modelMST_Student.FatherName = row["FatherName"].ToString();
+                    modelMST_Student.MotherMobileNo = row["MotherMobileNo"].ToString();
+                    modelMST_Student.MotherName = row["MotherName"].ToString();
+                    modelMST_Student.LocalGurdianName = row["LocalGurdianName"].ToString();
+                    modelMST_Student.LocalGurdianNo = row["LocalGurdianNo"].ToString();
+                    modelMST_Student.Nationlity = row["Nationlity"].ToString();
+                    modelMST_Student.AadharCardNo = row["AadharCardNo"].ToString();
+                    modelMST_Student.PermentAddress = row["PermentAddress"].ToString();
+                    modelMST_Student.PresentAddress = row["PresentAddress"].ToString();
+                    modelMST_Student.PhotoPath = row["PhotoPath"].ToString();
+                    modelMST_Student.isActive = row["isActive"].ToString();
+                    modelMST_Student.CourseID = Convert.ToInt32(row["CourseID"]);
+					modelMST_Student.Remarks = row["Remarks"].ToString();
+				}
+                
                 return View("MST_StudentAddEdit", modelMST_Student);
             }
             return View("MST_StudentAddEdit");
         }
+        #endregion
 
+        #region Save(Insert/Update)
         public IActionResult Save(MST_StudentModel modelMST_Student)
         {
+            #region PhotoPath
             if (modelMST_Student.File != null)
             {
                 string FilePath = "wwwroot\\Images";
@@ -162,78 +143,79 @@ namespace Hostel_Management_System.Areas.MST_Student.Controllers
                     modelMST_Student.File.CopyTo(stream);
                 }
             }
-
-            string MyConnectionStr = this.Configuration.GetConnectionString("ConStr");
-            SqlConnection conn = new SqlConnection(MyConnectionStr);
-            DataTable dt = new DataTable();
-            conn.Open();
-            SqlCommand cmd = conn.CreateCommand();
-            cmd.CommandType = CommandType.StoredProcedure;
+            #endregion
 
             if (modelMST_Student.StudentID == null)
             {
-                cmd.CommandText = "PR_MST_Student_Insert";
+                DataTable dt = dalMST_Student.PR_MST_Student_Insert(
+                    modelMST_Student.StudentName,
+                    modelMST_Student.Email,
+                    modelMST_Student.MobileNo,
+                    modelMST_Student.BloodGroup,
+                    modelMST_Student.BirthDate,
+                    modelMST_Student.Age,
+                    modelMST_Student.FatherName,
+                    modelMST_Student.FatherMobileNo,
+                    modelMST_Student.MotherName,
+                    modelMST_Student.MotherMobileNo,
+                    modelMST_Student.LocalGurdianName,
+                    modelMST_Student.LocalGurdianNo,
+                    modelMST_Student.Nationlity,
+                    modelMST_Student.AadharCardNo,
+                    modelMST_Student.PresentAddress,
+                    modelMST_Student.PermentAddress,
+                    modelMST_Student.isActive,
+                    modelMST_Student.CourseID,
+                    modelMST_Student.Remarks,
+                    modelMST_Student.PhotoPath
+                );
+                TempData["MST_Student_AlertMessage"] = "Record Inserted Successfully!!";
             }
             else
             {
-                cmd.CommandText = "PR_MST_Student_Update";
-                cmd.Parameters.AddWithValue("@StudentID", modelMST_Student.StudentID);
-				cmd.Parameters.AddWithValue("@Remarks", modelMST_Student.Remarks);
-			}
-            
-            cmd.Parameters.AddWithValue("@StudentName", modelMST_Student.StudentName);
-            cmd.Parameters.AddWithValue("@Email", modelMST_Student.Email);
-            cmd.Parameters.AddWithValue("@MobileNo", modelMST_Student.MobileNo);
-            cmd.Parameters.AddWithValue("@BloodGroup", modelMST_Student.BloodGroup);
-            cmd.Parameters.AddWithValue("@BirthDate", modelMST_Student.BirthDate);
-            cmd.Parameters.AddWithValue("@Age", modelMST_Student.Age);
-			cmd.Parameters.AddWithValue("@CourseID", modelMST_Student.CourseID);
-			cmd.Parameters.AddWithValue("@FatherName", modelMST_Student.FatherName);
-            cmd.Parameters.AddWithValue("@FatherMobileNo", modelMST_Student.FatherMobileNo);
-            cmd.Parameters.AddWithValue("@MotherName", modelMST_Student.MotherName);
-            cmd.Parameters.AddWithValue("@MotherMobileNo", modelMST_Student.MotherMobileNo);
-            cmd.Parameters.AddWithValue("@LocalGurdianName", modelMST_Student.LocalGurdianName);
-            cmd.Parameters.AddWithValue("@LocalGurdianNo", modelMST_Student.LocalGurdianNo);
-            cmd.Parameters.AddWithValue("@Nationlity", modelMST_Student.Nationlity);
-			cmd.Parameters.AddWithValue("@AadharCardNo", modelMST_Student.AadharCardNo);
-			cmd.Parameters.AddWithValue("@PresentAddress", modelMST_Student.PresentAddress);
-			cmd.Parameters.AddWithValue("@PermentAddress", modelMST_Student.PermentAddress);
-			cmd.Parameters.AddWithValue("@isActive", modelMST_Student.isActive);
-			cmd.Parameters.AddWithValue("@PhotoPath", modelMST_Student.PhotoPath);
-			
-
-			if (Convert.ToBoolean(cmd.ExecuteNonQuery()))
-            {
-                if (modelMST_Student.StudentID == null)
-                    TempData["MST_Student_AlertMessage"] = "Record Inserted Successfully!!";
-                else
-                {
-                    TempData["MST_Student_AlertMessage"] = "Record Updated Successfully!!";
-                }
+                DataTable dt = dalMST_Student.PR_MST_Student_Update(
+                    (int)modelMST_Student.StudentID,
+                    modelMST_Student.StudentName,
+                    modelMST_Student.Email,
+                    modelMST_Student.MobileNo,
+                    modelMST_Student.BloodGroup,
+                    modelMST_Student.BirthDate,
+                    modelMST_Student.Age,
+                    modelMST_Student.FatherName,
+                    modelMST_Student.FatherMobileNo,
+                    modelMST_Student.MotherName,
+                    modelMST_Student.MotherMobileNo,
+                    modelMST_Student.LocalGurdianName,
+                    modelMST_Student.LocalGurdianNo,
+                    modelMST_Student.Nationlity,
+                    modelMST_Student.AadharCardNo,
+                    modelMST_Student.PresentAddress,
+                    modelMST_Student.PermentAddress,
+                    modelMST_Student.isActive,
+                    modelMST_Student.CourseID,
+                    modelMST_Student.Remarks,
+                    modelMST_Student.PhotoPath
+                );
+                TempData["MST_Student_AlertMessage"] = "Record Updated Successfully!!";
             }
             return RedirectToAction("Index");
         }
+        #endregion
 
+        #region Cancle
         public IActionResult Cancle()
 		{
 			return RedirectToAction("Index");
 		}
+        #endregion
 
+        #region ViewProfile
         public IActionResult ViewProfile(int StudentID)
         {
-            string MyConnectionStr = this.Configuration.GetConnectionString("ConStr");
-            DataTable dt = new DataTable();
-            SqlConnection conn = new SqlConnection(MyConnectionStr);
-            conn.Open();
-            SqlCommand cmd = conn.CreateCommand();
-            cmd.CommandType = CommandType.StoredProcedure;
-            cmd.CommandText = "PR_MST_Student_SelectByPk";
-            cmd.Parameters.AddWithValue("@StudentID", StudentID);
-            SqlDataReader objSDR = cmd.ExecuteReader();
-            dt.Load(objSDR);
-            conn.Close();
+            DataTable dt = dalMST_Student.PR_MST_Student_SelectByPk(StudentID);
             return View("MST_Student_ViewProfile", dt);
         }
+        #endregion
 
     }
 }

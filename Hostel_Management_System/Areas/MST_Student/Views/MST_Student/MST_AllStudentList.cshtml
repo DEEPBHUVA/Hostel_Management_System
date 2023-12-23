@@ -49,15 +49,15 @@
                         <table class="table table-bordered">
                             <thead>
                                 <tr>
-                                    <th>Image</th>
+                                    <th class="text-center">Image</th>
                                     <th>Name</th>
                                     <th>Email</th>
-                                    <th>Contact No.</th>
-                                    <th>Birth Date</th>
-                                    <th>Age</th>
+                                    <th class="text-center">Contact No.</th>
+                                    <th class="text-center">Birth Date</th>
+                                    <th class="text-center">Age</th>
                                     <th>Nationlity</th>
                                     <th>Aadharcard No.</th>
-                                    <th>Status</th>
+                                    <th class="text-center">Status</th>
                                     <th class="text-center">Action</th>
                                     
                                 </tr>
@@ -66,15 +66,19 @@
                                 @foreach (DataRow dr in Model.Rows)
                                 {
                                     <tr>
-                                        <td><img src="@Url.Content(dr["PhotoPath"].ToString())" alt="@dr["StudentName"]" style="height:40px; width:40px; border-radius:50%;" /></td>
+                                        <td class="text-center"><img src="@Url.Content(dr["PhotoPath"].ToString())" alt="@dr["StudentName"]" style="height:40px; width:40px; border-radius:50%;" /></td>
                                         <td>@dr["StudentName"]</td>
                                         <td>@dr["Email"]</td>
-                                        <td>@dr["MobileNo"]</td>
-                                        <td>@Convert.ToDateTime(dr["BirthDate"]).ToString("dd-MM-yyyy")</td>
-                                        <td>@dr["Age"]</td>
+                                        <td class="text-center">@dr["MobileNo"]</td>
+                                        <td class="text-center">@Convert.ToDateTime(dr["BirthDate"]).ToString("dd-MM-yyyy")</td>
+                                        <td class="text-center">@dr["Age"]</td>
                                         <td>@dr["Nationlity"]</td>
                                         <td>@dr["AadharCardNo"]</td>
-                                        <td>@dr["isActive"]</td>
+                                        <td class="text-center">
+                                            <span class="badge @(dr["isActive"].ToString().Equals("True", StringComparison.OrdinalIgnoreCase) ? "bg-success" : "bg-danger")">
+                                                @dr["isActive"]
+                                            </span>
+                                        </td>
                                         <td class="d-flex justify-content-between">
                                             <form method="get" asp-area="MST_Student" asp-controller="MST_Student" asp-action="ViewProfile">
                                                 <input type="hidden" name="StudentID" value="@Convert.ToInt32(dr["StudentID"].ToString())">

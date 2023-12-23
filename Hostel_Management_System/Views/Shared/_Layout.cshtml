@@ -29,7 +29,7 @@
     <link href="~/assets/css/style.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
-
+    
 
     @* <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.19.0/font/bootstrap-icons.css" rel="stylesheet"> *@
 
@@ -285,6 +285,11 @@
                             <i class="bi bi-person-fill-add"></i><span>Add Student</span>
                         </a>
                     </li>
+                     <li>
+                        <a asp-area="MST_Student" asp-controller="MST_Student" asp-action="Index">
+                            <i class="bi bi-view-list"></i><span>Student List</span>
+                        </a>
+                    </li>
                     <li>
                         <a asp-area="Room_Allocate" asp-controller="Room_Allocate" asp-action="Add">
                             <i class="bi bi-clipboard-plus-fill"></i><span>Room Allocation</span>
@@ -292,14 +297,10 @@
                     </li>
                     <li>
                         <a asp-area="Room_Allocate" asp-controller="Room_Allocate" asp-action="Index">
-                            <i class="bi bi-view-list"></i></i><span>Allocated Rooms List</span>
+                            <i class="bi bi-view-list"></i></i><span>Allocated List</span>
                         </a>
                     </li>
-                    <li>
-                        <a asp-area="MST_Student" asp-controller="MST_Student" asp-action="Index">
-                            <i class="bi bi-view-list"></i><span>Student List</span>
-                        </a>
-                    </li>
+                   
                     
                 </ul>
             </li><!-- End Components Nav -->
@@ -321,7 +322,25 @@
                     </li>
                 </ul>
             </li><!-- End Forms Nav -->
-      
+
+            <li class="nav-item">
+                <a class="nav-link collapsed" data-bs-target="#tables-nav" data-bs-toggle="collapse" href="#">
+                    <i class="bi bi-paypal"></i><span> Payment</span><i class="bi bi-chevron-down ms-auto"></i>
+                </a>
+                <ul id="tables-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+                    <li>
+                        <a asp-area="MST_Payment" asp-controller="MST_Payment" asp-action="Add">
+                            <i class="bi bi-circle"></i>Add Payment 
+                        </a>
+                    </li>
+                    <li>
+                        <a asp-area="MST_Payment" asp-controller="MST_Payment" asp-action="Index">
+                            <i class="bi bi-circle aria-hidden="true"></i><span>Payment List</span>
+                        </a>
+                    </li>
+                </ul>
+            </li><!-- End Tables Nav -->
+
             <li class="nav-item">
                 <a class="nav-link text-dark" asp-area="MST_Course" asp-controller="MST_Course" asp-action="Index">
                     <i class="bi bi-list"></i><span>Add Course</span>
@@ -364,7 +383,7 @@
     <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
     <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
 
-
+    
     <!-- Template Main JS File -->
     <script src="~/assets/js/main.js"></script>
     @await RenderSectionAsync("Scripts", required: false)
