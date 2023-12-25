@@ -39,7 +39,7 @@ namespace Hostel_Management_System.Areas.Room_Allocate.Controllers
             connection2.Open();
             SqlCommand cmd2 = connection2.CreateCommand();
             cmd2.CommandType = CommandType.StoredProcedure;
-            cmd2.CommandText = "PR_MST_StudentDropdown";
+            cmd2.CommandText = "PR_MST_StudentDropdown_FORRoom";
             SqlDataReader reader2 = cmd2.ExecuteReader();
             dt2.Load(reader2);
 

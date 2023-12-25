@@ -19,6 +19,8 @@
 
 <div class="card col-md-6">
     <div class="card-body p-3">
+        <i class="bi bi-door-open-fill"></i> <span class="card-title">Room Allocation</span>
+        <hr />
         <form role="form" method="post" asp-area="Room_Allocate" asp-controller="Room_Allocate" asp-action="Save">
             @Html.HiddenFor(x => x.RoomAllocateID)
 

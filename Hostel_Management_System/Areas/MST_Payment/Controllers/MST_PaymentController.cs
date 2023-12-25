@@ -1,8 +1,10 @@
 ﻿using Hostel_Management_System.Areas.MST_Payment.Models;
 using Hostel_Management_System.Areas.MST_Room.Models;
+using Hostel_Management_System.Areas.MST_Student.Models;
 using Hostel_Management_System.DAL;
 using Microsoft.AspNetCore.Mvc;
 using System.Data;
+using System.Data.SqlClient;
 
 namespace Hostel_Management_System.Areas.MST_Payment.Controllers
 {
@@ -31,7 +33,30 @@ namespace Hostel_Management_System.Areas.MST_Payment.Controllers
         #region Add
         public IActionResult Add(int? PaymentID)
         {
-            if (PaymentID != null)
+
+			#region Student Dropdown
+			string MyConnectionStr1 = this.Configuration.GetConnectionString("ConStr");
+			SqlConnection connection2 = new SqlConnection(MyConnectionStr1);
+			DataTable dt2 = new DataTable();
+			connection2.Open();
+			SqlCommand cmd2 = connection2.CreateCommand();
+			cmd2.CommandType = CommandType.StoredProcedure;
+			cmd2.CommandText = "PR_MST_StudentDropdown";
+			SqlDataReader reader2 = cmd2.ExecuteReader();
+			dt2.Load(reader2);
+
+			List<MST_StudentDropdown> list1 = new List<MST_StudentDropdown>();
+			foreach (DataRow dr in dt2.Rows)
+			{
+				MST_StudentDropdown dlist = new MST_StudentDropdown();
+				dlist.StudentID = Convert.ToInt32(dr["StudentID"]);
+				dlist.StudentName = dr["StudentName"].ToString();
+				list1.Add(dlist);
+			}
+			ViewBag.StudentList = list1;
+			#endregion
+
+			if (PaymentID != null)
             {
                 DataTable dt = dalMST_Payment.PR_MST_Payment_SelectByPK(PaymentID);
                 MST_PaymentModel modelMST_Payment = new MST_PaymentModel();

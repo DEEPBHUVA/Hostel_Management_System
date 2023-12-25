@@ -30,6 +30,9 @@
 	<div class="card-body p-3">
 		@* <h5 class="card-title"><i class="fa-solid fa-gears"></i> Student Registration Form</h5>
 		<hr /> *@
+
+		<i class="bi bi-person-circle"></i>	 <span class="card-title">Student Registration</span>
+		<hr />
 		<form role="form" method="post" asp-area="MST_Student" asp-controller="MST_Student" asp-action="Save" enctype="multipart/form-data">
 			@Html.HiddenFor(x => x.StudentID)
 			@Html.HiddenFor(x => x.PhotoPath)
