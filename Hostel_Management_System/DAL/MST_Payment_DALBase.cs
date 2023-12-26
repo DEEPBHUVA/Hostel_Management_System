@@ -72,7 +72,7 @@ namespace Hostel_Management_System.DAL
         #endregion
 
         #region PR_MST_Payment_Insert
-        public DataTable PR_MST_Payment_Insert(int StudentID, DateTime PaymentDate, string MobileNo, decimal Amount, string Remark, string PaidBY)
+        public DataTable PR_MST_Payment_Insert(int StudentID, DateTime PaymentDate, string MobileNo, decimal Amount, string Remark, string PaidBY, string BankName, string ChequeNo)
         {
             try
             {
@@ -84,6 +84,8 @@ namespace Hostel_Management_System.DAL
                 sqlDB.AddInParameter(dbCMD, "Amount", SqlDbType.Decimal, Amount);
                 sqlDB.AddInParameter(dbCMD, "Remark", SqlDbType.VarChar, Remark);
                 sqlDB.AddInParameter(dbCMD, "PaidBY", SqlDbType.VarChar, PaidBY);
+                sqlDB.AddInParameter(dbCMD, "BankName", SqlDbType.VarChar, BankName);
+                sqlDB.AddInParameter(dbCMD, "ChequeNo", SqlDbType.VarChar, ChequeNo);
 
                 DataTable dt = new DataTable();
 
@@ -101,7 +103,7 @@ namespace Hostel_Management_System.DAL
         #endregion
 
         #region PR_MST_Payment_Update
-        public DataTable PR_MST_Payment_Update(int PaymentID, int StudentID, DateTime PaymentDate, string MobileNo, decimal Amount, string Remark, string PaidBY)
+        public DataTable PR_MST_Payment_Update(int PaymentID, int StudentID, DateTime PaymentDate, string MobileNo, decimal Amount, string Remark, string PaidBY, string BankName, string ChequeNo)
         {
             try
             {
@@ -114,6 +116,8 @@ namespace Hostel_Management_System.DAL
                 sqlDB.AddInParameter(dbCMD, "Amount", SqlDbType.Decimal, Amount);
                 sqlDB.AddInParameter(dbCMD, "Remark", SqlDbType.VarChar, Remark);
                 sqlDB.AddInParameter(dbCMD, "PaidBY", SqlDbType.VarChar, PaidBY);
+                sqlDB.AddInParameter(dbCMD, "BankName", SqlDbType.VarChar, BankName);
+                sqlDB.AddInParameter(dbCMD, "ChequeNo", SqlDbType.VarChar, ChequeNo);
 
                 DataTable dt = new DataTable();
 

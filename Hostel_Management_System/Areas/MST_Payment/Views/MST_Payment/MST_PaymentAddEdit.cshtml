@@ -63,14 +63,14 @@
 			<div class="row my-2" id="chequeDetails" style="display: none;">
 				<div class="form-group col-6">
 					<label for="inputState"><span class="text-danger">*</span>Cheque No.</label>
-					<input type="text" class="form-control" placeholder="Enter Cheque No.">
-					@* <span asp-validation-for="ChequeNo" class="text-danger"></span> *@
+					<input type="text" class="form-control" placeholder="Enter Cheque No." asp-for="ChequeNo">
+					
 				</div>
 
 				<div class="form-group col-md-6">
 					<label for="inputState"><span class="text-danger">*</span>Bank Name</label>
-					<input type="text" class="form-control" placeholder="Enter Bank Name">
-					@* <span asp-validation-for="BankName" class="text-danger"></span> *@
+					<input type="text" class="form-control" placeholder="Enter Bank Name" asp-for="BankName">
+					
 				</div>
 			</div>
 
@@ -87,8 +87,6 @@
 					<span asp-validation-for="Amount" class="text-danger"></span>
 				</div>
 			</div>
-
-
 
 			<hr />
 

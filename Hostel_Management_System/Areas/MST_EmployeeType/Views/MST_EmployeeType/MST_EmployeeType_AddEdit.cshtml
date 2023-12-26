@@ -1,0 +1,41 @@
+﻿﻿@{
+    ViewData["Title"] = "Employee Type Add/Edit";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@using System.Data;
+@model Hostel_Management_System.Areas.MST_EmployeeType.Models.MST_EmployeeTypeModel;
+
+<div class="pagetitle">
+    <h1>Employee Type Add/Edit</h1>
+    <nav>
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a asp-controller="Home" asp-action="Index">Home</a></li>
+            <li class="breadcrumb-item"><a asp-controller="MST_EmployeeType" asp-action="Index">Type List</a></li>
+            <li class="breadcrumb-item active"><a asp-controller="MST_EmployeeType" asp-action="Add">Add</a></li>
+        </ol>
+    </nav>
+</div>
+
+<div class="card col-md-6">
+    <div class="card-body p-3">
+        <i class="bi bi-person-fill-gear"></i> <span class="card-title">Empployee Type</span>
+        <hr />
+        <form role="form" method="post" asp-area="MST_EmployeeType" asp-controller="MST_EmployeeType" asp-action="Save">
+            @Html.HiddenFor(x => x.EmployeeTypeID)
+
+            <div class="form-group">
+                <label for="inputState"><span class="text-danger">*</span>Employee Type</label>
+                <input type="text" class="form-control" placeholder="Enter Employee Type" asp-for="EmployeeType">
+                <span asp-validation-for="EmployeeType" class="text-danger"></span>
+            </div>
+            <br />
+            <button type="submit" class="btn btn-success"><i class="fa-solid fa-floppy-disk mx-1"></i> Save</button>
+            <a class="btn btn-secondary" asp-controller="MST_EmployeeType" asp-action="Cancle"><i class="bi bi-caret-left-fill"></i> Back</a>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial.cshtml" />
+}

@@ -68,6 +68,8 @@ namespace Hostel_Management_System.Areas.MST_Payment.Controllers
                     modelMST_Payment.PaidBY = row["PaidBY"].ToString();
                     modelMST_Payment.MobileNo = row["MobileNo"].ToString();
                     modelMST_Payment.Remark = row["Remark"].ToString();
+                    modelMST_Payment.BankName = row["BankName"].ToString();
+                    modelMST_Payment.ChequeNo = row["ChequeNo"].ToString();
                     modelMST_Payment.PaymentDate = Convert.ToDateTime(row["PaymentDate"]);
 
                 }
@@ -82,12 +84,12 @@ namespace Hostel_Management_System.Areas.MST_Payment.Controllers
         {
             if (modelMST_Payment.PaymentID == null)
             {
-                DataTable dt = dalMST_Payment.PR_MST_Payment_Insert(modelMST_Payment.StudentID, modelMST_Payment.Remark, modelMST_Payment.PaymentDate, modelMST_Payment.MobileNo, modelMST_Payment.PaidBY, modelMST_Payment.Amount);
+                DataTable dt = dalMST_Payment.PR_MST_Payment_Insert(modelMST_Payment.StudentID, modelMST_Payment.PaymentDate, modelMST_Payment.MobileNo, modelMST_Payment.Amount,modelMST_Payment.Remark, modelMST_Payment.PaidBY,modelMST_Payment.BankName,modelMST_Payment.ChequeNo);
                 TempData["MST_Payment_AlertMessage"] = "Record Inserted Successfully!!";
             }
             else
             {
-                DataTable dt = dalMST_Payment.PR_MST_Payment_Update((int)modelMST_Payment.PaymentID,modelMST_Payment.StudentID, modelMST_Payment.Remark, modelMST_Payment.PaymentDate, modelMST_Payment.MobileNo, modelMST_Payment.PaidBY, modelMST_Payment.Amount);
+                DataTable dt = dalMST_Payment.PR_MST_Payment_Update((int)modelMST_Payment.PaymentID, modelMST_Payment.StudentID, modelMST_Payment.PaymentDate, modelMST_Payment.MobileNo, modelMST_Payment.Amount, modelMST_Payment.Remark, modelMST_Payment.PaidBY, modelMST_Payment.BankName, modelMST_Payment.ChequeNo);
                 TempData["MST_Payment_AlertMessage"] = "Record Updated Successfully!!";
             }
             return RedirectToAction("Index");

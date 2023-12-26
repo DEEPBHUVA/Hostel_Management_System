@@ -1,5 +1,5 @@
 ﻿@{
-    ViewData["Title"] = "Course List";
+    ViewData["Title"] = "EmployeeType List";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
@@ -7,11 +7,11 @@
 @model DataTable
 
 <div class="pagetitle">
-    <h1>Course List</h1>
+    <h1>Employee Type List</h1>
     <nav>
         <ol class="breadcrumb">
             <li class="breadcrumb-item"><a asp-controller="Home" asp-action="Index">Home</a></li>
-            <li class="breadcrumb-item active"><a asp-controller="MST_Course" asp-action="Index">Course List</a></li>
+            <li class="breadcrumb-item active"><a asp-controller="MST_EmployeeType" asp-action="Index">Type List</a></li>
         </ol>
     </nav>
 </div>
@@ -21,7 +21,7 @@
         <div class="col-lg-12">
             <div class="card">
                 <div class="card-body">
-                    <h5 class="card-title"><i class="fa-solid fa-gears"></i> Course</h5>
+                    <h5 class="card-title"><i class="fa-solid fa-gears"></i> Types</h5>
                     <div class="row">
                         <div class="col-md-9">
                             <a class="btn btn-secondary" asp-area="MST_Course" asp-controller="MST_Course" asp-action="Add"><i class="fa-solid fa-plus"></i>  Add Course</a>
