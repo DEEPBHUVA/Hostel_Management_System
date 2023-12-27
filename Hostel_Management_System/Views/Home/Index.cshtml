@@ -2,8 +2,6 @@
     ViewData["Title"] = "Home Page";
 }
 
-@model List<Hostel_Management_System.Models.DashBoardModel>
-
 <div class="pagetitle">
     <h1>Dashaboard</h1>
     <nav>
@@ -17,93 +15,148 @@
 
 <section class="section dashboard">
     <div class="row d-flex">
-
-        <!-- Left side columns -->
         <div class="col-lg-12">
             <div class="row">
-               @if (Model != null && Model.Any())
-               {
-                    @foreach (var data in Model)
-                    {
-                        <!-- Sales Card -->
-                        <div class="col-xxl-3 col-md-6">
-                            <div class="card info-card sales-card">
-                                <div class="card-body">
-                                    <h5 class="card-title">State <span>| Today</span></h5>
-                                    <div class="d-flex align-items-center">
-                                        <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
-                                            <i class="bi bi-geo-alt-fill"></i>
-                                        </div>
-                                        <div class="ps-3">
-                                            <h6>@data.StudentCount</h6>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div><!-- End Sales Card -->
-                        <!-- Revenue Card -->
-                        <div class="col-xxl-3 col-md-6">
-                            <div class="card info-card revenue-card">
-                                <div class="card-body">
-                                    <h5 class="card-title">City <span>| This Month</span></h5>
-                                    <div class="d-flex align-items-center">
-                                        <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
-                                            <i class="bi bi-currency-dollar"></i>
-                                        </div>
-                                        <div class="ps-3">
-                                            <h6>@data.RoomCount</h6>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div><!-- End Revenue Card -->
-                        <!-- Customers Card -->
-                        <div class="col-xxl-3 col-xl-12">
-
-                            <div class="card info-card customers-card">
-                                <div class="card-body">
-                                    <h5 class="card-title">Customers <span>| This Year</span></h5>
-                                    <div class="d-flex align-items-center">
-                                        <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
-                                            <i class="bi bi-people"></i>
-                                        </div>
-                                        <div class="ps-3">
-                                            <h6>@data.RoomCount</h6>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div><!-- End Customers Card -->
-                        <!-- Sales Card -->
-                        <div class="col-xxl-3 col-md-6">
-                            <div class="card info-card sales-card">
+                <div class="col-xxl-2 col-md-6">
+                    <div class="card info-card sales-card border-5 border-primary border-top rounded">
                         <div class="card-body">
-                            <h5 class="card-title">State <span>| Today</span></h5>
-
+                            <h5 class="card-title">Students <span>|</span></h5>
                             <div class="d-flex align-items-center">
                                 <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
-                                    <i class="bi bi-cart"></i>
+                                    <i class="fa-solid fa-users"></i>
                                 </div>
                                 <div class="ps-3">
-                                        <h6>@data.RoomCount</h6>
+                                    <h6>@ViewBag.DashboardData["StudentCount"]</h6>
                                 </div>
                             </div>
+                            <hr class="border-primary" />
+                            <a asp-area="MST_Student" asp-controller="MST_Student" asp-action="Index" class="text-end text-primary">View Details <i class="bi bi-arrow-right-circle-fill"></i></a>
                         </div>
                     </div>
-                    </div><!-- End Sales Card -->
-                    }
-                }
-                else
-                {
-                    <p>No data available.</p>
-                }
+                </div>
+                <div class="col-xxl-2 col-md-6">
+                    <div class="card info-card revenue-card border-5 border-success border-top rounded">
+                        <div class="card-body">
+                            <h5 class="card-title">Rooms <span>|</span></h5>
+                            <div class="d-flex align-items-center">
+                                <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
+                                    <i class="fa-solid fa-door-open"></i>
+                                </div>
+                                <div class="ps-3">
+                                    <h6>@ViewBag.DashboardData["RoomCount"]</h6>
+                                </div>
+                            </div>
+                            <hr class="border-success" />
+                            <a asp-area="MST_Room" asp-controller="MST_Room" asp-action="Index" class="text-end text-success">View Details <i class="bi bi-arrow-right-circle-fill"></i></a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-xxl-2 col-md-6">
+                    <div class="card info-card customers-card  border-5 border-warning border-top rounded">
+                        <div class="card-body">
+                            <h5 class="card-title">Tota Beds <span>|</span></h5>
+                            <div class="d-flex align-items-center">
+                                <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
+                                    <i class="fa-solid fa-bed"></i>
+                                </div>
+                                <div class="ps-3">
+                                    <h6>@ViewBag.DashboardData["BedCount"]</h6>
+                                </div>
+                            </div>
+                            <hr style="color:orange" />
+                            <a asp-area="MST_Room" asp-controller="MST_Room" asp-action="Index" style=" color: orange;">View Details <i class="bi bi-arrow-right-circle-fill"></i></a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-xxl-2 col-md-6">
+                    <div class="card info-card abed-card border-5 border-danger border-top rounded">
+                        <div class="card-body">
+                            <h5 class="card-title">Available Bed <span>|</span></h5>
+                            <div class="d-flex align-items-center">
+                                <div class="card-icon rounded-circle d-flex align-items-center justify-content-center bg-danger-subtle" style="color:red">
+                                    <i class="fa-solid fa-gears"></i>
+                                </div>
+                                <div class="ps-3">
+                                    <h6>@ViewBag.DashboardData["AvailableBedCount"]</h6>
+                                </div>
+                            </div>
+                            <hr style="color:red" />
+                            <a asp-area="MST_Room" asp-controller="MST_Room" asp-action="Index" class="text-danger">View Details <i class="bi bi-arrow-right-circle-fill"></i></a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-xxl-2 col-md-6">
+                    <div class="card info-card abed-card border-5 border-info border-top rounded">
+                        <div class="card-body">
+                            <h5 class="card-title">Employees <span>|</span></h5>
+                            <div class="d-flex align-items-center">
+                                <div class="card-icon rounded-circle d-flex align-items-center justify-content-center text-info bg-info-subtle">
+                                    <i class="fa-solid fa-user-tie"></i>
+                                </div>
+                                <div class="ps-3">
+                                    <h6>@ViewBag.DashboardData["EmployeeCount"]</h6>
+                                </div>
+                            </div>
+                            <hr style="color:aqua" />
+                            <a asp-area="MST_Room" asp-controller="MST_Room" asp-action="Index" class="text-info">View Details <i class="bi bi-arrow-right-circle-fill"></i></a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-xxl-2 col-md-6">
+                    <div class="card info-card abed-card border-5 border-secondary border-top rounded">
+                        <div class="card-body">
+                            <h5 class="card-title">Available Bed <span>|</span></h5>
+                            <div class="d-flex align-items-center">
+                                <div class="card-icon rounded-circle d-flex align-items-center justify-content-center text-secondary bg-secondary-subtle">
+                                    <i class="fa-solid fa-indian-rupee-sign"></i>
+                                </div>
+                                <div class="ps-3">
+                                    <h6>@ViewBag.DashboardData["AvailableBedCount"]</h6>
+                                </div>
+                            </div>
+                            <hr style="color:dimgrey" />
+                            <a asp-area="MST_Room" asp-controller="MST_Room" asp-action="Index" class="text-secondary">View Details <i class="bi bi-arrow-right-circle-fill"></i></a>
+                        </div>
+                    </div>
+                </div>
+
+
+                <!-- Add more cards as needed -->
             </div>
         </div>
     </div>
 </section>
 
+<div class="row">
+    <div class="col-12">
+        <div class="card info-card @((int)ViewBag.DashboardData["BedCount"] == (int)ViewBag.DashboardData["StudentCount"] ? "border-danger" : "border-success") border-5 border-start rounded">
+            <div class="card-body">
+                <h5 class="card-title">Hostel Status</h5>
+                <div class="">
+                    @if ((int)ViewBag.DashboardData["BedCount"] == (int)ViewBag.DashboardData["StudentCount"])
+                    {
+                        <h6 class="text-danger ms-2">Admission closes! 😔</h6>
+                    }
+                    else
+                    {
+                        <h6 class="text-success">🏠 Hostel Admission Open! 🌟</h6>
+                    }
+                </>
+          
+            </div>
+        </div>
+    </div>
+</div>
 
-<section class="section">
+
+
+
+
+        <section class="section">
     <div class="row">
         <div class="col-lg-6">
 

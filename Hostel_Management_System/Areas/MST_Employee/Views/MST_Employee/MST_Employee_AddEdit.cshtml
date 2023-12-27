@@ -1,1 +1,165 @@
-﻿
+﻿﻿@{
+	ViewData["Title"] = "Employee Add/Edit";
+	Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@using System.Data;
+@model Hostel_Management_System.Areas.MST_Employee.Models.MST_EmployeeModel;
+
+<div class="pagetitle">
+	<h1>Student Registration</h1>
+	<nav>
+		<ol class="breadcrumb">
+			<li class="breadcrumb-item"><a asp-controller="Home" asp-action="Index">Home</a></li>
+			<li class="breadcrumb-item"><a asp-controller="MST_Employee" asp-action="Index">Employee List</a></li>
+			<li class="breadcrumb-item active"><a asp-controller="MST_Employee" asp-action="Add">Add</a></li>
+		</ol>
+	</nav>
+</div>
+
+<div class="card col-md-12">
+	<div class="card-body p-3">
+		@* <h5 class="card-title"><i class="fa-solid fa-gears"></i> Student Registration Form</h5>
+		<hr /> *@
+
+		<i class="bi bi-person-circle"></i>	 <span class="card-title">Employee</span>
+		<hr />
+		<form role="form" method="post" asp-area="MST_Employee" asp-controller="MST_Employee" asp-action="Save" enctype="multipart/form-data">
+			@Html.HiddenFor(x => x.EmployeeID)
+			@Html.HiddenFor(x => x.PhotoPath)
+
+			<div class="row my-2">
+				<div class="form-group col-md-6">
+					<label class="my-1">Image</label>
+					<input type="file" class="form-control" placeholder="Upload Image Here..." asp-for="File" />
+				</div>
+
+				<div class="form-group col-md-6">
+					<label for="inputState"><span class="text-danger">*</span>Status</label>
+					<select class="form-control" asp-for="isActive">
+						<option selected>Choose...</option>
+						<option value="True">Active</option>
+						<option value="False">Inactive</option>
+					</select>
+					<span asp-validation-for="isActive" class="text-danger"></span>
+				</div>
+			</div>
+
+			<div class="row my-2">
+				<div class="form-group col-9">
+					<label for="inputState"><span class="text-danger">*</span>Employee Full Name</label>
+					<input type="text" class="form-control" placeholder="Enter Employee name" asp-for="EmployeeName">
+					<span asp-validation-for="EmployeeName" class="text-danger"></span>
+				</div>
+
+				<div class="form-group col-3">
+					<label for="inputState"><span class="text-danger">*</span>Joining Date</label>
+					<input type="date" class="form-control" placeholder="Enter Joining Date" asp-for="JoiningDate">
+					<span asp-validation-for="JoiningDate" class="text-danger"></span>
+				</div>
+			</div>
+
+			<div class="row my-2">
+				<div class="form-group col-3">
+					<label for="inputState"><span class="text-danger">*</span>Email</label>
+					<input type="text" class="form-control" placeholder="Enter your email" asp-for="Email">
+					<span asp-validation-for="Email" class="text-danger"></span>
+				</div>
+
+				<div class="form-group col-3">
+					<label for="inputState"><span class="text-danger">*</span>Contact No.</label>
+					<input type="text" class="form-control" placeholder="Enter your contact no." asp-for="MobileNo">
+					<span asp-validation-for="MobileNo" class="text-danger"></span>
+				</div>
+
+				<div class="form-group col-md-3">
+					<label for="inputState"><span class="text-danger">*</span>Gender</label>
+					<select class="form-control" asp-for="Gender">
+						<option selected>Select Gender</option>
+						<option value="Male">Male</option>
+						<option value="Female">Female</option>
+					</select>
+					<span asp-validation-for="Gender" class="text-danger"></span>
+				</div>
+
+				<div class="form-group col-3">
+					<label for="inputState"><span class="text-danger">*</span>Salary</label>
+					<input type="text" class="form-control" placeholder="Enter Salary" asp-for="Salary">
+					<span asp-validation-for="Salary" class="text-danger"></span>
+				</div>
+			</div>
+
+			<div class="row my-2">
+				<div class="form-group col-3">
+					<label for="inputState"><span class="text-danger">*</span>Date of Birth</label>
+					<input type="date" class="form-control" placeholder="Enter your birth date" asp-for="BirthDate" id="birthDate">
+					<span asp-validation-for="BirthDate" class="text-danger"></span>
+				</div>
+
+				<div class="form-group col-3">
+					<label for="inputState"><span class="text-danger">*</span>Age</label>
+					<input type="text" class="form-control ageInput" placeholder="Enter your age" asp-for="Age">
+					<span asp-validation-for="Age" class="text-danger"></span>
+				</div>
+
+				<div class="form-group col-3">
+					<label for="inputState"><span class="text-danger">*</span>Blood Group</label>
+					<select class="form-control" asp-for="BloodGroup">
+						<option selected>Choose Blood Group</option>
+						<option value="None">None</option>
+						<option value="A+">A RhD positive (A+)</option>
+						<option value="A-">A RhD negative (A-)</option>
+						<option value="B+">B RhD positive (B+)</option>
+						<option value="B-">B RhD negative (B-)</option>
+						<option value="O+">O RhD positive (O+)</option>
+						<option value="O-">O RhD negative (O-)</option>
+						<option value="AB+">AB RhD positive (AB+)</option>
+						<option value="AB-">AB RhD negative (AB-)</option>
+					</select>
+					<span asp-validation-for="BloodGroup" class="text-danger"></span>
+				</div>
+
+				<div class="form-group col-3">
+					<label for="inputState"><span class="text-danger">*</span>Employee Type</label>
+					<select class="form-control" asp-for="EmployeeTypeID" asp-items="@(new SelectList(ViewBag.EmployeeTypeList,"EmployeeTypeID","EmployeeType"))">
+						<option value="">Select Type</option>
+					</select>
+					<span asp-validation-for="EmployeeTypeID" class="text-danger"></span>
+				</div>
+			</div>
+
+			<div class="form-group col-12">
+				<label for="exampleFormControlTextarea1">Address</label>
+				<textarea class="form-control" placeholder="Enter address" rows="2" asp-for="Address"></textarea>
+				<span asp-validation-for="Address" class="text-danger"></span>
+			</div>
+
+			<hr />
+			<button type="submit" class="btn btn-success btn-rounded px-4"><i class="fa-solid fa-floppy-disk mx-1"></i> Save</button>
+			
+			<a class="btn btn-secondary btn-rounded px-4" asp-controller="MST_Employee" asp-action="Cancle"><i class="bi bi-caret-left-fill"></i>Back</a>
+		</form>
+	</div>
+</div>
+
+@section Scripts {
+	<partial name="_ValidationScriptsPartial" />
+	<script>
+		$(document).ready(function () {
+			$('#birthDate').change(function () {
+				var birthDate = new Date($(this).val());
+				var today = new Date();
+				var age = today.getFullYear() - birthDate.getFullYear();
+				var monthDiff = today.getMonth() - birthDate.getMonth();
+
+				if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < birthDate.getDate())) {
+					age--;
+				}
+
+				$('.ageInput').val(age);
+			});
+		});
+	</script>
+
+}
+

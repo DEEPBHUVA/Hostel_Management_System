@@ -2,7 +2,7 @@
 {
     public class MST_EmployeeModel
     {
-        public int EmployeeID { get; set; }
+        public int? EmployeeID { get; set; }
         public string EmployeeName { get; set; }
         public string Email { get; set; }
         public string MobileNo { get; set; }
@@ -14,6 +14,7 @@
         public decimal Salary {  get; set; }
         public string Address { get; set; }
         public int EmployeeTypeID { get; set; }
+        public string EmployeeType { get; set; }
         public bool isActive { get; set; }
         public string? PhotoPath { get; set; }
         public IFormFile? File { get; set; }

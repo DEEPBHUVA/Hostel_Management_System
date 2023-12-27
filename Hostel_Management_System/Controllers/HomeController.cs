@@ -16,35 +16,38 @@ namespace Hostel_Management_System.Controllers
             _logger = logger;
             Configuration = configuration;
         }
-       
-        public IActionResult DashBoard()
-        {
-            string MyConnection = this.Configuration.GetConnectionString("ConnectionStrings");
-            List<DashBoardModel> modelDashBoard = new List<DashBoardModel>();
-
-            SqlConnection sqlConnection = new SqlConnection(MyConnection);
-            sqlConnection.Open();
-            SqlCommand cmd = sqlConnection.CreateCommand();
-            cmd.CommandType = CommandType.StoredProcedure;
-            cmd.CommandText = "PR_CountFor_DashBoard";
-            SqlDataReader reader = cmd.ExecuteReader();
-
-            while (reader.Read())
-            {
-                DashBoardModel data = new DashBoardModel
-                {
-                    StudentCount = Convert.ToInt32(reader["StudentCount"]),
-                    RoomCount = Convert.ToInt32(reader["RoomCount"])
-                };
-
-                modelDashBoard.Add(data);
-            }
-          
-            return View("Index",modelDashBoard);
-        }
 
         public IActionResult Index()
         {
+            string connectionString = this.Configuration.GetConnectionString("ConStr");
+            DataTable dataTable = new DataTable();
+
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                connection.Open();
+                using (SqlCommand command = new SqlCommand("PR_CountFor_DashBoard", connection))
+                {
+                    command.CommandType = CommandType.StoredProcedure;
+                    SqlDataReader reader = command.ExecuteReader();
+                    dataTable.Load(reader);
+                }
+            }
+
+            // Convert DataTable to Dictionary for simplicity
+            Dictionary<string, int> dataDictionary = new Dictionary<string, int>
+            {
+                { "StudentCount", Convert.ToInt32(dataTable.Rows[0]["StudentCount"]) },
+                { "RoomCount", Convert.ToInt32(dataTable.Rows[0]["RoomCount"]) },
+                { "BedCount", Convert.ToInt32(dataTable.Rows[0]["BedCount"]) },
+                { "AvailableBedCount", Convert.ToInt32(dataTable.Rows[0]["AvailableBedCount"]) },
+                { "EmployeeCount", Convert.ToInt32(dataTable.Rows[0]["EmployeeCount"]) },
+
+            };
+
+            // Pass data to view using ViewBag or ViewData
+            ViewBag.DashboardData = dataDictionary;
+            
+
             return View();
         }
 

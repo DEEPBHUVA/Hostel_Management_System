@@ -277,7 +277,7 @@
 
             <li class="nav-item">
                 <a class="nav-link collapsed" data-bs-target="#components-nav" data-bs-toggle="collapse" href="#">
-                    <i class="bi bi-menu-button-wide"></i><span>Manage Student</span><i class="bi bi-chevron-down ms-auto"></i>
+                    <i class="fa-solid fa-users"></i><span>Manage Student</span><i class="bi bi-chevron-down ms-auto"></i>
                 </a>
                 <ul id="components-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
                     <li>
@@ -290,6 +290,14 @@
                             <i class="bi bi-view-list"></i><span>Student List</span>
                         </a>
                     </li>
+                </ul>
+            </li><!-- End Components Nav -->
+
+            <li class="nav-item">
+                <a class="nav-link collapsed" data-bs-target="#forms-nav" data-bs-toggle="collapse" href="#">
+                    <i class="fa-solid fa-door-open"></i><span>Manage Rooms</span><i class="bi bi-chevron-down ms-auto"></i>
+                </a>
+                <ul id="forms-nav" class="nav-content collapse" data-bs-parent="#sidebar-nav">
                     <li>
                         <a asp-area="Room_Allocate" asp-controller="Room_Allocate" asp-action="Add">
                             <i class="bi bi-clipboard-plus-fill"></i><span>Room Allocation</span>
@@ -300,16 +308,6 @@
                             <i class="bi bi-view-list"></i></i><span>Allocated List</span>
                         </a>
                     </li>
-                   
-                    
-                </ul>
-            </li><!-- End Components Nav -->
-
-            <li class="nav-item">
-                <a class="nav-link collapsed" data-bs-target="#forms-nav" data-bs-toggle="collapse" href="#">
-                    <i class="bi bi-journal-text"></i><span>Manage Rooms</span><i class="bi bi-chevron-down ms-auto"></i>
-                </a>
-                <ul id="forms-nav" class="nav-content collapse" data-bs-parent="#sidebar-nav">
                     <li>
                         <a asp-area="MST_Room" asp-controller="MST_Room" asp-action="Add">
                             <i class="bi bi-circle"></i>Add Room
@@ -325,7 +323,7 @@
 
             <li class="nav-item">
                 <a class="nav-link collapsed" data-bs-target="#tables-nav" data-bs-toggle="collapse" href="#">
-                    <i class="bi bi-wallet"></i> <span> Manage Fees</span><i class="bi bi-chevron-down ms-auto"></i>
+                    <i class="fa-solid fa-credit-card"></i> <span> Manage Fees</span><i class="bi bi-chevron-down ms-auto"></i>
                 </a>
                 <ul id="tables-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
                     <li>
@@ -341,11 +339,27 @@
                 </ul>
             </li><!-- End Tables Nav -->
 
-
+            <li class="nav-item">
+                <a class="nav-link collapsed" data-bs-toggle="collapse" href="#fees-nav">
+                    <i class="fa-solid fa-user-tie"></i> <span> Manage Employee</span><i class="bi bi-chevron-down ms-auto"></i>
+                </a>
+                <ul id="fees-nav" class="nav-content collapse" data-bs-parent="#sidebar-nav">
+                    <li>
+                        <a asp-area="MST_Employee" asp-controller="MST_Employee" asp-action="Add">
+                            <i class="bi bi-circle"></i> Add Employee
+                        </a>
+                    </li>
+                    <li>
+                        <a asp-area="MST_Employee" asp-controller="MST_Employee" asp-action="Index">
+                            <i class="bi bi-circle"></i> <span>Employee List</span>
+                        </a>
+                    </li>
+                </ul>
+            </li><!-- End Fees Nav -->
             <!-- New dropdown -->
             <li class="nav-item">
                 <a class="nav-link collapsed" data-bs-target="#another-nav" data-bs-toggle="collapse" href="#">
-                    <i class="bi bi-gear"></i> <span> Account Setting</span><i class="bi bi-chevron-down ms-auto"></i>
+                    <i class="fa-solid fa-gear"></i> <span> Account Setting</span><i class="bi bi-chevron-down ms-auto"></i>
                 </a>
                 <ul id="another-nav" class="nav-content collapse" data-bs-parent="#sidebar-nav">
                     <li>
