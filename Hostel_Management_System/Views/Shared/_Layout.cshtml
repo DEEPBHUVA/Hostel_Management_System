@@ -9,8 +9,8 @@
     <meta content="" name="keywords">
 
     <!-- Favicons -->
-    <link href="~/assets/img/favicon.png" rel="icon">
-    <link href="~/assets/img/apple-touch-icon.png" rel="apple-touch-icon">
+    <link href="~/assets/img/logo-light.png" rel="icon">
+    <link href="~/assets/img/logo-light.png" rel="apple-touch-icon">
 
     <!-- Google Fonts -->
     <link href="https://fonts.gstatic.com" rel="preconnect">
@@ -29,10 +29,6 @@
     <link href="~/assets/css/style.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
-    
-
-    @* <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.19.0/font/bootstrap-icons.css" rel="stylesheet"> *@
-
 </head>
 <body>
     <!-- ======= Header ======= -->
@@ -40,7 +36,7 @@
 
         <div class="d-flex align-items-center justify-content-between">
             <a asp-controller="Home" asp-action="Index" class="logo d-flex align-items-center">
-                <img src="~/assets/img/logo.png" alt="">
+                <img src="~/assets/img/logo-light.png" alt="">
                 <span class="d-none d-lg-block">Skyline</span>
             </a>
             <i class="bi bi-list toggle-sidebar-btn"></i>
@@ -270,7 +266,7 @@
 
             <li class="nav-item">
                 <a class="nav-link" asp-controller="Home" asp-action="Index">
-                    <i class="bi bi-grid"></i>
+                    <i class="fa-solid fa-gauge"></i>
                     <span>Dashboard</span>
                 </a>
             </li><!-- End Dashboard Nav -->
@@ -356,6 +352,28 @@
                     </li>
                 </ul>
             </li><!-- End Fees Nav -->
+
+            <li class="nav-item">
+                <a class="nav-link collapsed" data-bs-target="#new-dropdown" data-bs-toggle="collapse" href="#">
+                    <i class="fa-brands fa-paypal"></i><span> Salary</span><i class="bi bi-chevron-down ms-auto"></i>
+                </a>
+                <ul id="new-dropdown" class="nav-content collapse" data-bs-parent="#sidebar-nav">
+                    <li>
+                        <a asp-area="YourArea" asp-controller="YourController" asp-action="YourAction">
+                            <i class="bi bi-circle"></i> Your Link
+                        </a>
+                    </li>
+                    <!-- Add more items as needed -->
+                    <li>
+                        <a asp-area="YourArea" asp-controller="YourController" asp-action="AnotherAction">
+                            <i class="bi bi-circle"></i> Another Link
+                        </a>
+                    </li>
+                    <!-- Add more items as needed -->
+                </ul>
+            </li>
+
+
             <!-- New dropdown -->
             <li class="nav-item">
                 <a class="nav-link collapsed" data-bs-target="#another-nav" data-bs-toggle="collapse" href="#">

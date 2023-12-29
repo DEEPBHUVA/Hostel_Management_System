@@ -13,6 +13,45 @@
 	.roombutton:hover {
 			background-color: cornflowerblue;
 	}
+
+	.card {
+		border-radius: 10px;
+		box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+		margin-top: 20px;
+	}
+
+	.card-body {
+		padding: 20px;
+	}
+
+	.card-title {
+		font-size: 1.25rem;
+		color: #333;
+	}
+
+	.form-group {
+		margin-bottom: 20px;
+	}
+
+	label {
+		font-weight: bold;
+	}
+
+	input[type="text"],
+	input[type="date"],
+	input[type="file"],
+	select,
+	textarea {
+		width: 100%;
+		padding: 8px;
+		border: 1px solid #ccc;
+		border-radius: 4px;
+		box-sizing: border-box;
+	}
+
+	select {
+		appearance: none;
+	}
 </style>
 
 <div class="pagetitle">
@@ -177,20 +216,20 @@
 			<div class="row my-2">
 				<div class="form-group col-6">
 					<label for="exampleFormControlTextarea1">Current Address</label>
-					<textarea class="form-control" placeholder="Enter current address" rows="3" asp-for="PresentAddress"></textarea>
+					<textarea class="form-control" placeholder="Enter current address" rows="2" asp-for="PresentAddress"></textarea>
 					<span asp-validation-for="PresentAddress" class="text-danger"></span>
 				</div>
 
 				<div class="form-group col-6">
 					<label for="exampleFormControlTextarea1">Address</label>
-					<textarea class="form-control" placeholder="Enter Parement address" rows="3" asp-for="PermentAddress"></textarea>
+					<textarea class="form-control" placeholder="Enter Parement address" rows="2" asp-for="PermentAddress"></textarea>
 					<span asp-validation-for="PermentAddress" class="text-danger"></span>
 				</div>
 			</div>
 
 			<div class="form-group my-2">
 				<label for="exampleFormControlTextarea1">Remarks</label>
-				<textarea class="form-control" placeholder="Enter Remarks.." rows="3" asp-for="Remarks"></textarea>
+				<textarea class="form-control" placeholder="Enter Remarks.." rows="1" asp-for="Remarks"></textarea>
 			</div>
 
 			<hr />

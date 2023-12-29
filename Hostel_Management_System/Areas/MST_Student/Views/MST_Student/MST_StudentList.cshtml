@@ -5,15 +5,6 @@
 
 @using System.Data
 @model DataTable
-<style>
-    .roombutton {
-        background-color: cornflowerblue;
-    }
-
-    .roombutton:hover {
-        background-color: cornflowerblue;
-    }
-</style>
 
 <div class="pagetitle">
     <h1>Student List</h1>
@@ -25,12 +16,53 @@
     </nav>
 </div>
 
+<style>
+    .roombutton {
+        background-color: cornflowerblue;
+    }
+
+    /* Table styles */
+    #sample_1 {
+        width: 100%;
+        
+        overflow: hidden;
+        border-radius: 10px;
+    }
+
+    #sample_1 th{
+        padding: 15px;
+        text-align: left;
+            
+    }
+
+    #sample_1 th {
+        background-color: darkblue; /* Header background color */
+        color: #fff;
+    }
+
+
+    /* Alert styles */
+    .alert {
+        border-radius: 10px;
+        margin-top: 20px;
+    }
+
+    /* No Record Found styles */
+    .no-record {
+        font-size: 15px;
+        color: white;
+    }
+</style>
+
 <section class="section">
     <div class="row">
         <div class="col-lg-12">
             <div class="card">
                 <div class="card-body">
-                    <h5 class="card-title"><i class="fa-solid fa-gears"></i> Students</h5>
+                    <h5 class="card-title">
+                        <i class="fa-solid fa-gears"></i> Students
+                        @* <span class="badge badge-secondary">@ViewBag.DashboardData["StudentCount"]</span> *@
+                    </h5>
                     <div class="row">
                         <div class="col-md-9">
                             <a class="btn text-light roombutton" asp-area="Room_Allocate" asp-controller="Room_Allocate" asp-action="Add"><i class="bi bi-clipboard-plus-fill text-light"></i>  Allocate Room</a>
@@ -68,9 +100,9 @@
                                     <th>Name</th>
                                     <th>Email</th>
                                     <th class="text-center">Contact No.</th>
-                                    <th class="text-center">Birth Date</th>
                                     <th class="text-center">Age</th>
                                     <th>Course</th>
+                                    <th class="text-center">Room</th>
                                     <th class="text-center">Status</th>
                                     <th class="text-center">Action</th>
                                     
@@ -85,9 +117,10 @@
                                         <td>@dr["StudentName"]</td>
                                         <td>@dr["Email"]</td>
                                         <td class="text-center">@dr["MobileNo"]</td>
-                                        <td class="text-center">@Convert.ToDateTime(dr["BirthDate"]).ToString("dd-MM-yyyy")</td>
+                                        @* <td class="text-center">@Convert.ToDateTime(dr["BirthDate"]).ToString("dd-MM-yyyy")</td> *@
                                         <td class="text-center">@dr["Age"]</td>
                                         <td>@dr["CourseName"]</td>
+                                        <td class="text-center">@dr["RoomNo"]</td>
                                         <td class="text-center">@dr["isActive"]</td>
                                         <td class="d-flex justify-content-between">
                                             <form method="get" asp-area="MST_Student" asp-controller="MST_Student" asp-action="ViewProfile">

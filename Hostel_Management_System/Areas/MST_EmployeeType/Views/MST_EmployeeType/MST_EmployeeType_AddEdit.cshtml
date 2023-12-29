@@ -17,9 +17,46 @@
     </nav>
 </div>
 
+<style>
+	.card {
+		border-radius: 10px;
+		box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+		margin-top: 20px;
+	}
+
+	.card-body {
+		padding: 20px;
+	}
+
+	.card-title {
+		font-size: 1.25rem;
+		color: #333;
+	}
+
+	label {
+		font-weight: bold;
+	}
+
+	input[type="text"],
+	input[type="date"],
+	input[type="file"],
+	select,
+	textarea {
+		width: 100%;
+		padding: 8px;
+		border: 1px solid #ccc;
+		border-radius: 4px;
+		box-sizing: border-box;
+	}
+
+	select {
+		appearance: none;
+	}
+</style>
+
 <div class="card col-md-6">
     <div class="card-body p-3">
-        <i class="bi bi-person-fill-gear"></i> <span class="card-title">Empployee Type</span>
+        <i class="bi bi-person-fill-gear"></i> <span class="card-title">Employee Type</span>
         <hr />
         <form role="form" method="post" asp-area="MST_EmployeeType" asp-controller="MST_EmployeeType" asp-action="Save">
             @Html.HiddenFor(x => x.EmployeeTypeID)
