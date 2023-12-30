@@ -3,6 +3,11 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
+
+@{
+    var noticeData = ViewBag.NoticeData as System.Data.DataTable;
+}
+
 <div id="greeting" class="card-title"></div>
 
 <section class="section dashboard">
@@ -137,35 +142,47 @@
                     {
                         <h6 class="text-success">🏠 Hostel Admission Open! 🌟</h6>
                     }
-                </>
-          
+                </div>
             </div>
         </div>
     </div>
 </div>
- <section class="section">
+
+@*  <section class="section">
     <div class="row">
         <div class="col-lg-6">
-
             <div class="card">
                 <div class="card-body">
-                    <h5 class="card-title">Example Card</h5>
-                    <p>This is an examle page with no contrnt. You can use it as a starter for your custom pages.</p>
+                    <h5 class="card-title">Notice</h5>
+                    <hr />
+                    @if (noticeData != null)
+                    {
+                        foreach (System.Data.DataRow row in noticeData.Rows)
+                        {
+                            // Access rows and columns of the DataTable
+                            <div>
+                                @row["Title"] <!-- Access specific column value -->
+                            </div>
+                        }
+                    }
+                    else
+                    {
+                        <p>No data available</p>
+                    }
                 </div>
             </div>
-
         </div>
 
-            <div class="col-lg-6">
-                <div class="card">
-                    <div class="card-body">
-                        <h5 class="card-title">Calendar</h5>
-                        <div id="calendar"></div>
-                    </div>
+        <div class="col-lg-6">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Calendar</h5>
+                    <div id="calendar"></div>
                 </div>
             </div>
+        </div>
     </div>
-</section>
+</section> *@
 
 <script>
     document.addEventListener("DOMContentLoaded", function () {

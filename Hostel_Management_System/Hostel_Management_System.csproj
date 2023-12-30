@@ -15,8 +15,11 @@
 
   <ItemGroup>
     <Folder Include="Areas\MST_Course\Data\" />
+    <Folder Include="Areas\MST_EmployeeSalary\Data\" />
     <Folder Include="Areas\MST_EmployeeType\Data\" />
     <Folder Include="Areas\MST_Employee\Data\" />
+    <Folder Include="Areas\MST_Notice\Data\" />
+    <Folder Include="Areas\MST_Notice\Views\" />
     <Folder Include="Areas\MST_Payment\Data\" />
     <Folder Include="Areas\MST_Room\Data\" />
     <Folder Include="Areas\MST_Student\Data\" />

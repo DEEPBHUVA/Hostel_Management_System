@@ -17,29 +17,21 @@
 </div>
 
 <style>
-    .roombutton {
-        background-color: cornflowerblue;
-    }
-
     /* Table styles */
     #sample_1 {
         width: 100%;
-        
         overflow: hidden;
         border-radius: 10px;
     }
 
     #sample_1 th{
-        padding: 15px;
-        text-align: left;
-            
+        padding:15px 0px 15px 0px;
     }
 
     #sample_1 th {
         background-color: darkblue; /* Header background color */
         color: #fff;
     }
-
 
     /* Alert styles */
     .alert {
@@ -65,7 +57,7 @@
                     </h5>
                     <div class="row">
                         <div class="col-md-9">
-                            <a class="btn text-light roombutton" asp-area="Room_Allocate" asp-controller="Room_Allocate" asp-action="Add"><i class="bi bi-clipboard-plus-fill text-light"></i>  Allocate Room</a>
+                            <a class="btn text-light" style="background-color:royalblue" asp-area="Room_Allocate" asp-controller="Room_Allocate" asp-action="Add"><i class="bi bi-clipboard-plus-fill text-light"></i>  Allocate Room</a>
                              <a class="btn btn-secondary" asp-area="MST_Student" asp-controller="MST_Student" asp-action="Add"><i class="bi bi-person-plus-fill"></i>  Add Student</a>
                         </div>
                         <div class="pull-right col-md-3">
@@ -120,24 +112,25 @@
                                         @* <td class="text-center">@Convert.ToDateTime(dr["BirthDate"]).ToString("dd-MM-yyyy")</td> *@
                                         <td class="text-center">@dr["Age"]</td>
                                         <td>@dr["CourseName"]</td>
-                                        <td class="text-center">@dr["RoomNo"]</td>
+                                        <td class="text-center">@((dr["RoomNo"] != DBNull.Value) ? dr["RoomNo"] : "N/A")</td>
                                         <td class="text-center">@dr["isActive"]</td>
                                         <td class="d-flex justify-content-between">
-                                            <form method="get" asp-area="MST_Student" asp-controller="MST_Student" asp-action="ViewProfile">
+                                            <form method="get" asp-area="MST_Student" asp-controller="MST_Student" asp-action="ViewProfile" class="flex-fill">
                                                 <input type="hidden" name="StudentID" value="@Convert.ToInt32(dr["StudentID"].ToString())">
                                                 <button type="submit" class="btn btn-warning"><i class="bi bi-eye-fill"></i></button>
                                             </form>
 
-                                            <form method="post" asp-area="MST_Student" asp-controller="MST_Student" , asp-action="UpdateStatus">
+                                            <form method="post" asp-area="MST_Student" asp-controller="MST_Student" asp-action="UpdateStatus" class="flex-fill">
                                                 <input type="hidden" name="StudentID" value="@Convert.ToInt32(dr["StudentID"])" />
                                                 <button type="submit" class="btn btn-danger btn-rounded" onclick="return confirm('Are you sure you want to remove this?')"><i class="fa fa-trash"></i></button>
                                             </form>
 
-                                            <form method="get" asp-area="MST_Student" asp-controller="MST_Student" asp-action="Add">
+                                            <form method="get" asp-area="MST_Student" asp-controller="MST_Student" asp-action="Add" class="flex-fill">
                                                 <input type="hidden" name="StudentID" value="@Convert.ToInt32(dr["StudentID"].ToString())">
                                                 <button type="submit" class="btn btn-primary btn-rounded"><i class="fa fa-pen-to-square"></i></button>
                                             </form>
                                         </td>
+
 
                                     </tr>
                                 }

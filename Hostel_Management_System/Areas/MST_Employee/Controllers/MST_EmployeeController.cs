@@ -1,13 +1,9 @@
-﻿using Hostel_Management_System.Areas.MST_Course.Models;
-using Hostel_Management_System.Areas.MST_Employee.Models;
+﻿using Hostel_Management_System.Areas.MST_Employee.Models;
 using Hostel_Management_System.Areas.MST_EmployeeType.Models;
-using Hostel_Management_System.Areas.MST_Student.Models;
 using Hostel_Management_System.DAL;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.RazorPages;
 using System.Data;
 using System.Data.SqlClient;
-using System.Net;
 
 namespace Hostel_Management_System.Areas.MST_Employee.Controllers
 {

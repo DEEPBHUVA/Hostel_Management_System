@@ -16,6 +16,35 @@
     </nav>
 </div>
 
+<style>
+    /* Table styles */
+    #sample_1 {
+        width: 100%;
+        overflow: hidden;
+        border-radius: 10px;
+    }
+
+    #sample_1 th {
+        padding: 15px 0px 15px 10px;
+    }
+
+    #sample_1 th {
+        background-color: darkblue; /* Header background color */
+        color: #fff;
+    }
+
+    /* Alert styles */
+    .alert {
+        border-radius: 10px;
+        margin-top: 20px;
+    }
+
+    /* No Record Found styles */
+    .no-record {
+        font-size: 15px;
+        color: white;
+    }
+</style>
 
 <section class="section">
     <div class="row">
@@ -50,7 +79,7 @@
                         </div>
                     }
 
-                    <table class="table table-hover">
+                    <table id="sample_1" class="table table-hover">
                         <thead>
                             <tr>
                                 @* <th>RoomID</th> *@

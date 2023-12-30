@@ -21,4 +21,10 @@
         public DateTime Created { get; set; }
         public DateTime Modified { get; set; }
     }
+
+    public class MST_Employee_DropdownModel
+    {
+        public int EmployeeID { get; set; }
+        public string EmployeeName { get; set; }
+    }
 }

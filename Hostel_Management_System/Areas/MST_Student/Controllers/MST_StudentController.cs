@@ -2,7 +2,6 @@
 using Hostel_Management_System.Areas.MST_Student.Models;
 using Hostel_Management_System.DAL;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.RazorPages;
 using System.Data;
 using System.Data.SqlClient;
 
@@ -216,6 +215,5 @@ namespace Hostel_Management_System.Areas.MST_Student.Controllers
             return View("MST_Student_ViewProfile", dt);
         }
         #endregion
-
     }
 }

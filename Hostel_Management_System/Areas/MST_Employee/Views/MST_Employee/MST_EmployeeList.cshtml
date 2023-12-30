@@ -27,7 +27,7 @@
     }
 
     #sample_1 th{
-        padding:15px 0 15px 0;
+            padding: 15px 0px 15px 0px;
         text-align: left;
             
     }
@@ -93,6 +93,7 @@
                                     <th>Name</th>
                                     <th>Employee Type</th>
                                     <th>Salary</th>
+                                    <th class="text-center">Joining Date</th>
                                     <th class="text-center">Contact No.</th>
                                     <th class="text-center">Birth Date</th>
                                     <th class="text-center">Age</th>
@@ -109,10 +110,20 @@
                                         <td>@dr["EmployeeName"]</td>
                                         <td>@dr["EmployeeType"]</td>
                                         <td>@dr["Salary"]</td>
+                                        <td class="text-center">@Convert.ToDateTime(dr["JoiningDate"]).ToString("dd-MM-yyyy")</td>
                                         <td class="text-center">@dr["MobileNo"]</td>
                                         <td class="text-center">@Convert.ToDateTime(dr["BirthDate"]).ToString("dd-MM-yyyy")</td>
                                         <td class="text-center">@dr["Age"]</td>
-                                        <td class="text-center">@dr["isActive"]</td>
+                                        <td class="text-center">
+                                            @if ((bool)dr["isActive"])
+                                            {
+                                                <span class="badge bg-success">Active</span>
+                                            }
+                                            else
+                                            {
+                                                <span class="badge bg-danger">Inactive</span>
+                                            }
+                                        </td>
                                         <td class="d-flex justify-content-between">
                                             <form method="get" asp-area="MST_Employee" asp-controller="MST_Employee" asp-action="ViewProfile">
                                                 <input type="hidden" name="EmployeeID" value="@Convert.ToInt32(dr["EmployeeID"].ToString())">
