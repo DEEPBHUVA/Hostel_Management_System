@@ -17,6 +17,36 @@
     </nav>
 </div><!-- End Page Title -->
 
+<style>
+    /* Table styles */
+    #sample_1 {
+        width: 100%;
+        overflow: hidden;
+        border-radius: 10px;
+    }
+
+    #sample_1 th {
+        padding: 15px 0px 15px 0px;
+    }
+
+    #sample_1 th {
+        background-color: darkblue; /* Header background color */
+        color: #fff;
+    }
+
+    /* Alert styles */
+    .alert {
+        border-radius: 10px;
+        margin-top: 20px;
+    }
+
+    /* No Record Found styles */
+    .no-record {
+        font-size: 15px;
+        color: white;
+    }
+</style>
+
 <section class="section">
     <div class="row">
         <div class="col-lg-12">
@@ -27,7 +57,7 @@
                     <div class="row">
                         
                         <div class="col-md-9">
-                            <button class="btn btn-danger">Generate Pdf</button>
+                            <a class="btn btn-danger" asp-area="MST_Student" asp-controller="MST_Student" asp-action="CreatePdf"><i class="fa-solid fa-file-pdf"></i> Generate Pdf</a>
                         </div>
                         <div class="pull-right col-md-3 my-2">
                             <div id="sample_1_filter" class="dataTables_filter">
@@ -46,17 +76,17 @@
                     <!-- Table with stripped rows -->
                     @if (Model.Rows.Count > 0)
                     {
-                        <table class="table table-bordered">
+                        <table id="sample_1" class="table table-bordered">
                             <thead>
                                 <tr>
                                     <th class="text-center">Image</th>
-                                    <th>Name</th>
-                                    <th>Email</th>
+                                    <th class="ps-2">Name</th>
+                                    <th class="ps-2">Email</th>
                                     <th class="text-center">Contact No.</th>
                                     <th class="text-center">Birth Date</th>
                                     <th class="text-center">Age</th>
-                                    <th>Nationlity</th>
-                                    <th>Aadharcard No.</th>
+                                    <th class="ps-2">Nationlity</th>
+                                    <th class="text-center">Aadharcard No.</th>
                                     <th class="text-center">Status</th>
                                     <th class="text-center">Action</th>
                                     
@@ -73,7 +103,7 @@
                                         <td class="text-center">@Convert.ToDateTime(dr["BirthDate"]).ToString("dd-MM-yyyy")</td>
                                         <td class="text-center">@dr["Age"]</td>
                                         <td>@dr["Nationlity"]</td>
-                                        <td>@dr["AadharCardNo"]</td>
+                                        <td class="text-center">@dr["AadharCardNo"]</td>
                                         <td class="text-center">
                                             <span class="badge @(dr["isActive"].ToString().Equals("True", StringComparison.OrdinalIgnoreCase) ? "bg-success" : "bg-danger")">
                                                 @dr["isActive"]

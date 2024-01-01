@@ -6,14 +6,6 @@
 @using System.Data;
 @model Hostel_Management_System.Areas.MST_Student.Models.MST_StudentModel;
 <style>
-	.roombutton{
-		background-color: cornflowerblue;
-	}
-
-	.roombutton:hover {
-			background-color: cornflowerblue;
-	}
-
 	.card {
 		border-radius: 10px;
 		box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
@@ -30,7 +22,7 @@
 	}
 
 	.form-group {
-		margin-bottom: 20px;
+		margin-bottom: 5px;
 	}
 
 	label {
@@ -76,24 +68,30 @@
 			@Html.HiddenFor(x => x.StudentID)
 			@Html.HiddenFor(x => x.PhotoPath)
 
-			<div class="row my-2">
+			<div class="row my-1">
 				<div class="form-group col-md-6">
 					<label class="my-1">Image</label>
-					<input type="file" class="form-control" placeholder="Upload Image Here..." asp-for="File" />
+					<input type="file" class="form-control" placeholder="Upload Image Here..." asp-for="File" id="imageInput" onchange="previewImage(this)" />
+					<img id="imagePreview" class="mt-2" style="max-width: 200px; max-height: 150px; display: none;" />
 				</div>
 
 				<div class="form-group col-md-6">
-					<label for="inputState"><span class="text-danger">*</span>Status</label>
-					<select class="form-control" asp-for="isActive">
-						<option selected>Choose...</option>
-						<option value="True">Active</option>
-						<option value="False">Inactive</option>
-					</select>
-					<span asp-validation-for="isActive" class="text-danger"></span>
+					<label>
+						<span class="text-danger">*</span> Status:
+					</label>
+					<div>
+						<input type="checkbox" id="isActive" name="isActive" value="True">
+						<label for="isActive">Active</label>
+					</div>
+					<div>
+						<input type="checkbox" id="isInactive" name="isInactive" value="False">
+						<label for="isInactive">Inactive</label>
+					</div>
+					<span class="text-danger"></span>
 				</div>
 			</div>
 
-			<div class="form-row my-2">
+			<div class="form-row my-1">
 				<div class="form-group col-12">
 					<label for="inputState"><span class="text-danger">*</span>Full Name</label>
 					<input type="text" class="form-control" placeholder="Enter your name" asp-for="StudentName">
@@ -101,7 +99,7 @@
 				</div>
 			</div>
 
-			<div class="row my-2">
+			<div class="row my-1">
 				<div class="form-group col-3">
 					<label for="inputState"><span class="text-danger">*</span>Email</label>
 					<input type="text" class="form-control" placeholder="Enter your email" asp-for="Email">
@@ -127,7 +125,7 @@
 				</div>
 			</div>
 
-			<div class="row my-2">
+			<div class="row my-1">
 				<div class="form-group col-3">
 					<label for="inputState"><span class="text-danger">*</span>Date of Birth</label>
 					<input type="date" class="form-control" placeholder="Enter your birth date" asp-for="BirthDate" id="birthDate">
@@ -167,11 +165,11 @@
 				</div>
 			</div>
 
-			<div class="row my-2">
+			<div class="row my-1">
 				
 			</div>
 
-			<div class="row my-2">
+			<div class="row my-1">
 				<div class="form-group col-6">
 					<label for="inputState"><span class="text-danger">*</span>Father Name</label>
 					<input type="text" class="form-control" placeholder="Enter father name" asp-for="FatherName">
@@ -185,7 +183,7 @@
 				</div>
 			</div>
 
-			<div class="row my-2">
+			<div class="row my-1">
 				<div class="form-group col-6">
 					<label for="inputState"><span class="text-danger">*</span>Mother Name</label>
 					<input type="text" class="form-control" placeholder="Enter Mother name" asp-for="MotherName">
@@ -199,7 +197,7 @@
 				</div>
 			</div>
 
-			<div class="row my-2">
+			<div class="row my-1">
 				<div class="form-group col-6">
 					<label for="inputState"><span class="text-danger">*</span>Guardian Name</label>
 					<input type="text" class="form-control" placeholder="Enter Guardian name" asp-for="LocalGurdianName">
@@ -213,7 +211,7 @@
 				</div>
 			</div>
 
-			<div class="row my-2">
+			<div class="row my-1">
 				<div class="form-group col-6">
 					<label for="exampleFormControlTextarea1">Current Address</label>
 					<textarea class="form-control" placeholder="Enter current address" rows="2" asp-for="PresentAddress"></textarea>
@@ -227,14 +225,14 @@
 				</div>
 			</div>
 
-			<div class="form-group my-2">
+			<div class="form-group">
 				<label for="exampleFormControlTextarea1">Remarks</label>
 				<textarea class="form-control" placeholder="Enter Remarks.." rows="1" asp-for="Remarks"></textarea>
 			</div>
 
 			<hr />
 			<button type="submit" class="btn btn-success btn-rounded px-4"><i class="fa-solid fa-floppy-disk mx-1"></i> Save</button>
-			<a class="btn text-light roombutton" asp-area="Room_Allocate" asp-controller="Room_Allocate" asp-action="Add"><i class="bi bi-clipboard-plus-fill text-light"></i>  Allocate Room</a>
+			<a class="btn text-light" style="background-color: royalblue" asp-area="Room_Allocate" asp-controller="Room_Allocate" asp-action="Add"><i class="bi bi-clipboard-plus-fill text-light"></i>  Allocate Room</a>
 			<a class="btn btn-secondary btn-rounded px-4" asp-controller="MST_Student" asp-action="Cancle"><i class="bi bi-caret-left-fill"></i>Back</a>
 		</form>
 	</div>
@@ -257,6 +255,22 @@
 				$('.ageInput').val(age);
 			});
 		});
+
+		 function previewImage(input) {
+        var fileInput = input;
+        var imagePreview = document.getElementById('imagePreview');
+
+        if (fileInput.files && fileInput.files[0]) {
+            var reader = new FileReader();
+
+            reader.onload = function (e) {
+                imagePreview.src = e.target.result;
+                imagePreview.style.display = 'block';
+            };
+
+            reader.readAsDataURL(fileInput.files[0]);
+        }
+    }
 	</script>
 
 }

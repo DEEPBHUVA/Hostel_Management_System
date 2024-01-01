@@ -7,14 +7,6 @@
 @model DataTable
 
 <style>
-    .roombutton {
-        background-color: cornflowerblue;
-    }
-
-    .roombutton:hover {
-        background-color: cornflowerblue;
-    }
-
     #sample_1 {
         width: 100%;
         overflow: hidden;
@@ -22,7 +14,7 @@
     }
 
     #sample_1 th {
-
+        padding : 15px 0px 15px 0px;
         text-align: left;
     }
 
@@ -64,7 +56,7 @@
                     <h5 class="card-title"><i class="fa-solid fa-gears"></i> Allocation List</h5>
                     <div class="row">
                         <div class="col-md-9">
-                            <a class="btn text-light roombutton" asp-area="Room_Allocate" asp-controller="Room_Allocate" asp-action="Add"><i class="bi bi-clipboard-plus-fill text-light"></i>  Allocate Room</a>
+                            <a class="btn text-light" style="background-color: royalblue" asp-area="Room_Allocate" asp-controller="Room_Allocate" asp-action="Add"><i class="bi bi-clipboard-plus-fill text-light"></i>  Allocate Room</a>
                             <a class="btn btn-secondary" asp-area="MST_Room" asp-controller="MST_Room" asp-action="Index"><i class="bi bi-list"></i>  Room List</a>
                         </div>
                         <div class="pull-right col-md-3">
@@ -96,13 +88,13 @@
                         <table id="sample_1" class="table table-hover">
                             <thead>
                                 <tr>
-                                    <th>Student Name</th>
-                                    <th>Room No.</th>
-                                    <th>Created</th>
-                                    <th>Modified</th>
+                                    <th class="ps-2">Student Name</th>
+                                    <th class="text-center">Room No.</th>
+                                    <th class="text-center">Created</th>
+                                    <th class="text-center">Modified</th>
                                     @* <th>Deallocate</th> *@
-                                    <th>Delete</th>
-                                    <th>Edit</th>
+                                    <th class="text-center">Delete</th>
+                                    <th class="text-center">Edit</th>
                                 </tr>
                             </thead>
                             <tbody id="sample_2">
@@ -110,17 +102,17 @@
                                 {
                                     <tr>
                                         <td>@dr["StudentName"]</td>
-                                        <td>@dr["RoomNo"]</td>
-                                        <td>@Convert.ToDateTime(dr["Created"]).ToString("dd-MM-yyyy")</td>
-                                        <td>@Convert.ToDateTime(dr["Modified"]).ToString("dd-MM-yyyy")</td>
-                                        
-                                        <td>
+                                        <td class="text-center">@dr["RoomNo"]</td>
+                                        <td class="text-center">@Convert.ToDateTime(dr["Created"]).ToString("dd-MM-yyyy")</td>
+                                        <td class="text-center">@Convert.ToDateTime(dr["Modified"]).ToString("dd-MM-yyyy")</td>
+
+                                        <td class="text-center">
                                             <form method="post" asp-area="Room_Allocate" asp-controller="Room_Allocate" , asp-action="Delete">
                                                 <input type="hidden" name="RoomAllocateID" value="@Convert.ToInt32(dr["RoomAllocateID"])" />
                                                 <button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete this?')"><i class="fa fa-trash"></i></button>
                                             </form>
                                         </td>
-                                        <td>
+                                        <td class ="text-center">
                                             <form method="get" asp-area="Room_Allocate" asp-controller="Room_Allocate" asp-action="Add">
                                                 <input type="hidden" name="RoomAllocateID" value="@Convert.ToInt32(dr["RoomAllocateID"].ToString())">
                                                 <button type="submit" class="btn btn-warning"><i class="fa fa-pen-to-square"></i></button>

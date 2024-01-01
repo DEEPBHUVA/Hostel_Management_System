@@ -26,6 +26,7 @@
     }
 
     #sample_1 th {
+        padding: 15px 0px 15px 0px;
         text-align: left;
     }
 
@@ -84,18 +85,18 @@
                         <table id="sample_1" class="table table-hover">
                             <thead>
                                 <tr>
-                                    <th>Employee Name</th>
+                                    <th class="ps-2">Employee Name</th>
                                     <th class="text-center">Salary Date</th>
-                                    <th>PaymentMode</th>
-                                    <th>Amount</th>
-                                    <th>Remark</th>
-                                    <th>Bank</th>
-                                    <th>ChequeNo</th>
-                                    <th>Status</th>
+                                    <th class="ps-2">PaymentMode</th>
+                                    <th class="ps-2">Amount</th>
+                                    <th class="ps-2">Remark</th>
+                                    <th class="ps-2">Bank</th>
+                                    <th class="ps-2">ChequeNo</th>
+                                    <th class="text-center">Status</th>
                                     <th class="text-center">Created</th>
                                     <th class="text-center">Modified</th>
-                                    <th>Delete</th>
-                                    <th>Edit</th>
+                                    <th class="text-center">Delete</th>
+                                    <th class="text-center">Edit</th>
 
                                 </tr>
                             </thead>
@@ -110,7 +111,7 @@
                                         <td>@dr["Remark"]</td>
                                         <td>@dr["BankName"]</td>
                                         <td>@dr["ChequeNo"]</td>
-                                        <td>
+                                        <td class="text-center">
                                             @if ((bool)dr["Status"])
                                             {
                                                 <span class="badge bg-success">Paid</span>
@@ -122,13 +123,13 @@
                                         </td>
                                         <td class="text-center">@Convert.ToDateTime(dr["Created"]).ToString("dd-MM-yyyy")</td>
                                         <td class="text-center">@Convert.ToDateTime(dr["Modified"]).ToString("dd-MM-yyyy")</td>
-                                        <td>
+                                        <td class="text-center">
                                             <form method="post" asp-area="MST_EmployeeSalary" asp-controller="MST_EmployeeSalary" , asp-action="Delete">
                                                 <input type="hidden" name="EmployeeSalaryID" value="@Convert.ToInt32(dr["EmployeeSalaryID"])" />
                                                 <button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete this?')"><i class="fa fa-trash"></i></button>
                                             </form>
                                         </td>
-                                        <td>
+                                        <td class="text-center">
                                             <form method="get" asp-area="MST_EmployeeSalary" asp-controller="MST_EmployeeSalary" asp-action="Add">
                                                 <input type="hidden" name="EmployeeSalaryID" value="@Convert.ToInt32(dr["EmployeeSalaryID"].ToString())">
                                                 <button type="submit" class="btn btn-warning"><i class="fa fa-pen-to-square"></i></button>

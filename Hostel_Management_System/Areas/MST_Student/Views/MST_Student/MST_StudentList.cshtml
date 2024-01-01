@@ -59,6 +59,9 @@
                         <div class="col-md-9">
                             <a class="btn text-light" style="background-color:royalblue" asp-area="Room_Allocate" asp-controller="Room_Allocate" asp-action="Add"><i class="bi bi-clipboard-plus-fill text-light"></i>  Allocate Room</a>
                              <a class="btn btn-secondary" asp-area="MST_Student" asp-controller="MST_Student" asp-action="Add"><i class="bi bi-person-plus-fill"></i>  Add Student</a>
+                            <a class="btn btn-success" asp-area="MST_Student" asp-controller="MST_Student" asp-action="GetAllStudent">
+                                <i class="bi bi-person-fill"></i><span> All Students</span>
+                            </a>
                         </div>
                         <div class="pull-right col-md-3">
                             <div id="sample_1_filter" class="dataTables_filter">
@@ -89,11 +92,11 @@
                             <thead>
                                 <tr>
                                     <th class="text-center">Image</th>
-                                    <th>Name</th>
-                                    <th>Email</th>
+                                    <th class="ps-2">Name</th>
+                                    <th class="ps-2">Email</th>
                                     <th class="text-center">Contact No.</th>
                                     <th class="text-center">Age</th>
-                                    <th>Course</th>
+                                    <th class="ps-2">Course</th>
                                     <th class="text-center">Room</th>
                                     <th class="text-center">Status</th>
                                     <th class="text-center">Action</th>
