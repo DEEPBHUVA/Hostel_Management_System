@@ -297,9 +297,56 @@ namespace Hostel_Management_System.Areas.MST_Student.Controllers
 
             doc.Open();
 
+            var logoPath = "D:\\CollageMaterial\\Sem-5\\.Net\\.Net_Project\\Hostel_Management_System\\Hostel_Management_System\\wwwroot\\assets\\img\\logo-light.png";
+            var logoImage = iTextSharp.text.Image.GetInstance(logoPath);
+
+            // Set the dimensions of your logo
+            float logoWidth = 150f; // Set your desired width
+            float logoHeight = 75f; // Set your desired height
+
+            // Scale the image while maintaining the aspect ratio
+            float aspectRatio = logoImage.Width / logoImage.Height;
+            logoImage.ScaleAbsolute(logoWidth, logoWidth / aspectRatio);
+
+            // Calculate logo position to center vertically and horizontally
+            float pageWidth = doc.PageSize.Width;
+            float pageHeight = doc.PageSize.Height;
+
+            float logoX = (pageWidth - logoImage.ScaledWidth) / 2;
+            float logoY = (pageHeight - logoImage.ScaledHeight) / 2;
+
+            // Set the logo position
+            logoImage.SetAbsolutePosition(logoX, logoY);
+
+            // Set opacity using a graphics state
+            PdfGState gState = new PdfGState();
+            gState.FillOpacity = 0.01f; // Set opacity value (0.0f to 1.0f)
+
+            // Get the PdfContentByte for the document
+            PdfContentByte canvas = writer.DirectContentUnder; // Or DirectContent for above the content
+
+            // Set the graphics state
+            canvas.SetGState(gState);
+
+            // Add the logo to the document
+            doc.Add(logoImage);
+
+            BaseFont customFont = BaseFont.CreateFont("D:\\CollageMaterial\\Sem-5\\.Net\\.Net_Project\\Hostel_Management_System\\Hostel_Management_System\\wwwroot\\font\\Poppins-Regular.ttf", BaseFont.IDENTITY_H, BaseFont.NOT_EMBEDDED);
+
+            // Create a Font object with your custom font
+            Font customPdfFont = new Font(customFont, 10, Font.NORMAL, BaseColor.BLACK);
+
+            Paragraph paragraph = new Paragraph("Skyline Boyz Hostel", customPdfFont);
+
+            // Set the alignment to center
+            paragraph.Alignment = Element.ALIGN_CENTER;
+
+            doc.Add(paragraph);
+
             List<MST_StudentModel> studentModels = GetStudentModels();
             // Add Content to PDF   
             doc.Add(Add_Content_To_PDF(tableLayout, studentModels));
+
 
             // Closing the document  
             doc.Close();
@@ -326,51 +373,16 @@ namespace Hostel_Management_System.Areas.MST_Student.Controllers
                 pageTable.AddCell(new Phrase($"Page {writer.PageNumber}", new Font(Font.FontFamily.HELVETICA, 10)));
 
                 // Position the table
-                pageTable.WriteSelectedRows(0, -1, 780, document.PageSize.Height - 565, writer.DirectContent);
+                pageTable.WriteSelectedRows(0, -1, 780, document.PageSize.Height - 570, writer.DirectContent);
             }
         }
 
         protected PdfPTable Add_Content_To_PDF(PdfPTable tableLayout, List<MST_StudentModel> studentModels)
         {
-            Document doc = new Document(PageSize.A4.Rotate());
             float[] headers = { 22, 20, 8, 10, 10, 12, 10, 8 }; // Header Widths  
             tableLayout.SetWidths(headers); // Set the pdf headers  
             tableLayout.WidthPercentage = 100; // Set the PDF File width percentage  
             tableLayout.HeaderRows = 1;
-
-            var logoPath = "D:\\CollageMaterial\\Sem-5\\.Net\\.Net_Project\\Hostel_Management_System\\Hostel_Management_System\\wwwroot\\assets\\img\\logo-light.png";
-            var logoImage = iTextSharp.text.Image.GetInstance(logoPath);
-            logoImage.Alignment = Element.ALIGN_MIDDLE;
-
-            // Adjust the width and height while maintaining the aspect ratio
-            float desiredWidth = 100f; // Set your desired width
-            float aspectRatio = logoImage.Width / logoImage.Height;
-            float desiredHeight = desiredWidth / aspectRatio;
-
-            logoImage.ScaleAbsolute(desiredWidth, desiredHeight);
-
-            // Center the logo on the page
-            float pageWidth = doc.PageSize.Width;
-            float pageHeight = doc.PageSize.Height;
-            float logoX = (pageWidth - desiredWidth) / 2;
-            float logoY = (pageHeight - desiredHeight) / 2;
-            logoImage.SetAbsolutePosition(logoX, logoY);
-
-            // Set opacity to 0.5
-            PdfGState gState = new PdfGState();
-            gState.FillOpacity = 0.5f;
-
-            var logoCell = new PdfPCell(logoImage)
-            {
-                Colspan = 4,
-                Rowspan = 1,
-                Border = 0,
-                Padding = 10,
-                HorizontalAlignment = Element.ALIGN_MIDDLE
-            };
-
-            //tableLayout.SetExtGState(gState);
-            tableLayout.AddCell(logoCell);
 
             // Add empty row for spacing
             AddEmptyRow(tableLayout, 12);
