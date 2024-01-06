@@ -12,6 +12,8 @@
         public string? BankName { get; set; }
         public string? Remark { get; set; }
         public string PaidBY { get; set; }
+        public string ReceiptNo { get; set; }
+        public string CourseName { get; set; }
         public DateTime Created { get; set; }
         public DateTime Modified { get; set; }
     }

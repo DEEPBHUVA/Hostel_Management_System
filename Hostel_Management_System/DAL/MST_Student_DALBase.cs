@@ -269,5 +269,31 @@ namespace Hostel_Management_System.DAL
             }
         }
         #endregion
+
+
+        #region PR_MST_Student_SeleckbyPkWithAllData
+        public DataTable PR_MST_Student_SeleckbyPkWithAllData(int? StudentID)
+        {
+            try
+            {
+                SqlDatabase sqlDB = new SqlDatabase(MyConnectionStr);
+                DbCommand dbCMD = sqlDB.GetStoredProcCommand("PR_MST_Student_SeleckbyPkWithAllData");
+                sqlDB.AddInParameter(dbCMD, "StudentID", SqlDbType.Int, StudentID);
+
+                DataTable dt = new DataTable();
+                using (IDataReader dr = sqlDB.ExecuteReader(dbCMD))
+                {
+                    dt.Load(dr);
+                }
+                return dt;
+
+            }
+            catch (Exception e)
+            {
+                throw e;
+                return null;
+            }
+        }
+        #endregion
     }
 }

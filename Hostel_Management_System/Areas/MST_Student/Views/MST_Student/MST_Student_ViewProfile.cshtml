@@ -4,7 +4,8 @@
 }
 
 @using System.Data
-@model DataTable
+@model Hostel_Management_System.Areas.MST_Student.Models.MST_StudentModel
+
 
 <div class="pagetitle">
     <h1>Student List</h1>
@@ -17,176 +18,169 @@
     </nav>
 </div>
 
-@foreach (DataRow obj in Model.Rows)
-{
-    <section class="section profile">
-        <div class="row">
-            <div class="col-xl-4">
-                <div class="card">
-                    <div class="card-body profile-card pt-4 d-flex flex-column align-items-center">
 
-                        <img src="@Url.Content(obj["PhotoPath"].ToString())" alt="@obj["StudentName"]" class="rounded-circle" />
-                        <h2>@obj["StudentName"]</h2>
-                        <h4 class="@(obj["isActive"].ToString() == "True" ? "badge bg-success" : "badge bg-danger")">@obj["isActive"]</h4>
+<section class="section profile">
+    <div class="row">
+        <div class="col-xl-4">
+            <div class="card">
+                <div class="card-body profile-card pt-4 d-flex flex-column align-items-center">
 
-                    </div>
+                    <img src="@Url.Content(Model.PhotoPath.ToString())" alt="@Model.StudentName" class="rounded-circle" />
+                    <h2>@Model.StudentName</h2>
+                    <h4 class="@(Model.isActive.ToString() == "True" ? "badge bg-success" : "badge bg-danger")">@Model.isActive</h4>
+
                 </div>
-                @* <div class="card">
-            <div class="card-body profile-card pt-4 d-flex flex-column align-items-center">
-
             </div>
-            </div> *@
-            </div>
+            @* <div class="card">
+        <div class="card-body profile-card pt-4 d-flex flex-column align-items-center">
 
-            <div class="col-xl-8">
-                <div class="card">
-                    <div class="card-body pt-3">
-                        <!-- Bordered Tabs -->
-                        <ul class="nav nav-tabs nav-tabs-bordered">
-                            <li class="nav-item">
-                                <button class="nav-link active" data-bs-toggle="tab" data-bs-target="#profile-overview">Profile</button>
-                            </li>
-                        </ul>
-
-                        <div class="tab-content pt-2">
-
-                            <div class="tab-pane fade show active profile-overview px-2" id="profile-overview">
-
-                                <h5 class="card-title">Details</h5>
-
-                                <div class="row">
-                                    <div class="col-lg-3 col-md-4 label ">Full Name</div>
-                                    <div class="col-lg-9 col-md-8">@obj["StudentName"]</div>
-                                </div>
-
-                                <div class="row">
-                                    <div class="col-lg-3 col-md-4 label">Email</div>
-                                    <div class="col-lg-9 col-md-8">@obj["Email"]</div>
-                                </div>
-
-                                <div class="row">
-                                    <div class="col-lg-3 col-md-4 label">Contact No.</div>
-                                    <div class="col-lg-9 col-md-8">@obj["MobileNo"]</div>
-                                </div>
-
-                                <div class="row">
-                                    <div class="col-lg-3 col-md-4 label">Birth Date</div>
-                                    <div class="col-lg-9 col-md-8">@Convert.ToDateTime(obj["BirthDate"]).ToString("dd-MM-yyyy")</div>
-                                </div>
-
-                                <div class="row">
-                                    <div class="col-lg-3 col-md-4 label">Age</div>
-                                    <div class="col-lg-9 col-md-8">@obj["Age"]</div>
-                                </div>
-
-                                <div class="row">
-                                    <div class="col-lg-3 col-md-4 label">Blood Group</div>
-                                    <div class="col-lg-9 col-md-8">@obj["BloodGroup"]</div>
-                                </div>
-
-                                <div class="row">
-                                    <div class="col-lg-3 col-md-4 label">Course</div>
-                                    <div class="col-lg-9 col-md-8">@obj["CourseName"]</div>
-                                </div>
-
-                                <div class="row">
-                                    <div class="col-lg-3 col-md-4 label">Nationality</div>
-                                    <div class="col-lg-9 col-md-8">@obj["Nationlity"]</div>
-                                </div>
-
-                                <div class="row">
-                                    <div class="col-lg-3 col-md-4 label">Aadhar Card No.</div>
-                                    <div class="col-lg-9 col-md-8">@obj["AadharCardNo"]</div>
-                                </div>
-
-                                <div class="row">
-                                    <div class="col-lg-3 col-md-4 label">Father Name</div>
-                                    <div class="col-lg-9 col-md-8">@obj["FatherName"]</div>
-                                </div>
-
-                                <div class="row">
-                                    <div class="col-lg-3 col-md-4 label">Father`s Contact No</div>
-                                    <div class="col-lg-9 col-md-8">@obj["FatherMobileNo"]</div>
-                                </div>
-
-                                <div class="row">
-                                    <div class="col-lg-3 col-md-4 label">Mother Name</div>
-                                    <div class="col-lg-9 col-md-8">@obj["MotherName"]</div>
-                                </div>
-
-                                <div class="row">
-                                    <div class="col-lg-3 col-md-4 label">Mother`s Contact No.</div>
-                                    <div class="col-lg-9 col-md-8">@obj["MotherMobileNo"]</div>
-                                </div>
-
-                                <div class="row">
-                                    <div class="col-lg-3 col-md-4 label">Gaurdian Name</div>
-                                    <div class="col-lg-9 col-md-8">@obj["LocalGurdianName"]</div>
-                                </div>
-
-                                <div class="row">
-                                    <div class="col-lg-3 col-md-4 label">Gaurdian`s Contact No.</div>
-                                    <div class="col-lg-9 col-md-8">@obj["LocalGurdianNo"]</div>
-                                </div>
-
-                                <div class="row">
-                                    <div class="col-lg-3 col-md-4 label">Current Address</div>
-                                    <div class="col-lg-9 col-md-8">@obj["PresentAddress"]</div>
-                                </div>
-
-                                <div class="row">
-                                    <div class="col-lg-3 col-md-4 label">Perment Address</div>
-                                    <div class="col-lg-9 col-md-8">@obj["PermentAddress"]</div>
-                                </div>
-
-                                <div class="row">
-                                    <div class="col-lg-3 col-md-4 label">Create At</div>
-                                    <div class="col-lg-9 col-md-8">@Convert.ToDateTime(obj["Created"]).ToString("dd-MM-yyyy")</div>
-                                </div>
-
-                                <div class="row">
-                                    <div class="col-lg-3 col-md-4 label">Modified</div>
-                                    <div class="col-lg-9 col-md-8">@Convert.ToDateTime(obj["Modified"]).ToString("dd-MM-yyyy")</div>
-                                </div>
-
-                            </div>
-
-                            <hr />
-
-                            <div class="d-flex">
-
-                                <div class="mx-2">
-                                    <form method="post" asp-area="MST_Student" asp-controller="MST_Student" , asp-action="Delete">
-                                        <input type="hidden" name="StudentID" value="@Convert.ToInt32(obj["StudentID"])" />
-                                        <button type="submit" class="btn btn-danger btn-rounded" onclick="return confirm('Are you sure you want to delete this?')"><i class="fa fa-trash"></i> Delete</button>
-                                    </form>
-                                </div>
-
-                                <div class="mx-2">
-                                    <form method="get" asp-area="MST_Student" asp-controller="MST_Student" asp-action="Add">
-                                        <input type="hidden" name="StudentID" value="@Convert.ToInt32(obj["StudentID"].ToString())">
-                                        <button type="submit" class="btn btn-primary btn-rounded"><i class="fa fa-pen-to-square"></i> Edit</button>
-                                    </form>
-                                </div>
-
-                                <div class="mx-2">
-                                    <a asp-controller="MST_Student" asp-action="Cancle" class="btn btn-secondary"><i class="bi bi-caret-left-fill"></i> Back to List</a>
-                                </div>
-
-                            </div>
-
-                        </div><!-- End Bordered Tabs -->
-
-                    </div>
-                </div>
-
-            </div>
         </div>
-    </section>
-}
+        </div> *@
+        </div>
 
+        <div class="col-xl-8">
+            <div class="card">
+                <div class="card-body pt-3">
+                    <!-- Bordered Tabs -->
+                    <ul class="nav nav-tabs nav-tabs-bordered">
+                        <li class="nav-item">
+                            <button class="nav-link active" data-bs-toggle="tab" data-bs-target="#profile-overview">Profile</button>
+                        </li>
+                    </ul>
 
+                    <div class="tab-content pt-2">
 
+                        <div class="tab-pane fade show active profile-overview px-2" id="profile-overview">
 
+                            <h5 class="card-title">Details</h5>
 
-@* @await Html.PartialAsync("_MyPartialView") *@
+                            <div class="row">
+                                <div class="col-lg-3 col-md-4 label ">Full Name</div>
+                                <div class="col-lg-9 col-md-8">@Model.StudentName</div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-lg-3 col-md-4 label">Email</div>
+                                <div class="col-lg-9 col-md-8">@Model.Email</div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-lg-3 col-md-4 label">Contact No.</div>
+                                <div class="col-lg-9 col-md-8">@Model.MobileNo</div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-lg-3 col-md-4 label">Birth Date</div>
+                                <div class="col-lg-9 col-md-8">@Convert.ToDateTime(Model.BirthDate).ToString("dd-MM-yyyy")</div>
+                            </div>
+
+                            <div class="row">   
+                                <div class="col-lg-3 col-md-4 label">Age</div>
+                                <div class="col-lg-9 col-md-8">@Model.Age</div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-lg-3 col-md-4 label">Blood Group</div>
+                                <div class="col-lg-9 col-md-8">@Model.BloodGroup</div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-lg-3 col-md-4 label">Course</div>
+                                <div class="col-lg-9 col-md-8">@Model.CourseName</div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-lg-3 col-md-4 label">Nationality</div>
+                                <div class="col-lg-9 col-md-8">@Model.Nationlity</div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-lg-3 col-md-4 label">Aadhar Card No.</div>
+                                <div class="col-lg-9 col-md-8">@Model.AadharCardNo</div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-lg-3 col-md-4 label">Father Name</div>
+                                <div class="col-lg-9 col-md-8">@Model.FatherName</div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-lg-3 col-md-4 label">Father`s Contact No</div>
+                                <div class="col-lg-9 col-md-8">@Model.FatherMobileNo</div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-lg-3 col-md-4 label">Mother Name</div>
+                                <div class="col-lg-9 col-md-8">@Model.MotherName</div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-lg-3 col-md-4 label">Mother`s Contact No.</div>
+                                <div class="col-lg-9 col-md-8">@Model.MotherMobileNo</div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-lg-3 col-md-4 label">Gaurdian Name</div>
+                                <div class="col-lg-9 col-md-8">@Model.LocalGurdianName</div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-lg-3 col-md-4 label">Gaurdian`s Contact No.</div>
+                                <div class="col-lg-9 col-md-8">@Model.LocalGurdianNo</div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-lg-3 col-md-4 label">Current Address</div>
+                                <div class="col-lg-9 col-md-8">@Model.PresentAddress</div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-lg-3 col-md-4 label">Perment Address</div>
+                                <div class="col-lg-9 col-md-8">@Model.PermentAddress</div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-lg-3 col-md-4 label">Create At</div>
+                                <div class="col-lg-9 col-md-8">@Convert.ToDateTime(Model.Created).ToString("dd-MM-yyyy")</div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-lg-3 col-md-4 label">Modified</div>
+                                <div class="col-lg-9 col-md-8">@Convert.ToDateTime(Model.Modified).ToString("dd-MM-yyyy")</div>
+                            </div>
+
+                        </div>
+
+                        <hr />
+
+                        <div class="d-flex">
+
+                            <div class="mx-2">
+                                <form method="post" asp-area="MST_Student" asp-controller="MST_Student" , asp-action="Delete">
+                                    <input type="hidden" name="StudentID" value="@Convert.ToInt32(Model.StudentID)" />
+                                    <button type="submit" class="btn btn-danger btn-rounded" onclick="return confirm('Are you sure you want to delete this?')"><i class="fa fa-trash"></i> Delete</button>
+                                </form>
+                            </div>
+
+                            <div class="mx-2">
+                                <form method="get" asp-area="MST_Student" asp-controller="MST_Student" asp-action="Add">
+                                    <input type="hidden" name="StudentID" value="@Convert.ToInt32(Model.StudentID.ToString())">
+                                    <button type="submit" class="btn btn-primary btn-rounded"><i class="fa fa-pen-to-square"></i> Edit</button>
+                                </form>
+                            </div>
+
+                            <div class="mx-2">
+                                <a asp-controller="MST_Student" asp-action="Cancle" class="btn btn-secondary"><i class="bi bi-caret-left-fill"></i> Back to List</a>
+                            </div>
+
+                        </div>
+
+                    </div><!-- End Bordered Tabs -->
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>
+

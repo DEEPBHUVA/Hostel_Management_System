@@ -16,6 +16,38 @@
     </nav>
 </div>
 
+<style>
+
+    /* Table styles */
+    #sample_1 {
+        width: 100%;
+        overflow: hidden;
+        border-radius: 10px;
+    }
+
+    #sample_1 th {
+        padding: 15px 0px 15px 0px;
+        text-align: left;
+    }
+
+    #sample_1 th {
+        background-color: darkblue; /* Header background color */
+        color: #fff;
+    }
+
+    /* Alert styles */
+    .alert {
+        border-radius: 10px;
+        margin-top: 20px;
+    }
+
+    /* No Record Found styles */
+    .no-record {
+        font-size: 15px;
+        color: white;
+    }
+</style>
+
 <section class="section">
     <div class="row">
         <div class="col-lg-12">
@@ -49,14 +81,14 @@
                         </div>
                     }
 
-                    <table  class="table table-hover">
+                    <table id="sample_1" class="table table-hover">
                         <thead>
                             <tr>
-                                <th>Course Name</th>
-                                <th>Created</th>
-                                <th>Modified</th>
-                                <th>Delete</th>
-                                <th>Edit</th>
+                                <th class="ps-2">Course Name</th>
+                                <th class="text-center">Created</th>
+                                <th class="text-center">Modified</th>
+                                <th class="text-center">Delete</th>
+                                <th class="text-center">Edit</th>
                             </tr>
                         </thead>
                         <tbody id="sample_2">
@@ -64,15 +96,15 @@
                             {
                                 <tr>
                                     <td>@dr["CourseName"]</td>
-                                    <td>@Convert.ToDateTime(dr["Created"]).ToString("dd-MM-yyyy")</td>
-                                    <td>@Convert.ToDateTime(dr["Modified"]).ToString("dd-MM-yyyy")</td>
-                                    <td>
+                                    <td class="text-center">@Convert.ToDateTime(dr["Created"]).ToString("dd-MM-yyyy")</td>
+                                    <td class="text-center">@Convert.ToDateTime(dr["Modified"]).ToString("dd-MM-yyyy")</td>
+                                    <td class="text-center">
                                         <form method="post" asp-area="MST_Course" asp-controller="MST_Course" , asp-action="Delete">
                                             <input type="hidden" name="CourseID" value="@Convert.ToInt32(dr["CourseID"])" />
                                             <button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete this?')"><i class="fa fa-trash"></i></button>
                                         </form>
                                     </td>
-                                    <td>
+                                    <td class ="text-center">
                                         <form method="get" asp-area="MST_Course" asp-controller="MST_Course" asp-action="Add">
                                             <input type="hidden" name="CourseID" value="@Convert.ToInt32(dr["CourseID"].ToString())">
                                             <button type="submit" class="btn btn-warning"><i class="fa fa-pen-to-square"></i></button>

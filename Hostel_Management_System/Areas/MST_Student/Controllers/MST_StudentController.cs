@@ -218,23 +218,8 @@ namespace Hostel_Management_System.Areas.MST_Student.Controllers
         #region ViewProfile
         public IActionResult ViewProfile(int StudentID)
         {
-            DataTable dt = dalMST_Student.PR_MST_Student_SelectByPk(StudentID);
+            DataTable dt = dalMST_Student.PR_MST_Student_SeleckbyPkWithAllData(StudentID);
             return View("MST_Student_ViewProfile",dt);
-        }
-        #endregion
-
-        #region PaymentDetailStudentWise
-        public IActionResult PaymentDetailStudentWise(int StudentID)
-        {
-            DataTable dt = dalMST_Student.PR_MST_Payment_SelectStudentID(StudentID);
-
-            var viewModel = new Payment_ViewModel
-            {
-                Payments = dt
-            };
-
-            // Pass the view model to the partial view
-            return View("_MyPartialView", viewModel);
         }
         #endregion
 
@@ -332,15 +317,10 @@ namespace Hostel_Management_System.Areas.MST_Student.Controllers
             doc.Add(logoImage);
 
             BaseFont customFont = BaseFont.CreateFont("D:\\CollageMaterial\\Sem-5\\.Net\\.Net_Project\\Hostel_Management_System\\Hostel_Management_System\\wwwroot\\font\\Poppins-Regular.ttf", BaseFont.IDENTITY_H, BaseFont.NOT_EMBEDDED);
-
             // Create a Font object with your custom font
             Font customPdfFont = new Font(customFont, 10, Font.NORMAL, BaseColor.BLACK);
-
             Paragraph paragraph = new Paragraph("Skyline Boyz Hostel", customPdfFont);
-
-            // Set the alignment to center
             paragraph.Alignment = Element.ALIGN_CENTER;
-
             doc.Add(paragraph);
 
             List<MST_StudentModel> studentModels = GetStudentModels();
