@@ -1,5 +1,6 @@
 ﻿using Hostel_Management_System.Areas.MST_Employee.Models;
 using Hostel_Management_System.Areas.MST_EmployeeType.Models;
+using Hostel_Management_System.BAL;
 using Hostel_Management_System.DAL;
 using Microsoft.AspNetCore.Mvc;
 using System.Data;
@@ -7,7 +8,8 @@ using System.Data.SqlClient;
 
 namespace Hostel_Management_System.Areas.MST_Employee.Controllers
 {
-    [Area("MST_Employee")]
+	[CheckAccess]
+	[Area("MST_Employee")]
     [Route("MST_Employee/{Controller}/{action}")]
     public class MST_EmployeeController : Controller
     {

@@ -3,6 +3,7 @@ using Hostel_Management_System.Areas.MST_Payment.Models;
 using Hostel_Management_System.Areas.MST_Payment.View_Model;
 using Hostel_Management_System.Areas.MST_Student.Models;
 using Hostel_Management_System.Areas.MST_Student.ViewModel;
+using Hostel_Management_System.BAL;
 using Hostel_Management_System.DAL;
 using iTextSharp.text;
 using iTextSharp.text.pdf;
@@ -12,7 +13,8 @@ using System.Data.SqlClient;
 
 namespace Hostel_Management_System.Areas.MST_Student.Controllers
 {
-    [Area("MST_Student")]
+	[CheckAccess]
+	[Area("MST_Student")]
     [Route("MST_Student/{Controller}/{action}")]
     public class MST_StudentController : Controller
     {

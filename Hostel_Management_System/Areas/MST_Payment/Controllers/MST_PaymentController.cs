@@ -1,6 +1,7 @@
 ﻿using Hostel_Management_System.Areas.MST_Payment.Models;
 using Hostel_Management_System.Areas.MST_Room.Models;
 using Hostel_Management_System.Areas.MST_Student.Models;
+using Hostel_Management_System.BAL;
 using Hostel_Management_System.DAL;
 using iTextSharp.text;
 using iTextSharp.text.pdf;
@@ -11,7 +12,8 @@ using static Hostel_Management_System.Areas.MST_Student.Controllers.MST_StudentC
 
 namespace Hostel_Management_System.Areas.MST_Payment.Controllers
 {
-    [Area("MST_Payment")]
+	[CheckAccess]
+	[Area("MST_Payment")]
     [Route("MST_Payment/{Controller}/{action}")]
     public class MST_PaymentController : Controller
     {

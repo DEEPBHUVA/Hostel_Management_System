@@ -1,0 +1,67 @@
+﻿@{
+    ViewData["Title"] = "Login Page";
+    Layout = "~/Views/Shared/_LoginLayout.cshtml";
+}
+
+@model Hostel_Management_System.Areas.SEC_User.Models.SEC_UserModel
+
+
+<div class="limiter">
+    <div class="container-login100">
+        <div class="wrap-login100">
+            <form class="login100-form validate-form" method="post" asp-area="SEC_User" asp-controller="SEC_User" asp-action="Login">
+                <img src="~/assets/img/logo-full.png" alt="" class="login100-form-title" height="105px" width="380px">
+                <span class="login100-form-title p-b-43">
+                    Login to continue
+                </span>
+
+                @if (TempData["Error"] != null)
+                {
+                    <div class="text-danger">@Html.Raw(TempData["Error"])</div>
+                }
+
+                <div class="wrap-input100">
+                    <input type="text" asp-for="UserName" class="input100" />
+                    <span class="focus-input100"></span>
+                    <span class="label-input100">UserName</span>
+                </div>
+                <span asp-validation-for="UserName" class="text-danger"></span>
+
+                <div class="wrap-input100">
+                    <input type="password" asp-for="Password" class="input100" />
+                    <span class="focus-input100"></span>
+                    <span class="label-input100">Password</span>
+                </div>
+                <span asp-validation-for="Password" class="text-danger"></span>
+
+                <div class="flex-sb-m w-full p-t-3 p-b-32">
+                    <div class="contact100-form-checkbox">
+                        <input class="input-checkbox100" id="ckb1" type="checkbox" name="remember-me">
+                        <label class="label-checkbox100" for="ckb1">
+                            Remember me
+                        </label>
+                    </div>
+
+                    <div>
+                        <a href="#" class="txt1">
+                            Forgot Password?
+                        </a>
+                    </div>
+                </div>
+
+                <div class="container-login100-form-btn">
+                    <button class="login100-form-btn" type="submit">
+                        Login
+                    </button>
+                </div>
+            </form>
+
+            <div class="login100-more" style="background-image: url('@Url.Content("~/assets/img/HostelBG.jpg")')"></div>
+
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

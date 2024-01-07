@@ -24,6 +24,7 @@
     <Folder Include="Areas\MST_Room\Data\" />
     <Folder Include="Areas\MST_Student\Data\" />
     <Folder Include="Areas\Room_Allocate\Data\" />
+    <Folder Include="Areas\SEC_User\Data\" />
   </ItemGroup>
 
   <ItemGroup>

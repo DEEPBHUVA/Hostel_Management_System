@@ -3,10 +3,12 @@ using Microsoft.AspNetCore.Mvc;
 using System.Data.SqlClient;
 using System.Data;
 using System.Diagnostics;
+using Hostel_Management_System.BAL;
 
 namespace Hostel_Management_System.Controllers
 {
-    public class HomeController : Controller
+	[CheckAccess]
+	public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
         public IConfiguration Configuration;

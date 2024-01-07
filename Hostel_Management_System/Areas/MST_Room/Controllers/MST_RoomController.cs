@@ -3,10 +3,12 @@ using System.Data.SqlClient;
 using System.Data;
 using Hostel_Management_System.Areas.MST_Room.Models;
 using Hostel_Management_System.DAL;
+using Hostel_Management_System.BAL;
 
 namespace Hostel_Management_System.Areas.MST_Room.Controllers
 {
-    [Area("MSt_Room")]
+	[CheckAccess]
+	[Area("MSt_Room")]
     [Route("MST_Room/{Controller}/{action}")]
     public class MST_RoomController : Controller
     {

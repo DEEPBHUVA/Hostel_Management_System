@@ -2,6 +2,7 @@
 using Hostel_Management_System.Areas.MST_EmployeeSalary.Models;
 using Hostel_Management_System.Areas.MST_Payment.Models;
 using Hostel_Management_System.Areas.MST_Student.Models;
+using Hostel_Management_System.BAL;
 using Hostel_Management_System.DAL;
 using Microsoft.AspNetCore.Mvc;
 using System.Data;
@@ -9,7 +10,8 @@ using System.Data.SqlClient;
 
 namespace Hostel_Management_System.Areas.MST_EmployeeSalary.Controllers
 {
-    [Area("MST_EmployeeSalary")]
+	[CheckAccess]
+	[Area("MST_EmployeeSalary")]
     [Route("MST_EmployeeSalary/{Controller}/{action}")]
     public class MST_EmployeeSalaryController : Controller
     {

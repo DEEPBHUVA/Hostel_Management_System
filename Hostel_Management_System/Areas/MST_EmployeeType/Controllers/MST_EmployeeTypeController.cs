@@ -1,11 +1,13 @@
 ﻿using Hostel_Management_System.Areas.MST_Course.Models;
 using Hostel_Management_System.Areas.MST_EmployeeType.Models;
+using Hostel_Management_System.BAL;
 using Hostel_Management_System.DAL;
 using Microsoft.AspNetCore.Mvc;
 using System.Data;
 
 namespace Hostel_Management_System.Areas.MST_EmployeeType.Controllers
 {
+	[CheckAccess]
 	[Area("MST_EmployeeType")]
 	[Route("MST_EmployeeType/{Controller}/{action}")]
 	public class MST_EmployeeTypeController : Controller

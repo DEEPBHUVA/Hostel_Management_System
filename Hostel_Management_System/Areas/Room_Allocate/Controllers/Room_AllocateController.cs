@@ -5,10 +5,12 @@ using Hostel_Management_System.Areas.MST_Room.Models;
 using Hostel_Management_System.Areas.Room_Allocate.Models;
 using Hostel_Management_System.Areas.MST_Student.Models;
 using Hostel_Management_System.DAL;
+using Hostel_Management_System.BAL;
 
 namespace Hostel_Management_System.Areas.Room_Allocate.Controllers
 {
-    [Area("Room_Allocate")]
+	[CheckAccess]
+	[Area("Room_Allocate")]
     [Route("Room_Allocate/{Controller}/{action}")]
     public class Room_AllocateController : Controller
     {

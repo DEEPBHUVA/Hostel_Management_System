@@ -1,11 +1,13 @@
 ﻿using Hostel_Management_System.Areas.MST_Notice.Models;
+using Hostel_Management_System.BAL;
 using Hostel_Management_System.DAL;
 using Microsoft.AspNetCore.Mvc;
 using System.Data;
 
 namespace Hostel_Management_System.Areas.MST_Notice.Controllers
 {
-    [Area("MST_Notice")]
+	[CheckAccess]
+	[Area("MST_Notice")]
     [Route("MST_Notice/{Controller}/{action}")]
     public class MST_NoticeController : Controller
     {

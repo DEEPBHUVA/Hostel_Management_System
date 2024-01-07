@@ -4,10 +4,12 @@ using System.Data;
 using Hostel_Management_System.Areas.MST_Course.Models;
 using Hostel_Management_System.Areas.MST_Room.Models;
 using Hostel_Management_System.DAL;
+using Hostel_Management_System.BAL;
 
 namespace Hostel_Management_System.Areas.MST_Course.Controllers
 {
-    [Area("MST_Course")]
+	[CheckAccess]
+	[Area("MST_Course")]
     [Route("MST_Course/{Controller}/{action}")]
     public class MST_CourseController : Controller
     {
