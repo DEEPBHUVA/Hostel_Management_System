@@ -241,14 +241,14 @@ namespace Hostel_Management_System.Areas.MST_Payment.Controllers
                 #endregion
 
                 #region Heading
-                var logoPath = "D:\\CollageMaterial\\Sem-5\\.Net\\.Net_Project\\Hostel_Management_System\\Hostel_Management_System\\wwwroot\\assets\\img\\logo.png";
+                var logoPath = "D:\\CollageMaterial\\Sem-5\\.Net\\.Net_Project\\Hostel_Management_System\\Hostel_Management_System\\wwwroot\\assets\\img\\logo-skyline.png";
                 var pngImage = iTextSharp.text.Image.GetInstance(logoPath);
 
                 var table = new PdfPTable(2);
                 table.WidthPercentage = 100;
 
-                float logoWidth = 200f; // Adjust the width as needed
-                float logoHeight = 50f; // Adjust the height as needed
+                float logoWidth = 260f; // Adjust the width as needed
+                float logoHeight = 65f; // Adjust the height as needed
                 pngImage.ScaleAbsolute(logoWidth, logoHeight);
 
                 var logoCell = new PdfPCell(pngImage)

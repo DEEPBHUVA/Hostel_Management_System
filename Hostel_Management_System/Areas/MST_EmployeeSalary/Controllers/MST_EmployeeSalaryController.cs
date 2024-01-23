@@ -1,7 +1,5 @@
 ﻿using Hostel_Management_System.Areas.MST_Employee.Models;
 using Hostel_Management_System.Areas.MST_EmployeeSalary.Models;
-using Hostel_Management_System.Areas.MST_Payment.Models;
-using Hostel_Management_System.Areas.MST_Student.Models;
 using Hostel_Management_System.BAL;
 using Hostel_Management_System.DAL;
 using Microsoft.AspNetCore.Mvc;

@@ -1,8 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using System.Data.SqlClient;
 using System.Data;
 using Hostel_Management_System.Areas.MST_Course.Models;
-using Hostel_Management_System.Areas.MST_Room.Models;
 using Hostel_Management_System.DAL;
 using Hostel_Management_System.BAL;
 

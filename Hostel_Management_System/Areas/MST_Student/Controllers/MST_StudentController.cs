@@ -1,8 +1,5 @@
 ﻿using Hostel_Management_System.Areas.MST_Course.Models;
-using Hostel_Management_System.Areas.MST_Payment.Models;
-using Hostel_Management_System.Areas.MST_Payment.View_Model;
 using Hostel_Management_System.Areas.MST_Student.Models;
-using Hostel_Management_System.Areas.MST_Student.ViewModel;
 using Hostel_Management_System.BAL;
 using Hostel_Management_System.DAL;
 using iTextSharp.text;
@@ -31,11 +28,29 @@ namespace Hostel_Management_System.Areas.MST_Student.Controllers
         #endregion
 
         #region SelectOnlyActiveStudent
-        public IActionResult Index()
+        public IActionResult Index(string? StudentName, string? Course, int RoomNo,bool filter = false)
         {
-            DataTable dt = dalMST_Student.PR_MST_Student_SelectAll();
-            return View("MST_StudentList", dt);
-        }
+			string MyCONNstr = this.Configuration.GetConnectionString("ConStr"); 
+            DataTable dtable = new DataTable();
+			SqlConnection SQLConn = new SqlConnection(MyCONNstr); 
+            SQLConn.Open();
+			SqlCommand cmd = SQLConn.CreateCommand(); 
+            cmd.CommandType = CommandType.StoredProcedure;
+			if (Convert.ToBoolean(filter))
+			{
+				cmd.CommandText = "PR_MST_Student_Filter";
+				cmd.Parameters.AddWithValue("@StudentName", StudentName);
+				cmd.Parameters.AddWithValue("@Course", Course);
+				cmd.Parameters.AddWithValue("@RoomNo", RoomNo);
+			}
+			else
+			{
+				cmd.CommandText = "PR_MST_Student_SelectAll";
+			}
+			SqlDataReader objStr = cmd.ExecuteReader();
+			dtable.Load(objStr);
+			return View("MST_StudentList", dtable);
+		}
         #endregion
 
         #region SelectAllStudent
@@ -73,8 +88,9 @@ namespace Hostel_Management_System.Areas.MST_Student.Controllers
         #region Add
         public IActionResult Add(int? StudentID) 
         {
-			#region Course Dropdown
-			string MyConnectionStr1 = this.Configuration.GetConnectionString("ConStr");
+            
+            #region Course Dropdown
+            string MyConnectionStr1 = this.Configuration.GetConnectionString("ConStr");
 			SqlConnection connection2 = new SqlConnection(MyConnectionStr1);
             DataTable dt2 = new DataTable();
             connection2.Open();
@@ -221,7 +237,7 @@ namespace Hostel_Management_System.Areas.MST_Student.Controllers
         public IActionResult ViewProfile(int StudentID)
         {
             DataTable dt = dalMST_Student.PR_MST_Student_SeleckbyPkWithAllData(StudentID);
-            return View("MST_Student_ViewProfile",dt);
+            return View("MST_Student_ViewProfile", dt);
         }
         #endregion
 
@@ -441,3 +457,6 @@ namespace Hostel_Management_System.Areas.MST_Student.Controllers
 
     }
 }
+
+
+

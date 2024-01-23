@@ -1,14 +1,179 @@
-﻿@{
+﻿@using Hostel_Management_System.BAL
+@{
     ViewData["Title"] = "Home Page";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
+@using System.Data
+@model DataTable
 
-@{
-    var noticeData = ViewBag.NoticeData as System.Data.DataTable;
-}
+<style>
 
-<div id="greeting" class="card-title"></div>
+    /* Table styles */
+    #sample_1 {
+        width: 100%;
+        overflow: hidden;
+        border-radius: 10px;
+    }
+
+    #sample_1 th {
+        padding: 15px 0px 15px 0px;
+        text-align: left;
+    }
+
+    #sample_1 th {
+        background-color: darkblue; /* Header background color */
+        color: #fff;
+    }
+
+    /* Alert styles */
+    .alert {
+        border-radius: 10px;
+        margin-top: 20px;
+    }
+
+    /* No Record Found styles */
+    .no-record {
+        font-size: 15px;
+        color: white;
+    }
+
+
+    .card {
+        max-width: 100%;
+        overflow: hidden;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    
+
+    .calendar-container {
+        max-width: 100%;
+        overflow: hidden;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .calendar-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        max-width: 100%;
+        overflow: hidden;
+        padding: 0 20px;
+    }
+
+    .calendar-navigation {
+        display: flex;
+        align-items: center;
+    }
+
+    .calendar-navigation span {
+        height: 38px;
+        width: 38px;
+        margin: 0 5px;
+        cursor: pointer;
+        text-align: center;
+        line-height: 38px;
+        border-radius: 50%;
+        user-select: none;
+        color: #aeabab;
+        font-size: 1.5rem;
+        background-color: #fff;
+        transition: background-color 0.3s ease;
+    }
+
+    .calendar-navigation span:hover {
+        background-color: #f1f1f1;
+    }
+
+    .calendar-weekdays {
+        list-style: none;
+        display: flex;
+        max-width: 100%;
+        overflow: hidden;
+        padding: 0;
+        margin: 20px 0 10px;
+    }
+
+    .calendar-weekdays li {
+        width: calc(100% / 7);
+        text-align: center;
+        font-weight: 500;
+        font-size: 1rem;
+        color: #333;
+    }
+
+    .calendar-body {
+        max-width: 100%;
+        overflow: hidden;
+        padding: 0 20px;
+    }
+
+    .calendar-dates {
+        list-style: none;
+        display: flex;
+        flex-wrap: wrap;
+        max-width: 100%;
+        overflow: hidden;
+        margin: 0;
+        padding: 0;
+    }
+
+    .calendar-dates li {
+        width: calc(100% / 7);
+        font-size: 1rem;
+        color: #333;
+        padding: 10px;
+        box-sizing: border-box;
+        text-align: center;
+        cursor: pointer;
+        position: relative;
+        transition: background-color 0.3s ease;
+    }
+
+    .calendar-dates li.active {
+        color: #fff;
+        background-color: darkblue;
+        border-radius:10%;
+    }
+
+    .calendar-dates li::before {
+        content: "";
+        position: absolute;
+        z-index: -1;
+        top: 50%;
+        left: 50%;
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        transform: translate(-50%, -50%);
+        transition: background-color 0.3s ease;
+    }
+
+    .calendar-dates li.active::before {
+        background: darkblue;
+    }
+
+    .calendar-dates li:not(.active):hover::before {
+        background: #e4e1e1;
+    }
+
+    #greeting {
+        font-size: 1.5rem;
+        font-weight: bold;
+        margin-bottom: 20px;
+    }
+
+    .user{
+        font-size: 1.5rem;
+        font-weight: bold;
+    }
+</style>
+
+<h2 class="user">Hii, @CV.UserName() </h2>
+<div id="greeting"></div>
 
 <section class="section dashboard">
     <div class="row d-flex">
@@ -98,7 +263,7 @@
                                 </div>
                             </div>
                             <hr style="color:aqua" />
-                            <a asp-area="MST_Room" asp-controller="MST_Room" asp-action="Index" class="text-info">View Details <i class="bi bi-arrow-right-circle-fill"></i></a>
+                            <a asp-area="MST_Employee" asp-controller="MST_Employee" asp-action="Index" class="text-info">View Details <i class="bi bi-arrow-right-circle-fill"></i></a>
                         </div>
                     </div>
                 </div>
@@ -132,7 +297,7 @@
     <div class="col-12">
         <div class="card info-card @((int)ViewBag.DashboardData["BedCount"] == (int)ViewBag.DashboardData["StudentCount"] ? "border-danger" : "border-success") border-5 border-start rounded">
             <div class="card-body">
-                <h5 class="card-title">Hostel Status</h5>
+                <h5 class="card-title"><i class="fa-solid fa-comment"></i> Hostel Status</h5>
                 <div class="">
                     @if ((int)ViewBag.DashboardData["BedCount"] == (int)ViewBag.DashboardData["StudentCount"])
                     {
@@ -148,22 +313,60 @@
     </div>
 </div>
 
-@*  <section class="section">
+ <section class="section">
     <div class="row">
         <div class="col-lg-6">
             <div class="card">
                 <div class="card-body">
-                    <h5 class="card-title">Notice</h5>
-                    <hr />
-                    @if (noticeData != null)
+                    <h5 class="card-title"><i class="fa-solid fa-note-sticky"></i> Notice</h5>
+                 
+
+                    @if (TempData["MST_Notice_AlertMessage"] != null)
                     {
-                        foreach (System.Data.DataRow row in noticeData.Rows)
-                        {
-                            // Access rows and columns of the DataTable
-                            <div>
-                                @row["Title"] <!-- Access specific column value -->
-                            </div>
-                        }
+                        <div class="alert alert-success alert-dismissible fade show" role="alert">
+                            @TempData["MST_Notice_AlertMessage"]
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>
+                    }
+
+                    @if (TempData["MST_Notice_Delete_AlertMessage"] != null)
+                    {
+                        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                            @TempData["MST_Notice_Delete_AlertMessage"]
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>
+                    }
+                    @if (Model != null && Model.Rows.Count > 0)
+                    {
+                        <table id="sample_1" class="table table-hover">
+                            <thead>
+                                <tr>
+                                    <th class="ps-2">Title</th>
+                                    <th class="ps-2">Description</th>
+                                    <th class="text-center">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (DataRow dr in Model.Rows)
+                                {
+                                    <tr>
+                                        <td>@dr["Title"]</td>
+                                        <td>@dr["Description"]</td>
+                                        <td class="d-flex justify-content-center align-items-center">
+                                            <form method="post" asp-area="MST_Notice" asp-controller="MST_Notice" , asp-action="Delete">
+                                                <input type="hidden" name="NoticeID" value="@Convert.ToInt32(dr["NoticeID"])" />
+                                                <button type="submit" class="btn btn-danger me-2" onclick="return confirm('Are you sure you want to delete this?')"><i class="fa fa-trash"></i></button>
+                                            </form>
+
+                                            <form method="get" asp-area="MST_Notice" asp-controller="MST_Notice" asp-action="Add">
+                                                <input type="hidden" name="NoticeID" value="@Convert.ToInt32(dr["NoticeID"].ToString())">
+                                                <button type="submit" class="btn btn-warning"><i class="fa fa-pen-to-square"></i></button>
+                                            </form>
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
                     }
                     else
                     {
@@ -173,16 +376,45 @@
             </div>
         </div>
 
+
         <div class="col-lg-6">
             <div class="card">
                 <div class="card-body">
-                    <h5 class="card-title">Calendar</h5>
-                    <div id="calendar"></div>
+                    <h5 class="card-title"><i class="fa-solid fa-calendar-days"></i> Calendar</h5>
+                 
+                    <div class="calendar-container">
+                        <header class="mt-3 calendar-header">
+                            <p class="calendar-current-date rounded-5 bg-secondary p-2 text-light fw-bold"></p>
+                            <div class="calendar-navigation">
+                                <span id="calendar-prev"
+                                      class="material-symbols-rounded text-light" style="background-color:darkblue">
+                                    chevron_left
+                                </span>
+                                <span id="calendar-next"
+                                      class="material-symbols-rounded text-light" style="background-color:darkblue">
+                                    chevron_right
+                                </span>
+                            </div>
+                        </header>
+
+                        <div class="calendar-body">
+                            <ul class="calendar-weekdays bg-warning rounded-5 p-2">
+                                <li>Sun</li>
+                                <li>Mon</li>
+                                <li>Tue</li>
+                                <li>Wed</li>
+                                <li>Thu</li>
+                                <li>Fri</li>
+                                <li>Sat</li>
+                            </ul>
+                            <ul class="mb-3 calendar-dates"></ul>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-</section> *@
+</section>
 
 <script>
     document.addEventListener("DOMContentLoaded", function () {
@@ -208,24 +440,120 @@
     });
 
 
+    let date = new Date();
+    let year = date.getFullYear();
+    let month = date.getMonth();
 
-        $(document).ready(function () {
-            $('#calendar').fullCalendar({
-                // Your FullCalendar options go here
-                // For example:
-                header: {
-                    left: 'prev,next today',
-                    center: 'title',
-                    right: 'month,agendaWeek,agendaDay'
-                },
-                events: [
-                    {
-                        title: 'Event 1',
-                        start: '2023-01-01T10:00:00',
-                        end: '2023-01-01T14:00:00'
-                    },
-                    // Add more events as needed
-                ]
-            });
+    const day = document.querySelector(".calendar-dates");
+
+    const currdate = document
+        .querySelector(".calendar-current-date");
+
+    const prenexIcons = document
+        .querySelectorAll(".calendar-navigation span");
+
+    // Array of month names
+    const months = [
+        "January",
+        "February",
+        "March",
+        "April",
+        "May",
+        "June",
+        "July",
+        "August",
+        "September",
+        "October",
+        "November",
+        "December"
+    ];
+
+    // Function to generate the calendar
+    const manipulate = () => {
+
+        // Get the first day of the month
+        let dayone = new Date(year, month, 1).getDay();
+
+        // Get the last date of the month
+        let lastdate = new Date(year, month + 1, 0).getDate();
+
+        // Get the day of the last date of the month
+        let dayend = new Date(year, month, lastdate).getDay();
+
+        // Get the last date of the previous month
+        let monthlastdate = new Date(year, month, 0).getDate();
+
+        // Variable to store the generated calendar HTML
+        let lit = "";
+
+        // Loop to add the last dates of the previous month
+        for (let i = dayone; i > 0; i--) {
+            lit +=
+                `<li class="inactive">${monthlastdate - i + 1}</li>`;
+        }
+
+        // Loop to add the dates of the current month
+        for (let i = 1; i <= lastdate; i++) {
+
+            // Check if the current date is today
+            let isToday = i === date.getDate()
+                && month === new Date().getMonth()
+                && year === new Date().getFullYear()
+                ? "active"
+                : "";
+            lit += `<li class="${isToday}">${i}</li>`;
+        }
+
+        // Loop to add the first dates of the next month
+        for (let i = dayend; i < 6; i++) {
+            lit += `<li class="inactive">${i - dayend + 1}</li>`
+        }
+
+        // Update the text of the current date element
+        // with the formatted current month and year
+        currdate.innerText = `${months[month]} ${year}`;
+
+        // update the HTML of the dates element
+        // with the generated calendar
+        day.innerHTML = lit;
+    }
+
+    manipulate();
+
+    // Attach a click event listener to each icon
+    prenexIcons.forEach(icon => {
+
+        // When an icon is clicked
+        icon.addEventListener("click", () => {
+
+            // Check if the icon is "calendar-prev"
+            // or "calendar-next"
+            month = icon.id === "calendar-prev" ? month - 1 : month + 1;
+
+            // Check if the month is out of range
+            if (month < 0 || month > 11) {
+
+                // Set the date to the first day of the
+                // month with the new year
+                date = new Date(year, month, new Date().getDate());
+
+                // Set the year to the new year
+                year = date.getFullYear();
+
+                // Set the month to the new month
+                month = date.getMonth();
+            }
+
+            else {
+
+                // Set the date to the current date
+                date = new Date();
+            }
+
+            // Call the manipulate function to
+            // update the calendar display
+            manipulate();
         });
+    });
+        
 </script>

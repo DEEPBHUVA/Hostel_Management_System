@@ -4,6 +4,7 @@ using System.Data.SqlClient;
 using System.Data;
 using System.Diagnostics;
 using Hostel_Management_System.BAL;
+using Hostel_Management_System.DAL;
 
 namespace Hostel_Management_System.Controllers
 {
@@ -12,6 +13,8 @@ namespace Hostel_Management_System.Controllers
     {
         private readonly ILogger<HomeController> _logger;
         public IConfiguration Configuration;
+
+        MST_Notice_DAL dalMST_Notice = new MST_Notice_DAL();
 
         public HomeController(ILogger<HomeController> logger, IConfiguration configuration)
         {
@@ -48,9 +51,9 @@ namespace Hostel_Management_System.Controllers
 
             // Pass data to view using ViewBag or ViewData
             ViewBag.DashboardData = dataDictionary;
-            
 
-            return View();
+            DataTable dt = dalMST_Notice.PR_MST_Notice_SelectAll();
+            return View(dt);
         }
 
         public IActionResult Privacy()

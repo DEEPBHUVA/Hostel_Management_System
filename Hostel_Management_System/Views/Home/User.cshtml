@@ -1,0 +1,231 @@
+﻿@using Hostel_Management_System.BAL
+@{
+    ViewData["Title"] = "Home Page";
+    Layout = "~/Views/Shared/_UserLayout.cshtml";
+}
+
+@using System.Data
+@model DataTable
+
+<style>
+    #greeting {
+        font-size: 1.5rem;
+        font-weight: bold;
+        margin-bottom: 20px;
+    }
+
+    .user {
+        font-size: 1.5rem;
+        font-weight: bold;
+    }
+
+    .profile-card {
+        background-color: #fff;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        padding: 20px;
+        text-align: center;
+    }
+
+    .profile-card img {
+        max-width: 100%;
+        border-radius: 50%;
+    }
+
+    .badge {
+        font-size: 14px;
+        margin-top: 10px;
+    }
+
+    .badge.bg-success {
+        background-color: #2ecc71;
+        color: #fff;
+    }
+
+    .badge.bg-danger {
+        background-color: #e74c3c;
+        color: #fff;
+    }
+
+    .social-links a {
+        color: #3498db;
+        margin: 0 5px;
+        font-size: 18px;
+    }
+
+    .nav-tabs-bordered .nav-item {
+        margin-bottom: -1px;
+    }
+
+    .nav-tabs-bordered .nav-link {
+        border: 1px solid #ddd;
+        border-radius: 5px 5px 0 0;
+    }
+
+    .nav-tabs-bordered .nav-item.show .nav-link,
+    .nav-tabs-bordered .nav-link.active {
+        border-bottom: none;
+    }
+
+    .tab-content {
+        padding: 20px;
+    }
+
+    .label {
+        font-weight: bold;
+        color: #777;
+    }
+</style>
+
+<h2 class="user">Hii, @CV.UserName() </h2>
+<div id="greeting"></div>
+
+@foreach (DataRow obj in Model.Rows)
+{
+<section class="section dashboard">
+    <section class="section profile">
+        <div class="row">
+            <div class="col-xl-4">
+                <div class="card">
+                    <div class="card-body profile-card pt-4 d-flex flex-column align-items-center">
+
+                         <img src="@Url.Content(obj["PhotoPath"].ToString())" alt="@obj["StudentName"]" class="rounded-circle" />
+                          <h2>@obj["StudentName"]</h2>
+                          <h4 class="@(obj["isActive"].ToString() == "True" ? "badge bg-success" : "badge bg-danger")">@obj["isActive"]</h4>
+
+                            <div class="social-links mt-2">
+                                <a href="#" class="twitter"><i class="bi bi-twitter"></i></a>
+                                <a href="#" class="facebook"><i class="bi bi-facebook"></i></a>
+                                <a href="#" class="instagram"><i class="bi bi-instagram"></i></a>
+                                <a href="#" class="linkedin"><i class="bi bi-linkedin"></i></a>
+                            </div>
+                    </div>
+                </div>
+                    
+            </div>
+
+            <div class="col-xl-8">
+                <div class="card">
+                    <div class="card-body pt-3">
+                        <!-- Bordered Tabs -->
+                        <ul class="nav nav-tabs nav-tabs-bordered">
+                            <li class="nav-item">
+                                <button class="nav-link active" data-bs-toggle="tab" data-bs-target="#profile-overview">Profile</button>
+                            </li>
+                        </ul>
+
+                        <div class="tab-content pt-2">
+
+                            <div class="tab-pane fade show active profile-overview px-2" id="profile-overview">
+
+                                <h5 class="card-title">Details</h5>
+
+                                <div class="row">
+                                    <div class="col-lg-3 col-md-4 label ">Full Name</div>
+                                    <div class="col-lg-9 col-md-8">@obj["StudentName"]</div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-lg-3 col-md-4 label">Email</div>
+                                    <div class="col-lg-9 col-md-8">@obj["Email"]</div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-lg-3 col-md-4 label">Contact No.</div>
+                                        <div class="col-lg-9 col-md-8">@obj["MobileNo"]</div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-lg-3 col-md-4 label">Birth Date</div>
+                                        <div class="col-lg-9 col-md-8">@Convert.ToDateTime(obj["BirthDate"]).ToString("dd-MM-yyyy")</div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-lg-3 col-md-4 label">Age</div>
+                                    <div class="col-lg-9 col-md-8">@obj["Age"]</div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-lg-3 col-md-4 label">Blood Group</div>
+                                    <div class="col-lg-9 col-md-8">@obj["BloodGroup"]</div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-lg-3 col-md-4 label">Course</div>
+                                        <div class="col-lg-9 col-md-8">@obj["CourseName"]</div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-lg-3 col-md-4 label">Nationality</div>
+                                        <div class="col-lg-9 col-md-8">@obj["Nationlity"]</div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-lg-3 col-md-4 label">Aadhar Card No.</div>
+                                        <div class="col-lg-9 col-md-8">@obj["AadharCardNo"]</div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-lg-3 col-md-4 label">Father Name</div>
+                                        <div class="col-lg-9 col-md-8">@obj["FatherName"]</div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-lg-3 col-md-4 label">Father`s Contact No</div>
+                                        <div class="col-lg-9 col-md-8">@obj["FatherMobileNo"]</div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-lg-3 col-md-4 label">Mother Name</div>
+                                        <div class="col-lg-9 col-md-8">@obj["MotherName"]</div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-lg-3 col-md-4 label">Mother`s Contact No.</div>
+                                        <div class="col-lg-9 col-md-8">@obj["MotherMobileNo"]</div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-lg-3 col-md-4 label">Current Address</div>
+                                        <div class="col-lg-9 col-md-8">@obj["PresentAddress"]</div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-lg-3 col-md-4 label">Perment Address</div>
+                                        <div class="col-lg-9 col-md-8">@obj["PermentAddress"]</div>
+                                </div>
+                            </div>
+                        </div><!-- End Bordered Tabs -->
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+</section>
+}
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        // Get the current time
+        var currentTime = new Date();
+        var hours = currentTime.getHours();
+
+        // Get the greeting based on the time
+        var greeting;
+        if (hours < 12) {
+            greeting = "Good Morning 🌞";
+        } else if (hours < 18) {
+            greeting = "Good Afternoon ☀️";
+        } else {
+            greeting = "Good Evening 🌜";
+        }
+
+        // Display the greeting in the designated element
+        var greetingElement = document.getElementById("greeting");
+        if (greetingElement) {
+            greetingElement.textContent = greeting;
+        }
+    }); 
+ </script>

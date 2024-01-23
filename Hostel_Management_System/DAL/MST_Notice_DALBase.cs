@@ -102,7 +102,7 @@ namespace Hostel_Management_System.DAL
             try
             {
                 SqlDatabase sqlDB = new SqlDatabase(MyConnectionStr);
-                DbCommand dbCMD = sqlDB.GetStoredProcCommand("PR_MST_COURSE_UPDATE");
+                DbCommand dbCMD = sqlDB.GetStoredProcCommand("PR_MST_Notice_Update");
                 sqlDB.AddInParameter(dbCMD, "NoticeID", SqlDbType.Int, NoticeID);
                 sqlDB.AddInParameter(dbCMD, "Title", SqlDbType.VarChar, Title);
                 sqlDB.AddInParameter(dbCMD, "Description", SqlDbType.VarChar, Description);

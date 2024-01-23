@@ -27,5 +27,55 @@
 			}
 			return UserID;
 		}
-	}
+
+		public static string? FristName()
+		{
+			string? FristName = null;
+			if (_contextAccessor.HttpContext.Session.GetString("FristName") != null)
+			{
+				FristName = _contextAccessor.HttpContext.Session.GetString("FristName").ToString();
+			}
+			return FristName;
+		}
+
+		public static string? LastName()
+		{
+			string? LastName = null;
+			if (_contextAccessor.HttpContext.Session.GetString("LastName") != null)
+			{
+				LastName = _contextAccessor.HttpContext.Session.GetString("LastName").ToString();
+			}
+			return LastName;
+		}
+
+        public static string? UserRole()
+        {
+            string? UserRole = null;
+            if (_contextAccessor.HttpContext.Session.GetString("UserRole") != null)
+            {
+                UserRole = _contextAccessor.HttpContext.Session.GetString("UserRole").ToString();
+            }
+            return UserRole;
+        }
+
+        public static string? PhotoPath()
+        {
+            string? PhotoPath = null;
+            if (_contextAccessor.HttpContext.Session.GetString("PhotoPath") != null)
+            {
+                PhotoPath = _contextAccessor.HttpContext.Session.GetString("PhotoPath").ToString();
+            }
+            return PhotoPath;
+        }
+
+        public static int? StudentID()
+        {
+            int? StudentID = null;
+            if (_contextAccessor.HttpContext.Session.GetString("StudentID") != null)
+            {
+                StudentID = Convert.ToInt32(_contextAccessor.HttpContext.Session.GetString("StudentID"));
+            }
+            return StudentID;
+        }
+    }
 }

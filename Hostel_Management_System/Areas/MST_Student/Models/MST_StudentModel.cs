@@ -78,6 +78,15 @@ namespace Hostel_Management_System.Areas.MST_Student.Models
         public IFormFile? File { get; set; }
         public DateTime Created { get; set; }
         public DateTime Modified { get; set; }
+        public DateTime PaymentDate { get; set; }
+        public int? PaymentID { get; set; }
+        public decimal Amount { get; set; }
+        public string? ChequeNo { get; set; }
+        public string? BankName { get; set; }
+        public string? Remark { get; set; }
+        public string PaidBY { get; set; }
+        public string ReceiptNo { get; set; }
+        public int RoomNo { get; set;}
     }
 
     public class MST_StudentDropdown

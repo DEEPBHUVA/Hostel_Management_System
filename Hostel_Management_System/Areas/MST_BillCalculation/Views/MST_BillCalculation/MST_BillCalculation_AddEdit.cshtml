@@ -1,0 +1,103 @@
+﻿﻿@{
+    ViewData["Title"] = "Bill Add/Edit";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@using System.Data;
+@model Hostel_Management_System.Areas.MST_BillCalculation.Models.MST_BillCalculationModel;
+
+<div class="pagetitle">
+    <h1>Bill Add/Edit</h1>
+    <nav>
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a asp-controller="Home" asp-action="Index">Home</a></li>
+            <li class="breadcrumb-item"><a asp-controller="MST_BillCalculation" asp-action="Index">Bill List</a></li>
+            <li class="breadcrumb-item active"><a asp-controller="MST_BillCalculation" asp-action="Add">Add</a></li>
+        </ol>
+    </nav>
+</div>
+
+<style>
+    .card {
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        margin-top: 20px;
+    }
+
+    .card-body {
+        padding: 20px;
+    }
+
+    .card-title {
+        font-size: 1.25rem;
+        color: #333;
+    }
+
+    .form-group {
+        margin-bottom: 5px;
+    }
+
+    label {
+        font-weight: bold;
+    }
+
+    input[type="text"],
+    input[type="date"],
+    input[type="file"],
+    select,
+    textarea {
+        width: 100%;
+        padding: 8px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        box-sizing: border-box;
+    }
+
+    select {
+        appearance: none;
+    }
+</style>
+
+<div class="card col-md-6">
+    <div class="card-body p-3">
+        <span class="card-title"><i class="fa-solid fa-file-invoice"></i> Bills</span>
+        <hr />
+        <form role="form" method="post" asp-area="MST_BillCalculation" asp-controller="MST_BillCalculation" asp-action="Save">
+            @Html.HiddenFor(x => x.BillID)
+
+            <div class="form-group">
+                <label for="inputState"><span class="text-danger">*</span>Bill Type</label>
+                <select class="form-control" asp-for="BillTypeID" asp-items="@(new SelectList( ViewBag.BillTypeList,"BillTypeID","BillType"))">
+                    <option value="">Select BillType</option>
+                </select>
+                <span asp-validation-for="BillTypeID" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label for="inputState"><span class="text-danger">*</span>Description</label>
+                <input type="text" class="form-control" placeholder="Enter Description" asp-for="Description">
+                <span asp-validation-for="Description" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label for="inputState"><span class="text-danger">*</span>Date</label>
+                <input type="date" class="form-control" placeholder="Enter Date Of Bill" asp-for="BillDate">
+                <span asp-validation-for="BillDate" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label for="inputState"><span class="text-danger">*</span>Amount</label>
+                <input type="text" class="form-control" placeholder="Enter Amount" asp-for="Amount">
+                <span asp-validation-for="Amount" class="text-danger"></span>
+            </div>
+
+            <hr />
+            <button type="submit" class="btn btn-success"><i class="fa-solid fa-floppy-disk mx-1"></i> Save</button>
+            <a class="btn btn-secondary" asp-controller="MST_BillCalculation" asp-action="Cancle"><i class="bi bi-caret-left-fill"></i> Back</a>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial.cshtml" />
+}

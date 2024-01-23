@@ -1,8 +1,12 @@
-﻿using Hostel_Management_System.Areas.SEC_User.Models;
+﻿using Hostel_Management_System.Areas.MST_Payment.Models;
+using Hostel_Management_System.Areas.MST_Student.Models;
+using Hostel_Management_System.Areas.SEC_User.Models;
 using Hostel_Management_System.DAL;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Practices.EnterpriseLibrary.Data;
 using System.Data;
+using System.Data.SqlClient;
 
 namespace Hostel_Management_System.Areas.SEC_User.Controllers
 {
@@ -10,12 +14,57 @@ namespace Hostel_Management_System.Areas.SEC_User.Controllers
 	[Route("SEC_User/{Controller}/{action}")]
 	public class SEC_UserController : Controller
 	{
-		public IActionResult Index()
+        SEC_User_DAL dal = new SEC_User_DAL();
+        #region Configuration
+        public IConfiguration Configuration;
+		public SEC_UserController(IConfiguration configuration)
+		{
+			Configuration = configuration;
+		}
+        #endregion
+
+        #region Index
+        public IActionResult Index()
 		{
 			return View("SEC_USserLogin");
 		}
+        #endregion
 
-		[HttpPost]
+        #region GetUserRole
+        public string GetUserRole(string username, string password)
+		{
+			string connectionString = Configuration.GetConnectionString("ConStr");
+
+			using (SqlConnection connection = new SqlConnection(connectionString))
+			{
+				connection.Open();
+
+				using (SqlCommand command = new SqlCommand("[PR_SEC_User_GetRole]", connection))
+				{
+					command.CommandType = CommandType.StoredProcedure;
+
+					// Add OUTPUT parameter
+					SqlParameter userRoleParameter = new SqlParameter("@User_Role", SqlDbType.VarChar, 50);
+					userRoleParameter.Direction = ParameterDirection.Output;
+					command.Parameters.Add(userRoleParameter);
+
+					// Add other parameters
+					command.Parameters.Add(new SqlParameter("@UserName", SqlDbType.VarChar, 50) { Value = username });
+					command.Parameters.Add(new SqlParameter("@Password", SqlDbType.VarChar, 50) { Value = password });
+
+					command.ExecuteNonQuery();
+
+					// Retrieve the value of the OUTPUT parameter
+					string userRole = userRoleParameter.Value.ToString();
+
+					return userRole;
+				}
+			}
+		}
+        #endregion
+
+        #region
+        [HttpPost]
 		public IActionResult Login(SEC_UserModel modelSEC_User)
 		{
 			string ErrorMsg = string.Empty;
@@ -35,7 +84,7 @@ namespace Hostel_Management_System.Areas.SEC_User.Controllers
 			}
 			else
 			{
-				SEC_User_DAL dal = new SEC_User_DAL();
+				
 				DataTable dt = dal.PR_SEC_User_SelectBYUserNamePassword(modelSEC_User.UserName, modelSEC_User.Password);
 				if (dt.Rows.Count > 0)
 				{
@@ -43,8 +92,12 @@ namespace Hostel_Management_System.Areas.SEC_User.Controllers
 					{
 						HttpContext.Session.SetString("UserID", dr["UserID"].ToString());
 						HttpContext.Session.SetString("UserName", dr["UserName"].ToString());
+						HttpContext.Session.SetString("FristName", dr["FristName"].ToString()); // Corrected column name
+						HttpContext.Session.SetString("LastName", dr["LastName"].ToString());
+						HttpContext.Session.SetString("UserRole", dr["UserRole"].ToString());
 						HttpContext.Session.SetString("Email", dr["Email"].ToString());
-						HttpContext.Session.SetString("Password", dr["Password"].ToString());
+                        HttpContext.Session.SetString("StudentID", dr["StudentID"].ToString());
+                        HttpContext.Session.SetString("Password", dr["Password"].ToString());
 						HttpContext.Session.SetString("PhotoPath", dr["PhotoPath"].ToString());
 						break;	
 					}
@@ -57,18 +110,134 @@ namespace Hostel_Management_System.Areas.SEC_User.Controllers
 
 				if (HttpContext.Session.GetString("UserName") != null && HttpContext.Session.GetString("Password") != null)
 				{
-					return RedirectToAction("Index", "Home");
+					string username = HttpContext.Session.GetString("UserName");
+					string password = HttpContext.Session.GetString("Password");
+
+					
+					string userRole = GetUserRole(username, password);
+					if (!string.IsNullOrEmpty(userRole))
+					{
+						// Check the user role and redirect accordingly
+						if (userRole == "Admin")
+						{
+							return RedirectToAction("Index", "Home");
+						}
+						else if (userRole == "Student")
+						{
+							return RedirectToAction("Index", "User");
+						}
+					}
+					else
+					{
+						return RedirectToAction("Index");
+					}
+					
 				}
 			}
 			return RedirectToAction("Index");
 		}
-		//Logout action to clear current session and redirect user to login page
-		[HttpPost]
-        public async Task<IActionResult> LOGOUT()
+		#endregion
+
+        #region LogOut
+        //Logout action to clear current session and redirect user to login page
+        public IActionResult LOGOUT()
         {
             HttpContext.Session.Clear();
-            await HttpContext.SignOutAsync();
-            return RedirectToAction("Index");
+            return RedirectToAction("Index", "Home"); // Redirect to the desired action and controller
         }
+        #endregion
+
+        #region SelectAllPayment
+        public IActionResult GetallUser()
+        {
+            DataTable dt = dal.PR_SEC_User_SelectAll();
+            return View("SEC_User_List", dt);
+        }
+        #endregion
+
+        #region Add
+        public IActionResult Add(int? UserID)
+        {
+
+            #region Student Dropdown
+            string MyConnectionStr1 = this.Configuration.GetConnectionString("ConStr");
+            SqlConnection connection2 = new SqlConnection(MyConnectionStr1);
+            DataTable dt2 = new DataTable();
+            connection2.Open();
+            SqlCommand cmd2 = connection2.CreateCommand();
+            cmd2.CommandType = CommandType.StoredProcedure;
+            cmd2.CommandText = "PR_MST_StudentDropdown";
+            SqlDataReader reader2 = cmd2.ExecuteReader();
+            dt2.Load(reader2);
+
+            List<MST_StudentDropdown> list1 = new List<MST_StudentDropdown>();
+            foreach (DataRow dr in dt2.Rows)
+            {
+                MST_StudentDropdown dlist = new MST_StudentDropdown();
+                dlist.StudentID = Convert.ToInt32(dr["StudentID"]);
+                dlist.StudentName = dr["StudentName"].ToString();
+                list1.Add(dlist);
+            }
+            ViewBag.StudentList = list1;
+            #endregion
+
+            if (UserID != null)
+            {
+                DataTable dt = dal.PR_SEC_User_SelectByPk(UserID);
+                SEC_UserModel modelSEC_User= new SEC_UserModel();
+
+                foreach (DataRow row in dt.Rows)
+                {
+                    modelSEC_User.UserID= Convert.ToInt32(row["UserID"]);
+                    modelSEC_User.StudentID = Convert.ToInt32(row["StudentID"]);
+                    modelSEC_User.FirstName= row["FristName"].ToString();
+                    modelSEC_User.LastName= row["LastName"].ToString();
+                    modelSEC_User.UserName= row["UserName"].ToString();
+                    modelSEC_User.Password= row["Password"].ToString();
+                    modelSEC_User.Email= row["Email"].ToString();
+                    modelSEC_User.UserRole = row["UserRole"].ToString();
+                }
+                return View("SEC_User_AddForm", modelSEC_User);
+            }
+            return View("SEC_User_AddForm");
+        }
+        #endregion
+
+        #region Save(Insert/Update)
+        public IActionResult Save(SEC_UserModel modelSEC_user)
+        {
+            if (modelSEC_user.UserID== null)
+            {
+                DataTable dt = dal.PR_SEC_User_Insert((int)modelSEC_user.StudentID,modelSEC_user.FirstName,modelSEC_user.LastName,modelSEC_user.UserName,modelSEC_user.UserRole,modelSEC_user.Email);
+                TempData["SEC_User_AlertMessage"] = "Record Inserted Successfully!!";
+            }
+            else
+            {
+                DataTable dt = dal.PE_SEC_User_Edit((int)modelSEC_user.UserID, (int)modelSEC_user.StudentID, modelSEC_user.FirstName, modelSEC_user.LastName, modelSEC_user.UserName, modelSEC_user.UserRole, modelSEC_user.Email);
+                TempData["SEC_User_AlertMessage"] = "Record Updated Successfully!!";
+            }
+            return RedirectToAction("GetallUser");
+        }
+        #endregion
+
+        #region Delete
+        public IActionResult Delete(int UserID)
+        {
+            if (Convert.ToBoolean(dal.PR_SEC_User_Delete(UserID)))
+            {
+                TempData["SEC_User_Delete_AlertMessage"] = "Record Deleted Successfully";
+                return RedirectToAction("GetallUser");
+            }
+            return RedirectToAction("GetallUser");
+        }
+        #endregion
+
+        #region Cancle
+        public IActionResult Cancle()
+        {
+            return RedirectToAction("GetallUser");
+        }
+        #endregion
+
     }
 }
