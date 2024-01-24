@@ -1,0 +1,103 @@
+﻿@{
+    ViewData["Title"] = "Payment History Page";
+    Layout = "~/Views/Shared/_UserLayout.cshtml";
+}
+
+    @using System.Data
+    @model DataTable
+
+<div class="pagetitle">
+    <h1>Fees History List</h1>
+    <nav>
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a asp-controller="User" asp-action="Index">Home</a></li>
+            <li class="breadcrumb-item active"><a asp-controller="User" asp-action="Rules">Rules</a></li>
+        </ol>
+    </nav>
+</div>
+
+<style>
+    h1 {
+        color: #007BFF;
+    }
+
+    h2 {
+        color: #007BFF;
+    }
+
+    p {
+        margin-bottom: 15px;
+    }
+
+    ol {
+        margin-bottom: 20px;
+        list-style-type: decimal;
+        padding-left: 20px;
+    }
+
+    li {
+        margin-bottom: 10px;
+    }
+
+    strong {
+        color: darkblue;
+    }
+
+    note {
+        font-style: italic;
+        color: #888;
+    }
+
+    disclaimer {
+        font-style: italic;
+        color: #888;
+    }
+
+    .rule_Con{
+        padding:20px;
+        border-radius: 10px;
+        background-color: rgb(240, 239, 237);
+    }
+</style>
+
+<section class="section">
+
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="card">
+                <div class="card-body">
+                    <h1 class="card-title"><i class="fa-solid fa-rectangle-list"></i> Hostel Rules</h1>
+
+                    <div class="rule_Con">
+                    <ol>
+                        <li><strong>Adhere to Check-In/Check-Out Timing:</strong> Follow the designated timings for check-in and check-out.</li>
+
+                        <li><strong>Always Carry Identification:</strong> Carry your identification card at all times within the hostel premises.</li>
+
+                        <li><strong>Guest Policy:</strong> Adhere to the hostel's guest policy, sign in guests at the reception, and follow visiting hour restrictions.</li>
+
+                        <li><strong>Respect Quiet Hours:</strong> Maintain a quiet environment during specified quiet hours to ensure a peaceful atmosphere for all residents.</li>
+
+                        <li><strong>Maintain Cleanliness:</strong> Keep your living space and common areas clean. Participate in routine cleanliness checks.</li>
+
+                        <li><strong>No Smoking and Drinking:</strong> Smoking and drinking may be restricted or allowed only in designated areas. Follow the hostel's policies on these activities.</li>
+
+                        <li><strong>Use Facilities Responsibly:</strong> Use shared facilities such as bathrooms, kitchens, and common rooms responsibly and with respect for others.</li>
+
+                        <li><strong>Respect Privacy:</strong> Respect the privacy and well-being of fellow residents. Avoid harassment, discrimination, or disruptive behavior.</li>
+
+                        <li><strong>Participate in Fire Drills:</strong> Follow fire safety measures, including not blocking fire exits, and participate in fire drills when required.</li>
+
+                        <li><strong>Report Issues Promptly:</strong> Report maintenance issues, security concerns, or rule violations promptly to hostel management.</li>
+                    </ol>
+
+                    <note class="text-danger"><strong>Note:</strong> These rules are subject to change, and residents are responsible for staying informed about any updates or modifications to the hostel rules and regulations.</note>
+                    </div>
+                    
+
+
+                 </div>
+            </div>
+        </div>
+    </div>
+</section>

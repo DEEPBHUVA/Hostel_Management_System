@@ -241,6 +241,41 @@ namespace Hostel_Management_System.Areas.MST_Student.Controllers
         }
         #endregion
 
+        #region PaymentHistory
+        public IActionResult PaymentHistory()
+        {
+            int studentID = (int)@CV.StudentID();
+            string connectionString = this.Configuration.GetConnectionString("ConStr");
+            DataTable dataTable = new DataTable();
+
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                connection.Open();
+                using (SqlCommand command = new SqlCommand("PR_Calculate_StudentFeesAmount", connection))
+                {
+                    command.Parameters.AddWithValue("@StudentID", studentID);
+                    command.CommandType = CommandType.StoredProcedure;
+                    SqlDataReader reader = command.ExecuteReader();
+                    dataTable.Load(reader);
+                }
+            }
+
+            // Convert DataTable to Dictionary for simplicity
+            Dictionary<string, int> dataDictionary = new Dictionary<string, int>
+            {
+                { "TotalFeesAmount", Convert.ToInt32(dataTable.Rows[0]["TotalFeesAmount"]) },
+                
+
+            };
+
+            // Pass data to view using ViewBag or ViewData
+            ViewBag.TotalAMount = dataDictionary;
+
+            DataTable dt = dalMST_Student.PR_MST_Payment_SelectStudentID(studentID);
+            return View("MST_Student_PaymentHistory", dt);
+        }
+        #endregion
+
         public List<MST_StudentModel> GetStudentModels()
         {
             List<MST_StudentModel> studentModels = new List<MST_StudentModel>();

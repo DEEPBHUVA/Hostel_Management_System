@@ -61,8 +61,8 @@
 
                     <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
                         <li class="dropdown-header">
-                            <h6>@CV.FristName() @CV.LastName()</h6>
-                            <span><i class="fa-solid fa-user-tie"></i>  @CV.UserRole()</span>
+                            <h6 class="text-left">@CV.FristName() @CV.LastName()</h6>
+                            <span>@CV.UserRole()</span>
                         </li>
                         <li>
                             <hr class="dropdown-divider">
@@ -126,12 +126,12 @@
 
             <li class="nav-item">
                 <a class="nav-link collapsed" data-bs-target="#components-nav" data-bs-toggle="collapse" href="#">
-                    <i class="fa-solid fa-users"></i><span>Manage Student</span><i class="bi bi-chevron-down ms-auto"></i>
+                    <i class="fa-solid fa-clock-rotate-left"></i><span>Fees</span><i class="bi bi-chevron-down ms-auto"></i>
                 </a>
                 <ul id="components-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
                     <li>
-                        <a asp-area="MST_Student" asp-controller="MST_Student" asp-action="Add">
-                            <i class="bi bi-person-fill-add"></i><span>Add Student</span>
+                        <a asp-area="MST_Student" asp-controller="MST_Student" asp-action="PaymentHistory">
+                            <i class="fa-solid fa-circle"></i> <span>Fees History</span>
                         </a>
                     </li>
                 </ul>
@@ -140,12 +140,12 @@
             <!-- New dropdown -->
             <li class="nav-item">
                 <a class="nav-link collapsed" data-bs-target="#another-nav" data-bs-toggle="collapse" href="#">
-                    <i class="fa-solid fa-gear"></i> <span> Account Setting</span><i class="bi bi-chevron-down ms-auto"></i>
+                    <i class="fa-solid fa-rectangle-list"></i> <span> Rules</span><i class="bi bi-chevron-down ms-auto"></i>
                 </a>
                 <ul id="another-nav" class="nav-content collapse" data-bs-parent="#sidebar-nav">
                     <li>
-                        <a asp-area="YourArea" asp-controller="YourController" asp-action="YourAction">
-                            <i class="bi bi-circle"></i> Your Link
+                         <a asp-controller="User" asp-action="Rules">
+                            <i class="fa-solid fa-circle"></i> <span>Rules</span>
                         </a>
                     </li>
                     <!-- Add more items as needed -->
@@ -161,7 +161,7 @@
 
     <footer id="footer" class="footer">
         <div class="copyright">
-            &copy; Copyright <strong><span>Deep Bhuva (21010101025)</span></strong>. All Rights Reserved
+            &copy; Copyright <strong><span>Deep Bhuva</span></strong>. All Rights Reserved
         </div>
         <div class="credits">
             <!-- All the links in the footer should remain intact. -->

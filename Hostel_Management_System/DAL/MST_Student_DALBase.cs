@@ -252,7 +252,7 @@ namespace Hostel_Management_System.DAL
             {
                 SqlDatabase sqlDB = new SqlDatabase(MyConnectionStr);
                 DbCommand dbCMD = sqlDB.GetStoredProcCommand("PR_MST_Payment_SelectStudentID");
-                sqlDB.AddInParameter(dbCMD, "StudentID", SqlDbType.Int, StudentID);
+                sqlDB.AddInParameter(dbCMD, "SudentID", SqlDbType.Int, StudentID);
 
                 DataTable dt = new DataTable();
                 using (IDataReader dr = sqlDB.ExecuteReader(dbCMD))

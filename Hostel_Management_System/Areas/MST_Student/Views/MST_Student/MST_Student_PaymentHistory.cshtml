@@ -1,0 +1,103 @@
+﻿    @{
+        ViewData["Title"] = "Payment History Page";
+        Layout = "~/Views/Shared/_UserLayout.cshtml";
+    }
+
+    @using System.Data
+    @model DataTable
+
+    <div class="pagetitle">
+        <h1>Fees History List</h1>
+        <nav>
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a asp-controller="User" asp-action="Index">Home</a></li>
+                <li class="breadcrumb-item active"><a asp-controller="MST_Student" asp-action="PaymentHistory">Fees History</a></li>
+            </ol>
+        </nav>
+    </div>
+
+    <style>
+
+        /* Table styles */
+        #sample_1 {
+            width: 100%;
+            overflow: hidden;
+            border-radius: 10px;
+        }
+
+        #sample_1 th {
+            padding: 15px 0px 15px 0px;
+            text-align: left;
+        }
+
+        #sample_1 th {
+            background-color: darkblue; /* Header background color */
+            color: #fff;
+        }
+
+        #sample_2 td {
+        background-color: rgb(240, 239, 237);
+    }
+
+        .display_Total{
+            border-radius: 10px;
+        }
+    </style>
+
+    <section class="section">
+
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title"><i class="fa-solid fa-clock-rotate-left"></i> Fees History</h5>
+                   
+                   
+                        @if (Model.Rows.Count > 0)
+                        {
+                            <table id="sample_1" class="table table-hover">
+                                <thead>
+                                    <tr>
+                                        <th class="text-center">Fees Date</th>
+                                        <th class="ps-2">Remark</th>
+                                        <th class="ps-2">PaidBY</th>
+                                        <th class="ps-2">Amount</th>
+                                        <th class="ps-2">Bank</th>
+                                        <th class="ps-2">ChequeNo</th>
+                                        <th class="ps-2">ReceiptNo</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="sample_2">
+                                    @foreach (DataRow dr in Model.Rows)
+                                    {
+                                        <tr>
+                                            <td class="text-center">@dr["PaymentDate"]</td>
+                                            <td>@dr["Remark"]</td>
+                                            <td>@dr["PaidBY"]</td>
+                                            <td>@Convert.ToDecimal(dr["Amount"]).ToString("N2")</td>
+                                            <td>@dr["BankName"]</td>
+                                            <td>@dr["ChequeNo"]</td>
+                                            <td>@dr["ReceiptNo"]</td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        <div class="bg-success display_Total">
+                            <h6 class="card-title text-light ps-3">
+                                Total Paid Amount:  ₹@String.Format("{0:N2}", ViewBag.TotalAMount["TotalFeesAmount"])
+                            </h6>
+                        </div>
+                        }
+                        else
+                        {
+                            <tr>
+                                <div class="w-full p-2 rounded bg-danger bg-opacity-75">
+                                    <i class="bi bi-x-circle-fill text-light"></i> <span style="font-size: 15px; color: white;">No Record Found</span>
+                                </div>
+                            </tr>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
