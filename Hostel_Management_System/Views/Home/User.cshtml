@@ -4,8 +4,8 @@
     Layout = "~/Views/Shared/_UserLayout.cshtml";
 }
 
-@using System.Data
-@model DataTable
+@using System.Data;
+@model Hostel_Management_System.ViewModel.UserViewModel;
 
 <style>
     #greeting {
@@ -75,13 +75,33 @@
         font-weight: bold;
         color: #777;
     }
+
+    .notice-item {
+        padding:3px;
+        margin:8px;
+        border-radius:10px;
+    }
+
+    
+
+    .notice-content h5 {
+        color:#333;
+        padding:2px;
+    }
+
+    .notice-content p {
+        color: darkblue; /* Description text color */
+    }
+
+   
+    
+
 </style>
 
 <h2 class="user">Hii, @CV.UserName() </h2>
 <div id="greeting"></div>
 
-@foreach (DataRow obj in Model.Rows)
-{
+
 <section class="section dashboard">
     <section class="section profile">
         <div class="row">
@@ -89,9 +109,9 @@
                 <div class="card">
                     <div class="card-body profile-card pt-4 d-flex flex-column align-items-center">
 
-                         <img src="@Url.Content(obj["PhotoPath"].ToString())" alt="@obj["StudentName"]" class="rounded-circle" />
-                          <h2>@obj["StudentName"]</h2>
-                          <h4 class="@(obj["isActive"].ToString() == "True" ? "badge bg-success" : "badge bg-danger")">@obj["isActive"]</h4>
+                          <img src="@Url.Content(Model.StudentData.Rows[0]["PhotoPath"].ToString())" alt="@Model.StudentData.Rows[0]["StudentName"]" class="rounded-circle" />
+                          <h2>@Model.StudentData.Rows[0]["StudentName"]</h2>
+                          <h4 class="@(Model.StudentData.Rows[0]["isActive"].ToString() == "True" ? "badge bg-success" : "badge bg-danger")">@Model.StudentData.Rows[0]["isActive"]</h4>
 
                             <div class="social-links mt-2">
                                 <a href="#" class="twitter"><i class="bi bi-twitter"></i></a>
@@ -102,10 +122,34 @@
                     </div>
 
                 </div>
-                    <div class="card-body profile-card pt-4 d-flex flex-column align-items-center">
 
-                       
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title"><i class="fa-solid fa-note-sticky"></i> Notice</h5>
+
+                        @if (Model.NoticeData.Rows.Count > 0)
+                        {
+                            @foreach (DataRow row in Model.NoticeData.Rows)
+                            {
+                                <div class="notice-item ps-2 pt-2 mt-2 shadow-sm bg-body-tertiary rounded">
+                                    <div class="notice-content">
+                                        <h6><b>@row["Title"]</b></h6>
+                                        <p><i>@row["Description"]</i></p>
+                                    </div>
+                                </div>
+                            }
+                        }
+                        else
+                        {
+                            <div class="w-full p-2 rounded bg-danger bg-opacity-75">
+                                <i class="bi bi-x-circle-fill text-light"></i> <span style="font-size: 15px; color: white;">No Record Found</span>
+                            </div>
+                        }
                     </div>
+
+                </div>
+                
+
                     
             </div>
 
@@ -123,81 +167,81 @@
 
                             <div class="tab-pane fade show active profile-overview px-2" id="profile-overview">
 
-                                <h5 class="card-title">Details</h5>
+                                <h5 class="card-title"><i class="fa-solid fa-user"></i> Details</h5>
 
                                 <div class="row border-bottom">
                                     <div class="col-lg-3 col-md-4 label ">Full Name</div>
-                                    <div class="col-lg-9 col-md-8">@obj["StudentName"]</div>
+                                    <div class="col-lg-9 col-md-8">@Model.StudentData.Rows[0]["StudentName"]</div>
                                 </div>
 
                                     <div class="row border-bottom">
                                     <div class="col-lg-3 col-md-4 label">Email</div>
-                                    <div class="col-lg-9 col-md-8">@obj["Email"]</div>
+                                    <div class="col-lg-9 col-md-8">@Model.StudentData.Rows[0]["Email"]</div>
                                 </div>
 
                                     <div class="row border-bottom">
                                     <div class="col-lg-3 col-md-4 label">Contact No.</div>
-                                        <div class="col-lg-9 col-md-8">@obj["MobileNo"]</div>
+                                    <div class="col-lg-9 col-md-8">@Model.StudentData.Rows[0]["MobileNo"]</div>
                                 </div>
 
                                     <div class="row border-bottom">
                                     <div class="col-lg-3 col-md-4 label">Birth Date</div>
-                                        <div class="col-lg-9 col-md-8">@Convert.ToDateTime(obj["BirthDate"]).ToString("dd-MM-yyyy")</div>
+                                        <div class="col-lg-9 col-md-8">@Convert.ToDateTime(Model.StudentData.Rows[0]["BirthDate"]).ToString("dd-MM-yyyy")</div>
                                 </div>
 
                                     <div class="row border-bottom">
                                     <div class="col-lg-3 col-md-4 label">Age</div>
-                                    <div class="col-lg-9 col-md-8">@obj["Age"]</div>
+                                    <div class="col-lg-9 col-md-8">@Model.StudentData.Rows[0]["Age"]</div>
                                 </div>
 
                                     <div class="row border-bottom">
                                     <div class="col-lg-3 col-md-4 label">Blood Group</div>
-                                    <div class="col-lg-9 col-md-8">@obj["BloodGroup"]</div>
+                                    <div class="col-lg-9 col-md-8">@Model.StudentData.Rows[0]["BloodGroup"]</div>
                                 </div>
 
                                     <div class="row border-bottom">
                                     <div class="col-lg-3 col-md-4 label">Course</div>
-                                        <div class="col-lg-9 col-md-8">@obj["CourseName"]</div>
+                                    <div class="col-lg-9 col-md-8">@Model.StudentData.Rows[0]["CourseName"]</div>
                                 </div>
 
                                     <div class="row border-bottom">
                                     <div class="col-lg-3 col-md-4 label">Nationality</div>
-                                        <div class="col-lg-9 col-md-8">@obj["Nationlity"]</div>
+                                    <div class="col-lg-9 col-md-8">@Model.StudentData.Rows[0]["Nationlity"]</div>
                                 </div>
 
                                     <div class="row border-bottom">
                                     <div class="col-lg-3 col-md-4 label">Aadhar Card No.</div>
-                                        <div class="col-lg-9 col-md-8">@obj["AadharCardNo"]</div>
+                                    <div class="col-lg-9 col-md-8">@Model.StudentData.Rows[0]["AadharCardNo"]</div>
                                 </div>
 
                                     <div class="row border-bottom">
                                     <div class="col-lg-3 col-md-4 label">Father Name</div>
-                                        <div class="col-lg-9 col-md-8">@obj["FatherName"]</div>
+                                    <div class="col-lg-9 col-md-8">@Model.StudentData.Rows[0]["FatherName"]</div>
                                 </div>
 
                                     <div class="row border-bottom">
                                     <div class="col-lg-3 col-md-4 label">Father`s Contact No</div>
-                                        <div class="col-lg-9 col-md-8">@obj["FatherMobileNo"]</div>
+                                    <div class="col-lg-9 col-md-8">@Model.StudentData.Rows[0]["FatherMobileNo"]</div>
                                 </div>
 
                                     <div class="row border-bottom">
                                     <div class="col-lg-3 col-md-4 label">Mother Name</div>
-                                        <div class="col-lg-9 col-md-8">@obj["MotherName"]</div>
+                                    <div class="col-lg-9 col-md-8">@Model.StudentData.Rows[0]["MotherName"]</div>
                                 </div>
 
                                     <div class="row border-bottom">
                                     <div class="col-lg-3 col-md-4 label">Mother`s Contact No.</div>
-                                        <div class="col-lg-9 col-md-8">@obj["MotherMobileNo"]</div>
+                                    <div class="col-lg-9 col-md-8">@Model.StudentData.Rows[0]["MotherMobileNo"]</div>
                                 </div>
 
                                     <div class="row border-bottom">
                                     <div class="col-lg-3 col-md-4 label">Current Address</div>
-                                        <div class="col-lg-9 col-md-8">@obj["PresentAddress"]</div>
+                                    <div class="col-lg-9 col-md-8">@Model.StudentData.Rows[0]["PresentAddress"]</div>
                                 </div>
 
                                     <div class="row border-bottom">
                                     <div class="col-lg-3 col-md-4 label">Perment Address</div>
-                                        <div class="col-lg-9 col-md-8">@obj["PermentAddress"]</div>
+                                    <div class="col-lg-9 col-md-8">@Model.StudentData.Rows[0]["PermentAddress"]</div>
                                 </div>
                             </div>
                         </div><!-- End Bordered Tabs -->

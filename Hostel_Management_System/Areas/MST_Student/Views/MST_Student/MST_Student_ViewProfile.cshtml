@@ -4,8 +4,42 @@
 }
 
 @using System.Data
-@model Hostel_Management_System.Areas.MST_Student.Models.MST_StudentModel
+@model Hostel_Management_System.Areas.MST_Student.ViewModel.View_Model
 
+
+<style>
+
+    /* Table styles */
+    #sample_1 {
+        width: 100%;
+        overflow: hidden;
+        border-radius: 10px;
+    }
+
+    #sample_1 th {
+        padding: 15px 0px 15px 0px;
+        text-align: left;
+    }
+
+    #sample_1 th {
+        background-color: darkblue; /* Header background color */
+        color: #fff;
+    }
+
+    /* Alert styles */
+    .alert {
+        border-radius: 10px;
+        margin-top: 20px;
+    }
+
+    /* No Record Found styles */
+    .no-record {
+        font-size: 15px;
+        color: white;
+    }
+
+   
+</style>
 
 <div class="pagetitle">
     <h1>Student List</h1>
@@ -21,24 +55,29 @@
 
 <section class="section profile">
     <div class="row">
-        <div class="col-xl-4">
+        <div class="col-xl-5">
             <div class="card">
                 <div class="card-body profile-card pt-4 d-flex flex-column align-items-center">
 
-                    <img src="@Url.Content(Model.PhotoPath.ToString())" alt="@Model.StudentName" class="rounded-circle" />
-                    <h2>@Model.StudentName</h2>
-                    <h4 class="@(Model.isActive.ToString() == "True" ? "badge bg-success" : "badge bg-danger")">@Model.isActive</h4>
+                    <img src="@Url.Content(Model.StudentData.Rows[0]["PhotoPath"].ToString())" alt="@Model.StudentData.Rows[0]["StudentName"]" class="rounded-circle" />
+                    <h2>@Model.StudentData.Rows[0]["StudentName"]</h2>
+                    <h4 class="@(Model.StudentData.Rows[0]["isActive"].ToString() == "True" ? "badge bg-success" : "badge bg-danger")">@Model.StudentData.Rows[0]["isActive"]</h4>
+
 
                 </div>
             </div>
-            @* <div class="card">
-        <div class="card-body profile-card pt-4 d-flex flex-column align-items-center">
 
-        </div>
-        </div> *@
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="card-title text-light mt-3 rounded-2 ps-2" style="background-color:darkblue">Remarks:</h4>
+                   
+                    <h6 class="ps-2" style="color:darkblue"><i>@Model.StudentData.Rows[0]["Remarks"]</i></h6>
+                </div>
+            </div>
+            
         </div>
 
-        <div class="col-xl-8">
+        <div class="col-xl-7">
             <div class="card">
                 <div class="card-body pt-3">
                     <!-- Bordered Tabs -->
@@ -54,99 +93,89 @@
 
                             <h5 class="card-title">Details</h5>
 
-                            <div class="row">
+                            <div class="row border-bottom">
                                 <div class="col-lg-3 col-md-4 label ">Full Name</div>
-                                <div class="col-lg-9 col-md-8">@Model.StudentName</div>
+                                <div class="col-lg-9 col-md-8">@Model.StudentData.Rows[0]["StudentName"]</div>
                             </div>
 
-                            <div class="row">
+                            <div class="row border-bottom">
                                 <div class="col-lg-3 col-md-4 label">Email</div>
-                                <div class="col-lg-9 col-md-8">@Model.Email</div>
+                                <div class="col-lg-9 col-md-8">@Model.StudentData.Rows[0]["Email"]</div>
                             </div>
 
-                            <div class="row">
+                            <div class="row border-bottom">
                                 <div class="col-lg-3 col-md-4 label">Contact No.</div>
-                                <div class="col-lg-9 col-md-8">@Model.MobileNo</div>
+                                <div class="col-lg-9 col-md-8">@Model.StudentData.Rows[0]["MobileNo"]</div>
                             </div>
 
-                            <div class="row">
+                            <div class="row border-bottom">
                                 <div class="col-lg-3 col-md-4 label">Birth Date</div>
-                                <div class="col-lg-9 col-md-8">@Convert.ToDateTime(Model.BirthDate).ToString("dd-MM-yyyy")</div>
+                                <div class="col-lg-9 col-md-8">@Convert.ToDateTime(Model.StudentData.Rows[0]["BirthDate"]).ToString("dd-MM-yyyy")</div>
                             </div>
 
-                            <div class="row">   
+                            <div class="row border-bottom">
                                 <div class="col-lg-3 col-md-4 label">Age</div>
-                                <div class="col-lg-9 col-md-8">@Model.Age</div>
+                                <div class="col-lg-9 col-md-8">@Model.StudentData.Rows[0]["Age"]</div>
                             </div>
 
-                            <div class="row">
+                            <div class="row border-bottom">
                                 <div class="col-lg-3 col-md-4 label">Blood Group</div>
-                                <div class="col-lg-9 col-md-8">@Model.BloodGroup</div>
+                                <div class="col-lg-9 col-md-8">@Model.StudentData.Rows[0]["BloodGroup"]</div>
                             </div>
 
-                            <div class="row">
+                            <div class="row border-bottom">
                                 <div class="col-lg-3 col-md-4 label">Course</div>
-                                <div class="col-lg-9 col-md-8">@Model.CourseName</div>
+                                <div class="col-lg-9 col-md-8">@Model.StudentData.Rows[0]["CourseName"]</div>
                             </div>
 
-                            <div class="row">
+                            <div class="row border-bottom">
                                 <div class="col-lg-3 col-md-4 label">Nationality</div>
-                                <div class="col-lg-9 col-md-8">@Model.Nationlity</div>
+                                <div class="col-lg-9 col-md-8">@Model.StudentData.Rows[0]["Nationlity"]</div>
                             </div>
 
-                            <div class="row">
+                            <div class="row border-bottom">
                                 <div class="col-lg-3 col-md-4 label">Aadhar Card No.</div>
-                                <div class="col-lg-9 col-md-8">@Model.AadharCardNo</div>
+                                <div class="col-lg-9 col-md-8">@Model.StudentData.Rows[0]["AadharCardNo"]</div>
                             </div>
 
-                            <div class="row">
+                            <div class="row border-bottom">
                                 <div class="col-lg-3 col-md-4 label">Father Name</div>
-                                <div class="col-lg-9 col-md-8">@Model.FatherName</div>
+                                <div class="col-lg-9 col-md-8">@Model.StudentData.Rows[0]["FatherName"]</div>
                             </div>
 
-                            <div class="row">
+                            <div class="row border-bottom">
                                 <div class="col-lg-3 col-md-4 label">Father`s Contact No</div>
-                                <div class="col-lg-9 col-md-8">@Model.FatherMobileNo</div>
+                                <div class="col-lg-9 col-md-8">@Model.StudentData.Rows[0]["FatherMobileNo"]</div>
                             </div>
 
-                            <div class="row">
+                            <div class="row border-bottom">
                                 <div class="col-lg-3 col-md-4 label">Mother Name</div>
-                                <div class="col-lg-9 col-md-8">@Model.MotherName</div>
+                                <div class="col-lg-9 col-md-8">@Model.StudentData.Rows[0]["MotherName"]</div>
                             </div>
 
-                            <div class="row">
+                            <div class="row border-bottom">
                                 <div class="col-lg-3 col-md-4 label">Mother`s Contact No.</div>
-                                <div class="col-lg-9 col-md-8">@Model.MotherMobileNo</div>
+                                <div class="col-lg-9 col-md-8">@Model.StudentData.Rows[0]["MotherMobileNo"]</div>
                             </div>
 
-                            <div class="row">
-                                <div class="col-lg-3 col-md-4 label">Gaurdian Name</div>
-                                <div class="col-lg-9 col-md-8">@Model.LocalGurdianName</div>
-                            </div>
-
-                            <div class="row">
-                                <div class="col-lg-3 col-md-4 label">Gaurdian`s Contact No.</div>
-                                <div class="col-lg-9 col-md-8">@Model.LocalGurdianNo</div>
-                            </div>
-
-                            <div class="row">
+                            <div class="row border-bottom">
                                 <div class="col-lg-3 col-md-4 label">Current Address</div>
-                                <div class="col-lg-9 col-md-8">@Model.PresentAddress</div>
+                                <div class="col-lg-9 col-md-8">@Model.StudentData.Rows[0]["PresentAddress"]</div>
                             </div>
 
-                            <div class="row">
+                            <div class="row border-bottom">
                                 <div class="col-lg-3 col-md-4 label">Perment Address</div>
-                                <div class="col-lg-9 col-md-8">@Model.PermentAddress</div>
+                                <div class="col-lg-9 col-md-8">@Model.StudentData.Rows[0]["PermentAddress"]</div>
                             </div>
 
                             <div class="row">
                                 <div class="col-lg-3 col-md-4 label">Create At</div>
-                                <div class="col-lg-9 col-md-8">@Convert.ToDateTime(Model.Created).ToString("dd-MM-yyyy")</div>
+                                <div class="col-lg-9 col-md-8">@Convert.ToDateTime(Model.StudentData.Rows[0]["Created"]).ToString("dd-MM-yyyy")</div>
                             </div>
 
                             <div class="row">
                                 <div class="col-lg-3 col-md-4 label">Modified</div>
-                                <div class="col-lg-9 col-md-8">@Convert.ToDateTime(Model.Modified).ToString("dd-MM-yyyy")</div>
+                                <div class="col-lg-9 col-md-8">@Convert.ToDateTime(Model.StudentData.Rows[0]["Modified"]).ToString("dd-MM-yyyy")</div>
                             </div>
 
                         </div>
@@ -156,15 +185,15 @@
                         <div class="d-flex">
 
                             <div class="mx-2">
-                                <form method="post" asp-area="MST_Student" asp-controller="MST_Student" , asp-action="Delete">
-                                    <input type="hidden" name="StudentID" value="@Convert.ToInt32(Model.StudentID)" />
+                                <form method="post" asp-area="MST_Student" asp-controller="MST_Student" , asp-action="UpdateStatus">
+                                    <input type="hidden" name="StudentID" value="@Convert.ToInt32(Model.StudentData.Rows[0]["StudentID"])" />
                                     <button type="submit" class="btn btn-danger btn-rounded" onclick="return confirm('Are you sure you want to delete this?')"><i class="fa fa-trash"></i> Delete</button>
                                 </form>
                             </div>
 
                             <div class="mx-2">
                                 <form method="get" asp-area="MST_Student" asp-controller="MST_Student" asp-action="Add">
-                                    <input type="hidden" name="StudentID" value="@Convert.ToInt32(Model.StudentID.ToString())">
+                                    <input type="hidden" name="StudentID" value="@Convert.ToInt32(Model.StudentData.Rows[0]["StudentID"].ToString())">
                                     <button type="submit" class="btn btn-primary btn-rounded"><i class="fa fa-pen-to-square"></i> Edit</button>
                                 </form>
                             </div>
@@ -184,3 +213,77 @@
     </div>
 </section>
 
+<section class="section">
+
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title"><i class="fa-solid fa-clock-rotate-left"></i> Fees History</h5>
+                   
+                    @if (Model.PaymentData.Rows.Count > 0)
+                    {
+                        <table id="sample_1" class="table table-hover">
+                            <thead>
+                                <tr>
+                                    <th class="text-center">Fees Date</th>
+                                    <th class="text-center">Mobile No.</th>
+                                    <th class="ps-2">PaidBY</th>
+                                    <th class="ps-2">Amount</th>
+                                    <th class="ps-2">Bank</th>
+                                    <th class="ps-2">ChequeNo</th>
+                                    <th class="ps-2">ReceiptNo</th>
+                                    <th class="text-center">Created</th>
+                                    <th class="text-center">Modified</th>
+                                    <th class="text-center">Action</th>
+
+                                </tr>
+                            </thead>
+                            <tbody id="sample_2">
+                                @foreach (DataRow dr in Model.PaymentData.Rows)
+                                {
+                                    <tr>
+                                        <td class="text-center">@dr["PaymentDate"]</td>
+                                        <td class="text-center">@dr["MobileNo"]</td>
+                                        <td>@dr["PaidBY"]</td>
+                                        <td>@Convert.ToDecimal(dr["Amount"]).ToString("N2")</td>
+
+                                        <td>@dr["BankName"]</td>
+                                        <td>@dr["ChequeNo"]</td>
+                                        <td>@dr["ReceiptNo"]</td>
+                                        <td class="text-center">@Convert.ToDateTime(dr["Created"]).ToString("dd-MM-yyyy")</td>
+                                        <td class="text-center">@Convert.ToDateTime(dr["Modified"]).ToString("dd-MM-yyyy")</td>
+                                        <td class="d-flex justify-content-center align-items-center">
+                                            <form method="post" asp-area="MST_Payment" asp-controller="MST_Payment" , asp-action="Delete">
+                                                <input type="hidden" name="PaymentID" value="@Convert.ToInt32(dr["PaymentID"])" />
+                                                <button type="submit" class="btn btn-danger me-1" onclick="return confirm('Are you sure you want to delete this?')"><i class="fa fa-trash" style="font-size: 14px;"></i></button>
+                                            </form>
+
+                                            <form method="get" asp-area="MST_Payment" asp-controller="MST_Payment" asp-action="Add">
+                                                <input type="hidden" name="PaymentID" value="@Convert.ToInt32(dr["PaymentID"].ToString())">
+                                                <button type="submit" class="btn btn-warning me-1"><i class="fa fa-pen-to-square" style="font-size: 14px;"></i></button>
+                                            </form>
+
+                                            <form method="get" asp-area="MST_Payment" asp-controller="MST_Payment" asp-action="CreatePdf">
+                                                <input type="hidden" name="PaymentID" value="@Convert.ToInt32(dr["PaymentID"].ToString())">
+                                                <button type="submit" class="btn text-light" style="background-color:darkslategrey"><i class="fa-solid fa-file-invoice" style="font-size: 14px;"></i></button>
+                                            </form>
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    }
+                    else
+                    {
+                        <tr>
+                            <div class="w-full p-2 rounded bg-danger bg-opacity-75">
+                                <i class="bi bi-x-circle-fill text-light"></i> <span style="font-size: 15px; color: white;">No Record Found</span>
+                            </div>
+                        </tr>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

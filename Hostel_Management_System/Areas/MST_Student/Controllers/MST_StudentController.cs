@@ -1,5 +1,6 @@
 ﻿using Hostel_Management_System.Areas.MST_Course.Models;
 using Hostel_Management_System.Areas.MST_Student.Models;
+using Hostel_Management_System.Areas.MST_Student.ViewModel;
 using Hostel_Management_System.BAL;
 using Hostel_Management_System.DAL;
 using iTextSharp.text;
@@ -236,8 +237,17 @@ namespace Hostel_Management_System.Areas.MST_Student.Controllers
         #region ViewProfile
         public IActionResult ViewProfile(int StudentID)
         {
-            DataTable dt = dalMST_Student.PR_MST_Student_SeleckbyPkWithAllData(StudentID);
-            return View("MST_Student_ViewProfile", dt);
+            DataTable paymentData = dalMST_Student.PR_MST_Payment_SelectStudentID(StudentID);
+            DataTable studentData = dalMST_Student.PR_MST_Student_SeleckbyPkWithAllData(StudentID);
+
+            // Create an instance of the view model and populate its properties
+            var viewModel = new View_Model
+            {
+                PaymentData = paymentData,
+                StudentData = studentData
+            };
+
+            return View("MST_Student_ViewProfile", viewModel);
         }
         #endregion
 
@@ -264,8 +274,6 @@ namespace Hostel_Management_System.Areas.MST_Student.Controllers
             Dictionary<string, int> dataDictionary = new Dictionary<string, int>
             {
                 { "TotalFeesAmount", Convert.ToInt32(dataTable.Rows[0]["TotalFeesAmount"]) },
-                
-
             };
 
             // Pass data to view using ViewBag or ViewData
