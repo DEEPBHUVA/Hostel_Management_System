@@ -31,6 +31,14 @@ namespace Hostel_Management_System.Areas.Room_Allocate.Controllers
         }
         #endregion
 
+        #region PR_Room_Allocation_Filter
+        public IActionResult RoomFilter(string StudentName, int RoomNo)
+        {
+            DataTable dt = dalRoom_Allocation.PR_Room_Allocation_Filter(StudentName,(int)RoomNo);
+            return View("Room_AllocateList", dt);
+        }
+        #endregion
+
         #region Add
         public IActionResult Add(int? RoomAllocateID)
         {

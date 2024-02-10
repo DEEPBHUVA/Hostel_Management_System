@@ -8,11 +8,16 @@ namespace Hostel_Management_System.Areas.SEC_User.Models
 
 		[DisplayName("UserName")]
 		public string UserName { get; set; }
-
 		[Required]
 		[DisplayName("Password")]
 		public string? Password { get; set; }
-		public string Email { get; set; }
+        [Required]
+        [DisplayName("OldPassword")]
+        public string? OldPassword { get; set; }
+        [Required]
+        [DisplayName("NewPassword")]
+        public string? NewPassword { get; set; }
+        public string Email { get; set; }
 		public string FirstName { get; set; }
 		public string LastName { get; set; }
 		public int? StudentID { get; set; }

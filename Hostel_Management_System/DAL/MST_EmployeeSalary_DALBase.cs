@@ -134,5 +134,32 @@ namespace Hostel_Management_System.DAL
             }
         }
         #endregion
+
+        #region PR_MST_EmployeeSalary_Filter
+        public DataTable PR_MST_EmployeeSalary_Filter(string EmployeeName, DateTime? SalaryDate, string PaymentMode)
+        {
+            try
+            {
+                SqlDatabase sqlDB = new SqlDatabase(MyConnectionStr);
+                DbCommand dbCMD = sqlDB.GetStoredProcCommand("PR_MST_EmployeeSalary_Filter");
+                sqlDB.AddInParameter(dbCMD, "EmployeeName", SqlDbType.VarChar, EmployeeName);
+                sqlDB.AddInParameter(dbCMD, "SalaryDate", SqlDbType.DateTime, SalaryDate);
+                sqlDB.AddInParameter(dbCMD, "PaymentMode", SqlDbType.VarChar, PaymentMode);
+
+                DataTable dt = new DataTable();
+                using (IDataReader dr = sqlDB.ExecuteReader(dbCMD))
+                {
+                    dt.Load(dr);
+                }
+                return dt;
+
+            }
+            catch (Exception e)
+            {
+                throw e;
+                return null;
+            }
+        }
+        #endregion
     }
 }

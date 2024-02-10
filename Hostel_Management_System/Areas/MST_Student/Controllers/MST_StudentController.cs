@@ -1,4 +1,5 @@
-﻿using Hostel_Management_System.Areas.MST_Course.Models;
+﻿using ClosedXML.Excel;
+using Hostel_Management_System.Areas.MST_Course.Models;
 using Hostel_Management_System.Areas.MST_Student.Models;
 using Hostel_Management_System.Areas.MST_Student.ViewModel;
 using Hostel_Management_System.BAL;
@@ -61,6 +62,15 @@ namespace Hostel_Management_System.Areas.MST_Student.Controllers
             return View("MST_AllStudentList", dt);
         }
         #endregion
+
+        #region PR_MST_ALLStudent_Filter
+        public IActionResult PR_MST_ALLStudent_Filter(string StudentName,string Email,int Age)
+        {
+            DataTable dt = dalMST_Student.PR_MST_ALLStudent_Filter(StudentName,Email, (int)Age);
+            return View("MST_AllStudentList", dt);
+        }
+        #endregion
+
 
         #region Delete
         public IActionResult Delete(int StudentID)
@@ -318,6 +328,67 @@ namespace Hostel_Management_System.Areas.MST_Student.Controllers
                 return studentModels;
             }
         }
+         
+
+        public IActionResult ExportStudentsToExcel()
+        {
+           
+            List<MST_StudentModel> studentModels = GetStudentModels();
+
+            using (var workbook = new XLWorkbook())
+            {
+                var worksheet = workbook.Worksheets.Add("Students");
+
+                // Add headers with bold font and background color
+                var headerRow = worksheet.Row(1);
+                headerRow.Style.Font.Bold = true;
+              
+                headerRow.Style.Fill.BackgroundColor = XLColor.LightBlue; // You can choose any color you prefer
+                // Add headers
+                worksheet.Cell(1, 1).Value = "Student Name";
+                worksheet.Cell(1, 2).Value = "Email";
+                worksheet.Cell(1, 3).Value = "Age";
+                worksheet.Cell(1, 4).Value = "BirthDate";
+                worksheet.Cell(1, 5).Value = "Mobile No";
+                worksheet.Cell(1, 6).Value = "Aadhar Card No";
+                worksheet.Cell(1, 7).Value = "Course Name";
+                worksheet.Cell(1, 8).Value = "isActive";
+
+                // Add data
+                int row = 2;
+                foreach (var studentModel in studentModels)
+                {
+                    worksheet.Cell(row, 1).Value = studentModel.StudentName;
+                    worksheet.Cell(row, 2).Value = studentModel.Email;
+                    var ageCell = worksheet.Cell(row, 3);
+                    ageCell.Value = studentModel.Age;
+                    ageCell.Style.Alignment.Horizontal = XLAlignmentHorizontalValues.Center;
+                    worksheet.Cell(row, 4).Value = studentModel.BirthDate.ToString("yyyy-MM-dd");
+                    worksheet.Cell(row, 5).Value = studentModel.MobileNo;
+                    worksheet.Cell(row, 6).Value = studentModel.AadharCardNo;
+                    worksheet.Cell(row, 7).Value = studentModel.CourseName;
+                    worksheet.Cell(row, 8).Value = studentModel.isActive;
+                    // Add other properties...
+
+                    row++;
+                }
+
+                worksheet.Columns().AdjustToContents();
+                // Set content type and filename
+                var contentType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
+                var fileName = "StudentData.xlsx";
+
+                using (var stream = new MemoryStream())
+                {
+                    workbook.SaveAs(stream);
+                    var content = stream.ToArray();
+                    return File(content, contentType, fileName);
+                }
+            }
+        }
+
+
+
 
         public FileResult CreatePdf()
         {

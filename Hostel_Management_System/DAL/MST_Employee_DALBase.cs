@@ -177,5 +177,32 @@ namespace Hostel_Management_System.DAL
             }
         }
         #endregion
+
+        #region PR_MST_Employee_Filter
+        public DataTable PR_MST_Employee_Filter(string EmployeeName, DateTime? JoiningDate, string EmployeeType)
+        {
+            try
+            {
+                SqlDatabase sqlDB = new SqlDatabase(MyConnectionStr);
+                DbCommand dbCMD = sqlDB.GetStoredProcCommand("PR_MST_Employee_Filter");
+                sqlDB.AddInParameter(dbCMD, "EmployeeName", SqlDbType.VarChar, EmployeeName);
+                sqlDB.AddInParameter(dbCMD, "JoiningDate", SqlDbType.DateTime, JoiningDate);
+                sqlDB.AddInParameter(dbCMD, "EmployeeType", SqlDbType.VarChar, EmployeeType);
+
+                DataTable dt = new DataTable();
+                using (IDataReader dr = sqlDB.ExecuteReader(dbCMD))
+                {
+                    dt.Load(dr);
+                }
+                return dt;
+
+            }
+            catch (Exception e)
+            {
+                throw e;
+                return null;
+            }
+        }
+        #endregion
     }
 }

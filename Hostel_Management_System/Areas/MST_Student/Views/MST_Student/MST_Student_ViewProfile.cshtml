@@ -59,8 +59,20 @@
             <div class="card">
                 <div class="card-body profile-card pt-4 d-flex flex-column align-items-center">
 
-                    <img src="@Url.Content(Model.StudentData.Rows[0]["PhotoPath"].ToString())" alt="@Model.StudentData.Rows[0]["StudentName"]" class="rounded-circle" />
+                    @if (Model.StudentData.Rows.Count > 0)
+                    {
+                        var photoPath = Model.StudentData.Rows[0]["PhotoPath"].ToString();
+                        var studentName = Model.StudentData.Rows[0]["StudentName"].ToString();
+                        var isActive = false;
+
+                        <img src="@Url.Content(photoPath)" alt="@studentName" class="rounded-circle" style="@(isActive ? "display:none;" : "")" />
+                    }
                     <h2>@Model.StudentData.Rows[0]["StudentName"]</h2>
+                    <h6>
+                        @(((Model.StudentData.Rows.Count > 0) && (Model.StudentData.Rows[0]["RoomNo"] != DBNull.Value))
+                            ? Model.StudentData.Rows[0]["RoomNo"]
+                            : "N/A")
+                    </h6>
                     <h4 class="@(Model.StudentData.Rows[0]["isActive"].ToString() == "True" ? "badge bg-success" : "badge bg-danger")">@Model.StudentData.Rows[0]["isActive"]</h4>
 
 
@@ -168,12 +180,12 @@
                                 <div class="col-lg-9 col-md-8">@Model.StudentData.Rows[0]["PermentAddress"]</div>
                             </div>
 
-                            <div class="row">
+                            <div class="row border-bottom">
                                 <div class="col-lg-3 col-md-4 label">Create At</div>
                                 <div class="col-lg-9 col-md-8">@Convert.ToDateTime(Model.StudentData.Rows[0]["Created"]).ToString("dd-MM-yyyy")</div>
                             </div>
 
-                            <div class="row">
+                            <div class="row border-bottom">
                                 <div class="col-lg-3 col-md-4 label">Modified</div>
                                 <div class="col-lg-9 col-md-8">@Convert.ToDateTime(Model.StudentData.Rows[0]["Modified"]).ToString("dd-MM-yyyy")</div>
                             </div>

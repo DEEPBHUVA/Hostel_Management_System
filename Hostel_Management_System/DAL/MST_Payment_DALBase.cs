@@ -134,5 +134,32 @@ namespace Hostel_Management_System.DAL
             }
         }
         #endregion
+
+        #region PR_MST_Payment_Filter
+        public DataTable PR_MST_Payment_Filter(string StudentName, DateTime? PaymentDate, string PaidBy)
+        {
+            try
+            {
+                SqlDatabase sqlDB = new SqlDatabase(MyConnectionStr);
+                DbCommand dbCMD = sqlDB.GetStoredProcCommand("PR_MST_Payment_Filter");
+                sqlDB.AddInParameter(dbCMD, "StudentName", SqlDbType.VarChar, StudentName);
+                sqlDB.AddInParameter(dbCMD, "PaymentDate", SqlDbType.DateTime, PaymentDate);
+                sqlDB.AddInParameter(dbCMD, "PaidBY", SqlDbType.VarChar, PaidBy);
+
+                DataTable dt = new DataTable();
+                using (IDataReader dr = sqlDB.ExecuteReader(dbCMD))
+                {
+                    dt.Load(dr);
+                }
+                return dt;
+
+            }
+            catch (Exception e)
+            {
+                throw e;
+                return null;
+            }
+        }
+        #endregion
     }
 }

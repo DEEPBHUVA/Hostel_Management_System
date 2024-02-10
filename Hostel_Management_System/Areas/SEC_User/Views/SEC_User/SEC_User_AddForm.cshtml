@@ -12,7 +12,7 @@
         <ol class="breadcrumb">
             <li class="breadcrumb-item"><a asp-controller="Home" asp-action="Index">Home</a></li>
             <li class="breadcrumb-item"><a asp-controller="SEC_User" asp-action="GetallUser">User List</a></li>
-            <li class="breadcrumb-item active"><a asp-controller="SEC_User" asp-action="Add">Add</a></li>
+            <li class="breadcrumb-item active"><a asp-controller="SEC_User" asp-action="Add">User Form</a></li>
         </ol>
     </nav>
 </div>
@@ -60,7 +60,7 @@
 
 <div class="card col-md-6">
     <div class="card-body p-3">
-        <span class="card-title"> <i class="bi bi-door-closed-fill"></i> Users</span>
+        <span class="card-title"> <i class="fa-solid fa-user"></i> Users</span>
         <hr />
         <form role="form" method="post" asp-area="SEC_User" asp-controller="SEC_User" asp-action="Save">
             @Html.HiddenFor(x => x.UserID)
@@ -81,32 +81,25 @@
 
             <div class="form-group">
                 <label for="inputState"><span class="text-danger">*</span>Last Name</label>
-                <input type="text" class="form-control" placeholder="Enter Seat Count" asp-for="LastName">
+                <input type="text" class="form-control" placeholder="Enter Last Name" asp-for="LastName">
                 <span asp-validation-for="LastName" class="text-danger"></span>
             </div>
 
-            <div class="form-group">
-                <label for="inputState"><span class="text-danger">*</span>User Name</label>
-                <input type="text" class="form-control" placeholder="Enter User Name" asp-for="UserName">
-                <span asp-validation-for="UserName" class="text-danger"></span>
-            </div>
-
-           
-
-            <div class="form-group">
-                <label for="inputState"><span class="text-danger">*</span>Email</label>
-                <input type="text" class="form-control" placeholder="Enter Email" asp-for="Email">
-                <span asp-validation-for="Email" class="text-danger"></span>
-            </div>
-
-            <div class="form-group">
-                <label for="inputState"><span class="text-danger">*</span>User Role</label>
-                <select class="form-control" asp-for="UserRole">
-                    <option selected>Choose Role</option>
-                    <option value="Staff">Staff</option>
-                    <option value="Student">Student</option>
-                </select>
-                <span asp-validation-for="UserRole" class="text-danger"></span>
+            <div class="form-group row">
+                <div class="col-md-6">
+                    <label for="inputState"><span class="text-danger">*</span>User Name</label>
+                    <input type="text" class="form-control" placeholder="Enter User Name" asp-for="UserName">
+                    <span asp-validation-for="UserName" class="text-danger"></span>
+                </div>
+               <div class="col-md-6">
+                    <label for="inputState"><span class="text-danger">*</span>User Role</label>
+                    <select class="form-control" asp-for="UserRole">
+                        <option selected>Choose Role</option>
+                        <option value="Staff">Staff</option>
+                        <option value="Student">Student</option>
+                    </select>
+                    <span asp-validation-for="UserRole" class="text-danger"></span>
+               </div>
             </div>
 
             <hr />

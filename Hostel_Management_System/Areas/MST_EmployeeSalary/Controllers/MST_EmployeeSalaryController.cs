@@ -31,6 +31,14 @@ namespace Hostel_Management_System.Areas.MST_EmployeeSalary.Controllers
         }
         #endregion
 
+        #region EmployeeSalary
+        public IActionResult EmployeeSalary(string EmployeeName, DateTime? SalaryDate ,string PaymentMode)
+        {
+            DataTable dt = dalMST_EmployeeSalary.PR_MST_EmployeeSalary_Filter(EmployeeName, SalaryDate, PaymentMode);
+            return View("MST_EmployeeSalary_List", dt);
+        }
+        #endregion
+
         #region Add
         public IActionResult Add(int? EmployeeSalaryID)
         {

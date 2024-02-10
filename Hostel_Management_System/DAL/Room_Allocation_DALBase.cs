@@ -122,5 +122,31 @@ namespace Hostel_Management_System.DAL
             }
         }
         #endregion
+
+        #region PR_Room_Allocation_Filter
+        public DataTable PR_Room_Allocation_Filter(string StudentName, int RoomNo)
+        {
+            try
+            {
+                SqlDatabase sqlDB = new SqlDatabase(MyConnectionStr);
+                DbCommand dbCMD = sqlDB.GetStoredProcCommand("PR_Room_Allocation_Filter");
+                sqlDB.AddInParameter(dbCMD, "RoomNo", SqlDbType.Int, RoomNo);
+                sqlDB.AddInParameter(dbCMD, "StudentName", SqlDbType.VarChar, StudentName);
+
+                DataTable dt = new DataTable();
+                using (IDataReader dr = sqlDB.ExecuteReader(dbCMD))
+                {
+                    dt.Load(dr);
+                }
+                return dt;
+
+            }
+            catch (Exception e)
+            {
+                throw e;
+                return null;
+            }
+        }
+        #endregion
     }
 }

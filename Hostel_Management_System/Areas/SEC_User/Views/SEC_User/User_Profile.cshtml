@@ -1,0 +1,154 @@
+﻿@{
+    if (@CV.UserRole() == "Admin")
+    {
+        ViewData["Title"] = "Change Password";
+        Layout = "~/Views/Shared/_Layout.cshtml";
+    }
+    else if (@CV.UserRole() == "Staff")
+    {
+        ViewData["Title"] = "Change Password";
+        Layout = "~/Views/Shared/_StaffLayout.cshtml";
+    }
+    else if (@CV.UserRole() == "Student")
+    {
+        ViewData["Title"] = "Change Password";
+        Layout = "~/Views/Shared/_UserLayout.cshtml";
+    }
+
+}
+
+@using Hostel_Management_System.BAL
+
+<style>
+
+    .card {
+        width: 350px;
+        background-color: white;
+        border: none;
+        cursor: pointer;
+        transition: all 0.5s;
+    }
+
+    .image img {
+        transition: all 0.5s
+    }
+
+    .card:hover .image img {
+        transform: scale(1.5)
+    }
+
+    .btn {
+        height: 140px;
+        width: 140px;
+        border-radius: 50%
+    }
+
+    .name {
+        font-size: 22px;
+        font-weight: bold
+    }
+
+    .idd {
+        font-size: 14px;
+        font-weight: 600
+    }
+
+    .idd1 {
+        font-size: 12px
+    }
+
+    .number {
+        font-size: 22px;
+        font-weight: bold
+    }
+
+    .follow {
+        font-size: 12px;
+        font-weight: 500;
+        color: #444444
+    }
+
+    .btn1 {
+        height: 40px;
+        width: 150px;
+        border: none;
+        background-color: #000;
+        color: #aeaeae;
+        font-size: 15px
+    }
+
+    .text span {
+        font-size: 13px;
+        color: #545454;
+        font-weight: 500
+    }
+
+    .icons i {
+        font-size: 19px
+    }
+
+    hr .new1 {
+        border: 1px solid
+    }
+
+    .join {
+        font-size: 14px;
+        color: #a0a0a0;
+        font-weight: bold
+    }
+
+    .date {
+        background-color: #ccc
+    }
+</style>
+
+<div class="pagetitle">
+    <h1>Profile</h1>
+    <nav>
+        <ol class="breadcrumb">
+            @if (@CV.UserRole() == "Admin")
+            {
+                <li class="breadcrumb-item"><a asp-controller="Home" asp-action="Index">Home</a></li>
+            }
+            else if (@CV.UserRole() == "Staff")
+            {
+                <li class="breadcrumb-item"><a asp-controller="Staff" asp-action="Index">Home</a></li>
+            }
+            else if (@CV.UserRole() == "Student")
+            {
+                <li class="breadcrumb-item"><a asp-controller="User" asp-action="Index">Home</a></li>
+            }
+            <li class="breadcrumb-item active"><a asp-controller="SEC_User" asp-action="UserProfile">Profile</a></li>
+        </ol>
+    </nav>
+</div>
+
+
+
+    <div class="container mt-4 mb-4 p-3 d-flex justify-content-center">
+        <div class="card p-4">
+            <div class="image d-flex flex-column justify-content-center align-items-center">
+                <button class="btn btn-secondary">
+                    <img src="@Url.Content(CV.PhotoPath().ToString())" alt="@CV.UserName()" style="height:100px; width:100px; border-radius:50%;" />
+                </button>
+                <span class="name mt-3">@CV.UserName()</span>
+                
+                <div class="d-flex flex-row justify-content-center align-items-center gap-2" />
+                    <h3>@CV.FristName() @CV.LastName()</h3>
+                </div>
+                <div class="d-flex flex-row justify-content-center align-items-center gap-2" />
+                    <span>Role:</span>
+                    <span class="badge bg-success">@CV.UserRole()</span>
+
+                </div>
+                <div class="text mt-3">
+                    <p>@CV.Email()</p>
+                </div>
+                
+                <a class="btn-success" asp-area="SEC_User" asp-controller="SEC_User" asp-action="ChangePsw">Change Password</a>
+               
+            <div class="px-2 rounded mt-4 date">
+                <span class="join">Joined @CV.Created()</span>
+            </div>
+        </div>
+    </>

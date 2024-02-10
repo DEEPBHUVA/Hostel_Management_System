@@ -17,7 +17,6 @@
 </div>
 
 <style>
-
     /* Table styles */
     #sample_1 {
         width: 100%;
@@ -47,6 +46,42 @@
         color: white;
     }
 </style>
+
+<section class="section">
+    <div class="card">
+        <div class="card-body">
+            <form class="row align-items-end rounded px-1" method="POST" asp-area="MST_EmployeeSalary" asp-controller="MST_EmployeeSalary" asp-action="EmployeeSalary">
+                <div>
+                    <h5 class="card-title"><i class="fa-solid fa-filter"></i> Filter</h5>
+                </div>
+                <hr />
+
+                <div class="col-md-3">
+                    <label for="EmaployeeName" class="form-label">Emaployee Name</label>
+                    <input type="text" name="EmaployeeName" class="form-control" id="EmaployeeName" placeholder="e.g. abc">
+                </div>
+
+                <div class="col-md-3">
+                    <label for="SalaryDate" class="form-label">Date</label>
+                    <input type="date" name="SalaryDate" class="form-control" id="SalaryDate" placeholder="e.g. 10-02-2024">
+                </div>
+
+                <div class="form-group col-md-2">
+                    <label for="PaymentMode" class="form-label">Payment Mode</label>
+                    <input type="text" name="PaymentMode" class="form-control" id="PaymentMode" placeholder="e.g. Cash">
+                </div>
+
+
+                <div class="col-md-2">
+                    <button type="submit" title="Search" class="btn btn-success w-100">Search <i class="bi bi-search"></i></button>
+                </div>
+                <div class="col-md-2">
+                    <button type="submit" asp-controller="MST_EmployeeSalary" asp-action="Index" title="Clear" class="btn btn-danger w-100">Clear <i class="fa-solid fa-circle-xmark"></i></button>
+                </div>
+            </form>
+        </div>
+    </div>
+</section>
 
 <section class="section">
     <div class="row">

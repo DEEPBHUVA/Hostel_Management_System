@@ -37,6 +37,14 @@ namespace Hostel_Management_System.Areas.MST_Payment.Controllers
         }
         #endregion
 
+        #region PaymentFilter
+        public IActionResult PaymentFilter(string StudentName, DateTime? PaymentDate, string PaidBy)
+        {
+            DataTable dt = dalMST_Payment.PR_MST_Payment_Filter(StudentName, PaymentDate, PaidBy);
+            return View("MST_PaymentList", dt);
+        }
+        #endregion
+
         #region Add
         public IActionResult Add(int? PaymentID)
         {

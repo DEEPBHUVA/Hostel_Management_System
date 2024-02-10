@@ -32,6 +32,14 @@ namespace Hostel_Management_System.Areas.MST_Employee.Controllers
         }
         #endregion
 
+        #region EmployeeFilter
+        public IActionResult EmployeeFilter(string EmployeeName, DateTime? JoiningDate, string EmployeeType)
+        {
+            DataTable dt = dalMST_Employee.PR_MST_Employee_Filter(EmployeeName, JoiningDate, EmployeeType);
+            return View("MST_EmployeeList", dt);
+        }
+        #endregion
+
         #region Add
         public IActionResult Add(int? EmployeeID)
         {

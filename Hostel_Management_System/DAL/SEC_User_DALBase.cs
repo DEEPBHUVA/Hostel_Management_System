@@ -97,7 +97,7 @@ namespace Hostel_Management_System.DAL
         #endregion
 
         #region PR_SEC_User_Insert
-        public DataTable PR_SEC_User_Insert(int StudentID,string FristName,string LastName,string UserName,string UserRole,string Email)
+        public DataTable PR_SEC_User_Insert(int StudentID,string FristName,string LastName,string UserName,string UserRole)
         {
             try
             {
@@ -108,7 +108,6 @@ namespace Hostel_Management_System.DAL
                 sqlDB.AddInParameter(dbCMD, "LastName", SqlDbType.VarChar, LastName);
                 sqlDB.AddInParameter(dbCMD, "UserName", SqlDbType.VarChar, UserName);
                 sqlDB.AddInParameter(dbCMD, "UserRole", SqlDbType.VarChar, UserRole);
-                sqlDB.AddInParameter(dbCMD, "Email", SqlDbType.VarChar, Email);
 
 
                 DataTable dt = new DataTable();
@@ -127,7 +126,7 @@ namespace Hostel_Management_System.DAL
         #endregion
 
         #region PE_SEC_User_Edit
-        public DataTable PE_SEC_User_Edit(int UserID, int StudentID, string FristName, string LastName, string UserName, string UserRole, string Email)
+        public DataTable PE_SEC_User_Edit(int UserID, int StudentID, string FristName, string LastName, string UserName, string UserRole)
         {
             try
             {
@@ -139,7 +138,6 @@ namespace Hostel_Management_System.DAL
                 sqlDB.AddInParameter(dbCMD, "LastName", SqlDbType.VarChar, LastName);
                 sqlDB.AddInParameter(dbCMD, "UserName", SqlDbType.VarChar, UserName);
                 sqlDB.AddInParameter(dbCMD, "UserRole", SqlDbType.VarChar, UserRole);
-                sqlDB.AddInParameter(dbCMD, "Email", SqlDbType.VarChar, Email);
 
                 DataTable dt = new DataTable();
 
@@ -156,6 +154,34 @@ namespace Hostel_Management_System.DAL
             }
         }
         #endregion
-        
+
+        #region PR_Change_UserPassword
+        public DataTable PR_Change_UserPassword(int UserID, string OldPassword, string NewPassword)
+        {
+            try
+            {
+                SqlDatabase sqlDB = new SqlDatabase(MyConnectionStr);
+                DbCommand dbCMD = sqlDB.GetStoredProcCommand("PR_Change_UserPassword");
+                sqlDB.AddInParameter(dbCMD, "UserID", SqlDbType.Int, UserID);
+                sqlDB.AddInParameter(dbCMD, "OldPassword", SqlDbType.VarChar, OldPassword);
+                sqlDB.AddInParameter(dbCMD, "NewPassword", SqlDbType.VarChar, NewPassword);
+
+                DataTable dt = new DataTable();
+
+                using (IDataReader dr = sqlDB.ExecuteReader(dbCMD))
+                {
+                    dt.Load(dr);
+
+                }
+                return dt;
+            }
+            catch (Exception e)
+            {
+                return null;
+            }
+        }
+        #endregion
+
+
     }
 }

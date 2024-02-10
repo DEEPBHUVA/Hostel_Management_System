@@ -295,5 +295,34 @@ namespace Hostel_Management_System.DAL
             }
         }
         #endregion
+
+        #region PR_MST_ALLStudent_Filter
+        public DataTable PR_MST_ALLStudent_Filter(string StudentName,string Email, int Age)
+        {
+            try
+            {
+                SqlDatabase sqlDB = new SqlDatabase(MyConnectionStr);
+                DbCommand dbCMD = sqlDB.GetStoredProcCommand("PR_MST_ALLStudent_Filter");
+                sqlDB.AddInParameter(dbCMD, "Age", SqlDbType.Int, Age);
+                sqlDB.AddInParameter(dbCMD, "StudentName", SqlDbType.VarChar, StudentName);
+                sqlDB.AddInParameter(dbCMD, "Email", SqlDbType.VarChar, Email);
+
+                DataTable dt = new DataTable();
+                using (IDataReader dr = sqlDB.ExecuteReader(dbCMD))
+                {
+                    dt.Load(dr);
+                }
+                return dt;
+
+            }
+            catch (Exception e)
+            {
+                throw e;
+                return null;
+            }
+        }
+        #endregion
+
+
     }
 }

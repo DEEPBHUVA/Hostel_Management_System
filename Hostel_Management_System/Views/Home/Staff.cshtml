@@ -1,7 +1,7 @@
 ﻿@using Hostel_Management_System.BAL
 @{
     ViewData["Title"] = "Home Page";
-    Layout = "~/Views/Shared/_Layout.cshtml";
+    Layout = "~/Views/Shared/_StaffLayout.cshtml";
 }
 
 @using System.Data
@@ -132,7 +132,7 @@
     .calendar-dates li.active {
         color: #fff;
         background-color: darkblue;
-        border-radius:10%;
+        border-radius: 10%;
     }
 
     .calendar-dates li::before {
@@ -162,9 +162,24 @@
         margin-bottom: 20px;
     }
 
-    .user{
+    .user {
         font-size: 1.5rem;
         font-weight: bold;
+    }
+
+    .notice-item {
+        padding: 3px;
+        margin: 8px;
+        border-radius: 10px;
+    }
+
+    .notice-content h5 {
+        color: #333;
+        padding: 2px;
+    }
+
+    .notice-content p {
+        color: darkblue; /* Description text color */
     }
 </style>
 
@@ -172,31 +187,31 @@
 <div id="greeting"></div>
 
 <section class="section dashboard">
+    @if (TempData["SEC_User_ChangePassword"] != null)
+    {
+        <div class="alert alert-success alert-dismissible fade show mb-5" role="alert">
+            @TempData["SEC_User_ChangePassword"]
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    }
     <div class="row d-flex">
-        @if (TempData["SEC_User_ChangePassword"] != null)
-        {
-            <div class="alert alert-success alert-dismissible fade show mb-5" role="alert">
-                @TempData["SEC_User_ChangePassword"]
-                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-            </div>
-        }
         <div class="col-lg-12">
             <div class="row">
 
                 <div class="col-xxl-2 col-md-6">
                     <div class="card info-card sales-card border-5 border-primary border-top rounded">
                         <div class="card-body">
-                            <h5 class="card-title">Students <span>|</span></h5>
+                            <h5 class="card-title">Visitors <span>|</span></h5>
                             <div class="d-flex align-items-center">
                                 <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
                                     <i class="fa-solid fa-users"></i>
                                 </div>
                                 <div class="ps-3">
-                                    <h6>@ViewBag.DashboardData["StudentCount"]</h6>
+                                    <h6>@ViewBag.DashboardData["VisitorCount"]</h6>
                                 </div>
                             </div>
                             <hr class="border-primary" />
-                            <a asp-area="MST_Student" asp-controller="MST_Student" asp-action="Index" class="text-end text-primary">View Details <i class="bi bi-arrow-right-circle-fill"></i></a>
+                            <a asp-area="MST_Visitor" asp-controller="MST_Visitor" asp-action="Index" class="text-end text-primary">View Details <i class="bi bi-arrow-right-circle-fill"></i></a>
                         </div>
                     </div>
                 </div>
@@ -219,77 +234,8 @@
                     </div>
                 </div>
 
-                <div class="col-xxl-2 col-md-6">
-                    <div class="card info-card customers-card  border-5 border-warning border-top rounded">
-                        <div class="card-body">
-                            <h5 class="card-title">Tota Beds <span>|</span></h5>
-                            <div class="d-flex align-items-center">
-                                <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
-                                    <i class="fa-solid fa-bed"></i>
-                                </div>
-                                <div class="ps-3">
-                                    <h6>@ViewBag.DashboardData["BedCount"]</h6>
-                                </div>
-                            </div>
-                            <hr style="color:orange" />
-                            <a asp-area="MST_Room" asp-controller="MST_Room" asp-action="Index" style=" color: orange;">View Details <i class="bi bi-arrow-right-circle-fill"></i></a>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-xxl-2 col-md-6">
-                    <div class="card info-card abed-card border-5 border-danger border-top rounded">
-                        <div class="card-body">
-                            <h5 class="card-title">Available Bed <span>|</span></h5>
-                            <div class="d-flex align-items-center">
-                                <div class="card-icon rounded-circle d-flex align-items-center justify-content-center bg-danger-subtle" style="color:red">
-                                    <i class="fa-solid fa-gears"></i>
-                                </div>
-                                <div class="ps-3">
-                                    <h6>@ViewBag.DashboardData["AvailableBedCount"]</h6>
-                                </div>
-                            </div>
-                            <hr style="color:red" />
-                            <a asp-area="MST_Room" asp-controller="MST_Room" asp-action="Index" class="text-danger">View Details <i class="bi bi-arrow-right-circle-fill"></i></a>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-xxl-2 col-md-6">
-                    <div class="card info-card abed-card border-5 border-info border-top rounded">
-                        <div class="card-body">
-                            <h5 class="card-title">Employees <span>|</span></h5>
-                            <div class="d-flex align-items-center">
-                                <div class="card-icon rounded-circle d-flex align-items-center justify-content-center text-info bg-info-subtle">
-                                    <i class="fa-solid fa-user-tie"></i>
-                                </div>
-                                <div class="ps-3">
-                                    <h6>@ViewBag.DashboardData["EmployeeCount"]</h6>
-                                </div>
-                            </div>
-                            <hr style="color:aqua" />
-                            <a asp-area="MST_Employee" asp-controller="MST_Employee" asp-action="Index" class="text-info">View Details <i class="bi bi-arrow-right-circle-fill"></i></a>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-xxl-2 col-md-6">
-                    <div class="card info-card abed-card border-5 border-secondary border-top rounded">
-                        <div class="card-body">
-                            <h5 class="card-title">Available Bed <span>|</span></h5>
-                            <div class="d-flex align-items-center">
-                                <div class="card-icon rounded-circle d-flex align-items-center justify-content-center text-secondary bg-secondary-subtle">
-                                    <i class="fa-solid fa-indian-rupee-sign"></i>
-                                </div>
-                                <div class="ps-3">
-                                    <h6>@ViewBag.DashboardData["AvailableBedCount"]</h6>
-                                </div>
-                            </div>
-                            <hr style="color:dimgrey" />
-                            <a asp-area="MST_Room" asp-controller="MST_Room" asp-action="Index" class="text-secondary">View Details <i class="bi bi-arrow-right-circle-fill"></i></a>
-                        </div>
-                    </div>
-                </div>
+               
+                
 
                 <!-- Add more cards as needed -->
             </div>
@@ -297,80 +243,26 @@
     </div>
 </section>
 
-<div class="row">
-    <div class="col-12">
-        <div class="card info-card @((int)ViewBag.DashboardData["BedCount"] == (int)ViewBag.DashboardData["StudentCount"] ? "border-danger" : "border-success") border-5 border-start rounded">
-            <div class="card-body">
-                <h5 class="card-title"><i class="fa-solid fa-comment"></i> Hostel Status</h5>
-                <div class="">
-                    @if ((int)ViewBag.DashboardData["BedCount"] == (int)ViewBag.DashboardData["StudentCount"])
-                    {
-                        <h6 class="text-danger ms-2">Admission closes! 😔</h6>
-                    }
-                    else
-                    {
-                        <h6 class="text-success">🏠 Hostel Admission Open! 🌟</h6>
-                    }
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-
- <section class="section">
+<section class="section">
     <div class="row">
         <div class="col-lg-6">
             <div class="card">
                 <div class="card-body">
                     <h5 class="card-title"><i class="fa-solid fa-note-sticky"></i> Notice</h5>
-                 
 
-                    @if (TempData["MST_Notice_AlertMessage"] != null)
-                    {
-                        <div class="alert alert-success alert-dismissible fade show" role="alert">
-                            @TempData["MST_Notice_AlertMessage"]
-                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                        </div>
-                    }
 
-                    @if (TempData["MST_Notice_Delete_AlertMessage"] != null)
-                    {
-                        <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                            @TempData["MST_Notice_Delete_AlertMessage"]
-                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                        </div>
-                    }
+                   
                     @if (Model != null && Model.Rows.Count > 0)
                     {
-                        <table id="sample_1" class="table table-hover">
-                            <thead>
-                                <tr>
-                                    <th class="ps-2">Title</th>
-                                    <th class="ps-2">Description</th>
-                                    <th class="text-center">Action</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @foreach (DataRow dr in Model.Rows)
-                                {
-                                    <tr>
-                                        <td>@dr["Title"]</td>
-                                        <td>@dr["Description"]</td>
-                                        <td class="d-flex justify-content-center align-items-center">
-                                            <form method="post" asp-area="MST_Notice" asp-controller="MST_Notice" , asp-action="Delete">
-                                                <input type="hidden" name="NoticeID" value="@Convert.ToInt32(dr["NoticeID"])" />
-                                                <button type="submit" class="btn btn-danger me-2" onclick="return confirm('Are you sure you want to delete this?')"><i class="fa fa-trash"></i></button>
-                                            </form>
-
-                                            <form method="get" asp-area="MST_Notice" asp-controller="MST_Notice" asp-action="Add">
-                                                <input type="hidden" name="NoticeID" value="@Convert.ToInt32(dr["NoticeID"].ToString())">
-                                                <button type="submit" class="btn btn-warning"><i class="fa fa-pen-to-square"></i></button>
-                                            </form>
-                                        </td>
-                                    </tr>
-                                }
-                            </tbody>
-                        </table>
+                        @foreach (DataRow row in Model.Rows)
+                        {
+                            <div class="notice-item ps-2 pt-2 mt-2 shadow-sm bg-body-tertiary rounded">
+                                <div class="notice-content">
+                                    <h6><b>@row["Title"]</b></h6>
+                                    <p><i>@row["Description"]</i></p>
+                                </div>
+                            </div>
+                        }
                     }
                     else
                     {
@@ -389,18 +281,18 @@
             <div class="card">
                 <div class="card-body">
                     <h5 class="card-title"><i class="fa-solid fa-calendar-days"></i> Calendar</h5>
-                 
+
                     <div class="calendar-container">
                         <header class="mt-3 calendar-header">
                             <p class="calendar-current-date rounded-5 bg-secondary p-2 text-light fw-bold"></p>
                             <div class="calendar-navigation">
                                 <span id="calendar-prev"
                                       class="material-symbols-rounded text-light" style="background-color:darkblue">
-                                    chevron_left
+                                    <i class="fa-solid fa-circle-arrow-left"></i>
                                 </span>
                                 <span id="calendar-next"
                                       class="material-symbols-rounded text-light" style="background-color:darkblue">
-                                    chevron_right
+                                    <i class="fa-solid fa-circle-arrow-right"></i>
                                 </span>
                             </div>
                         </header>

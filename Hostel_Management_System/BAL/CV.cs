@@ -18,7 +18,17 @@
 			return UserName;
 		}
 
-		public static int? UserID()
+        public static string? Email()
+        {
+            string? Email = null;
+            if (_contextAccessor.HttpContext.Session.GetString("Email") != null)
+            {
+                Email = _contextAccessor.HttpContext.Session.GetString("Email").ToString();
+            }
+            return Email;
+        }
+
+        public static int? UserID()
 		{
 			int? UserID = null;
 			if (_contextAccessor.HttpContext.Session.GetString("UserID") != null)
@@ -76,6 +86,16 @@
                 StudentID = Convert.ToInt32(_contextAccessor.HttpContext.Session.GetString("StudentID"));
             }
             return StudentID;
+        }
+
+        public static DateTime? Created()
+        {
+            DateTime? Created = null;
+            if (_contextAccessor.HttpContext.Session.GetString("Created") != null)
+            {
+                Created = Convert.ToDateTime(_contextAccessor.HttpContext.Session.GetString("Created"));
+            }
+            return Created;
         }
     }
 }

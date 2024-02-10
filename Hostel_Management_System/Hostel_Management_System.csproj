@@ -14,6 +14,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Remove="BAL\CV.cs~RF6bf95c1c.TMP" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Folder Include="Areas\MST_BillCalculation\Data\" />
     <Folder Include="Areas\MST_BillType\Data\" />
     <Folder Include="Areas\MST_Course\Data\" />
@@ -24,6 +28,7 @@
     <Folder Include="Areas\MST_Payment\Data\" />
     <Folder Include="Areas\MST_Room\Data\" />
     <Folder Include="Areas\MST_Student\Data\" />
+    <Folder Include="Areas\MST_Visitor\Data\" />
     <Folder Include="Areas\Room_Allocate\Data\" />
     <Folder Include="Areas\SEC_User\Data\" />
   </ItemGroup>
@@ -198,7 +203,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="DocumentFormat.OpenXml" Version="3.0.0" />
+    <PackageReference Include="ClosedXML" Version="0.103.0-beta" />
     <PackageReference Include="EnterpriseLibrary.Data" Version="6.0.1304" />
     <PackageReference Include="EnterpriseLibrary.Data.NetCore" Version="6.3.2" />
     <PackageReference Include="iTextSharp" Version="5.5.13.3" />

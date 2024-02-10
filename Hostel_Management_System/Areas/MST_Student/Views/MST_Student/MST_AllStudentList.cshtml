@@ -7,15 +7,15 @@
 @model DataTable
 
 <div class="pagetitle">
-    <h1>Data Tables</h1>
+    <h1>Students List</h1>
     <nav>
         <ol class="breadcrumb">
-            <li class="breadcrumb-item"><a href="index.html">Home</a></li>
-            <li class="breadcrumb-item">Tables</li>
-            <li class="breadcrumb-item active">Data</li>
+            <li class="breadcrumb-item"><a asp-controller="Home" asp-action="Index">Home</a></li>
+            <li class="breadcrumb-item"><a asp-controller="MST_Student" asp-action="Index">Student List</a></li>
+            <li class="breadcrumb-item active"><a asp-controller="MST_Student" asp-action="GetAllStudent">All Students</a></li>
         </ol>
     </nav>
-</div><!-- End Page Title -->
+</div>
 
 <style>
     /* Table styles */
@@ -48,6 +48,41 @@
 </style>
 
 <section class="section">
+    <div class="card">
+        <div class="card-body">
+            <form class="row align-items-end rounded px-1" method="POST" asp-area="MST_Student" asp-controller="MST_Student" asp-action="PR_MST_ALLStudent_Filter" asp-route-filter="true">
+                <div>
+                    <h5 class="card-title"><i class="fa-solid fa-filter"></i> Filter</h5>
+                </div>
+                <hr />
+
+                <div class="col-md-3">
+                    <label for="StudentName" class="form-label">Student Name</label>
+                    <input type="text" name="StudentName" class="form-control" id="StudentName" placeholder="e.g. abc">
+                </div>
+
+                <div class="col-md-3">
+                    <label for="Course" class="form-label">Email Name</label>
+                    <input type="text" name="Email" class="form-control" id="Email" placeholder="e.g. demo@gmail.com">
+                </div>
+
+                <div class="col-md-2">
+                    <label for="RoomNo" class="form-label">Age</label>
+                    <input type="text" name="Age" class="form-control" id="Age" placeholder="e.g. 18">
+                </div>
+
+                <div class="col-md-2">
+                    <button type="submit" title="Search" class="btn btn-success w-100">Search <i class="bi bi-search"></i></button>
+                </div>
+                <div class="col-md-2">
+                    <button type="submit" asp-controller="MST_Student" asp-action="GetAllStudent" title="Clear" class="btn btn-danger w-100">Clear <i class="fa-solid fa-circle-xmark"></i></button>
+                </div>
+            </form>
+        </div>
+    </div>
+</section>
+
+<section class="section">
     <div class="row">
         <div class="col-lg-12">
 
@@ -58,6 +93,9 @@
                         
                         <div class="col-md-9">
                             <a class="btn btn-danger" asp-area="MST_Student" asp-controller="MST_Student" asp-action="CreatePdf"><i class="fa-solid fa-file-pdf"></i> Generate Pdf</a>
+                            <a class="btn btn-success" asp-area="MST_Student" asp-controller="MST_Student" asp-action="ExportStudentsToExcel">
+                                <i class="fa-solid fa-file-excel"></i><span> Export Excel</span>
+                            </a>
                         </div>
                         <div class="pull-right col-md-3 my-2">
                             <div id="sample_1_filter" class="dataTables_filter">

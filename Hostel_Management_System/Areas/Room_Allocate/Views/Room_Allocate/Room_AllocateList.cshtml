@@ -47,6 +47,36 @@
     </nav>
 </div>
 
+<section class="section">
+    <div class="card">
+        <div class="card-body">
+            <form class="row align-items-end rounded px-1" method="POST" asp-area="Room_Allocate" asp-controller="Room_Allocate" asp-action="RoomFilter">
+                <div>
+                    <h5 class="card-title"><i class="fa-solid fa-filter"></i> Filter</h5>
+                </div>
+                <hr />
+
+                <div class="col-md-4">
+                    <label for="StudentName" class="form-label">Student Name</label>
+                    <input type="text" name="StudentName" class="form-control" id="StudentName" placeholder="e.g. abc">
+                </div>
+
+                <div class="col-md-4">
+                    <label for="Course" class="form-label">Room No</label>
+                    <input type="text" name="RoomNo" class="form-control" id="RoomNo" placeholder="e.g. 101" />
+                </div>
+
+                <div class="col-md-2">
+                    <button type="submit" title="Search" class="btn btn-success w-100">Search <i class="bi bi-search"></i></button>
+                </div>
+                <div class="col-md-2">
+                    <button type="submit" asp-area="Room_Allocate" asp-controller="Room_Allocate" asp-action="Index" title="Clear" class="btn btn-danger w-100">Clear <i class="fa-solid fa-circle-xmark"></i></button>
+                </div>
+            </form>
+        </div>
+    </div>
+</section>
+
 
 <section class="section">
     <div class="row">

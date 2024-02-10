@@ -1,0 +1,124 @@
+﻿@{
+    if (@CV.UserRole() == "Admin")
+    {
+        ViewData["Title"] = "Visitor List";
+        Layout = "~/Views/Shared/_Layout.cshtml";
+    }
+    else if (@CV.UserRole() == "Staff")
+    {
+        ViewData["Title"] = "Visitor List";
+        Layout = "~/Views/Shared/_StaffLayout.cshtml";
+    }
+}
+
+@using System.Data;
+@using Hostel_Management_System.BAL
+@model Hostel_Management_System.Areas.MST_Visitor.Models.MST_VisitorModel;
+
+<div class="pagetitle">
+    <h1>Visitor Add/Edit</h1>
+    <nav>
+        <ol class="breadcrumb">
+            @if (@CV.UserRole() == "Admin")
+            {
+                <li class="breadcrumb-item"><a asp-controller="Home" asp-action="Index">Home</a></li>
+            }
+            else if (@CV.UserRole() == "Staff")
+            {
+                <li class="breadcrumb-item"><a asp-controller="Staff" asp-action="Index">Home</a></li>
+            }
+            <li class="breadcrumb-item"><a asp-controller="MST_Visitor" asp-action="Index">Visitor List</a></li>
+            <li class="breadcrumb-item active"><a asp-controller="MST_Visitor" asp-action="Add">Add</a></li>
+        </ol>
+    </nav>
+</div>
+
+<style>
+    .card {
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        margin-top: 20px;
+    }
+
+    .card-body {
+        padding: 20px;
+    }
+
+    .card-title {
+        font-size: 1.25rem;
+        color: #333;
+    }
+
+    .form-group {
+        margin-bottom: 5px;
+    }
+
+    label {
+        font-weight: bold;
+    }
+
+    input[type="text"],
+    input[type="date"],
+    input[type="file"],
+    select,
+    textarea {
+        width: 100%;
+        padding: 8px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        box-sizing: border-box;
+    }
+
+    select {
+        appearance: none;
+    }
+</style>
+
+<div class="card col-md-6">
+    <div class="card-body p-3">
+        <span class="card-title"> <i class="bi bi-door-closed-fill"></i> Visitor</span>
+        <hr />
+        <form role="form" method="post" asp-area="MST_Visitor" asp-controller="MST_Visitor" asp-action="Save">
+            @Html.HiddenFor(x => x.VisitorID)
+
+            <div class="form-group">
+                <label for="inputState"><span class="text-danger">*</span>Visitor Name</label>
+                <input type="text" class="form-control" placeholder="Enter Visitor Name" asp-for="VisitorName">
+                <span asp-validation-for="VisitorName" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label for="inputState"><span class="text-danger">*</span>Mobile No</label>
+                <input type="text" class="form-control" placeholder="Enter Mobile No." asp-for="MobileNo">
+                <span asp-validation-for="MobileNo" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label for="inputState"><span class="text-danger">*</span>Remarks</label>
+                <input type="text" class="form-control" placeholder="Enter Remarks" asp-for="Remark">
+                <span asp-validation-for="Remark" class="text-danger"></span>
+            </div>
+
+            <div class="form-group row">
+                <div class="col-md-6">
+                    <label for="inputState"><span class="text-danger">*</span>DateIN</label>
+                    <input type="date" class="form-control" placeholder="Enter Date" asp-for="DateIN">
+                    <span asp-validation-for="DateIN" class="text-danger"></span>
+                </div>
+                <div class="col-md-6">
+                    <label for="inputState"><span class="text-danger">*</span>DateOUT</label>
+                    <input type="date" class="form-control" placeholder="Enter Date" asp-for="DateOUT">
+                    <span asp-validation-for="DateOUT" class="text-danger"></span>
+                </div>
+            </div>
+
+            <hr />
+            <button type="submit" class="btn btn-success"><i class="fa-solid fa-floppy-disk mx-1"></i> Save</button>
+            <a class="btn btn-secondary" asp-controller="MST_Visitor" asp-action="Cancle"><i class="bi bi-caret-left-fill"></i> Back</a>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial.cshtml" />
+}

@@ -1,10 +1,9 @@
-﻿using Hostel_Management_System.Areas.MST_Payment.Models;
-using Hostel_Management_System.Areas.MST_Student.Models;
+﻿using Hostel_Management_System.Areas.MST_Student.Models;
 using Hostel_Management_System.Areas.SEC_User.Models;
+using Hostel_Management_System.BAL;
 using Hostel_Management_System.DAL;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Practices.EnterpriseLibrary.Data;
 using System.Data;
 using System.Data.SqlClient;
 
@@ -84,7 +83,6 @@ namespace Hostel_Management_System.Areas.SEC_User.Controllers
 			}
 			else
 			{
-				
 				DataTable dt = dal.PR_SEC_User_SelectBYUserNamePassword(modelSEC_User.UserName, modelSEC_User.Password);
 				if (dt.Rows.Count > 0)
 				{
@@ -99,7 +97,8 @@ namespace Hostel_Management_System.Areas.SEC_User.Controllers
                         HttpContext.Session.SetString("StudentID", dr["StudentID"].ToString());
                         HttpContext.Session.SetString("Password", dr["Password"].ToString());
 						HttpContext.Session.SetString("PhotoPath", dr["PhotoPath"].ToString());
-						break;	
+                        HttpContext.Session.SetString("Created", dr["Created"].ToString());
+                        break;	
 					}
 				}
 				else
@@ -126,7 +125,11 @@ namespace Hostel_Management_System.Areas.SEC_User.Controllers
 						{
 							return RedirectToAction("Index", "User");
 						}
-					}
+                        else if (userRole == "Staff")
+                        {   
+                            return RedirectToAction("Index", "Staff");
+                        }
+                    }
 					else
 					{
 						return RedirectToAction("Index");
@@ -194,7 +197,6 @@ namespace Hostel_Management_System.Areas.SEC_User.Controllers
                     modelSEC_User.LastName= row["LastName"].ToString();
                     modelSEC_User.UserName= row["UserName"].ToString();
                     modelSEC_User.Password= row["Password"].ToString();
-                    modelSEC_User.Email= row["Email"].ToString();
                     modelSEC_User.UserRole = row["UserRole"].ToString();
                 }
                 return View("SEC_User_AddForm", modelSEC_User);
@@ -208,12 +210,12 @@ namespace Hostel_Management_System.Areas.SEC_User.Controllers
         {
             if (modelSEC_user.UserID== null)
             {
-                DataTable dt = dal.PR_SEC_User_Insert((int)modelSEC_user.StudentID,modelSEC_user.FirstName,modelSEC_user.LastName,modelSEC_user.UserName,modelSEC_user.UserRole,modelSEC_user.Email);
+                DataTable dt = dal.PR_SEC_User_Insert((int)modelSEC_user.StudentID,modelSEC_user.FirstName,modelSEC_user.LastName,modelSEC_user.UserName,modelSEC_user.UserRole);
                 TempData["SEC_User_AlertMessage"] = "Record Inserted Successfully!!";
             }
             else
             {
-                DataTable dt = dal.PE_SEC_User_Edit((int)modelSEC_user.UserID, (int)modelSEC_user.StudentID, modelSEC_user.FirstName, modelSEC_user.LastName, modelSEC_user.UserName, modelSEC_user.UserRole, modelSEC_user.Email);
+                DataTable dt = dal.PE_SEC_User_Edit((int)modelSEC_user.UserID, (int)modelSEC_user.StudentID, modelSEC_user.FirstName, modelSEC_user.LastName, modelSEC_user.UserName, modelSEC_user.UserRole);
                 TempData["SEC_User_AlertMessage"] = "Record Updated Successfully!!";
             }
             return RedirectToAction("GetallUser");
@@ -239,5 +241,64 @@ namespace Hostel_Management_System.Areas.SEC_User.Controllers
         }
         #endregion
 
+        #region Cancle
+        public IActionResult ChangePsw()
+        {
+            return View("ChangePassword");
+        }
+        #endregion
+
+        #region UserProfile
+        public IActionResult UserProfile()
+        {
+            return View("User_Profile");
+        }
+        #endregion
+
+        #region PR_Change_UserPassword
+        public IActionResult ChangePassword(string oldPassword, string newPassword)
+        {
+            int userId = (int)@CV.UserID();
+            DataTable dt = dal.PR_Change_UserPassword(userId, oldPassword, newPassword);
+
+            if (dt.Rows.Count > 0)
+            {
+                string? message = dt.Rows[0]["Message"].ToString();
+
+                // Check the message and take appropriate actions
+                if (message.Equals("Password changed successfully"))
+                {
+                    TempData["SEC_User_ChangePassword"] = "Password changed successfully!";
+                }
+                else if (message.Equals("Incorrect old password"))
+                {
+                    TempData["SEC_User_ChangePassword"] = "Incorrect old password. Please try again.";
+                }
+                else
+                {
+                    TempData["SEC_User_ChangePassword"] = "An error occurred while changing the password.";
+                }
+            }
+            else
+            {
+                TempData["SEC_User_ChangePassword"] = "An unexpected error occurred.";
+            }
+
+
+            if (CV.UserRole() == "Admin")
+            {
+                return RedirectToAction("Index", "Home");
+            }
+            else if (CV.UserRole() == "Student")
+            {
+                return RedirectToAction("Index", "User");
+            }
+            else if (CV.UserRole() == "Staff")
+            {
+                return RedirectToAction("Index", "Staff");
+            }
+            return RedirectToAction("Index");
+        }
+        #endregion
     }
 }
