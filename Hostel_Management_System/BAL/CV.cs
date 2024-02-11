@@ -9,7 +9,7 @@
 		}
 
 		public static string? UserName()
-		{
+		{ 
 			string? UserName = null;
 			if (_contextAccessor.HttpContext.Session.GetString("UserName") != null)
 			{

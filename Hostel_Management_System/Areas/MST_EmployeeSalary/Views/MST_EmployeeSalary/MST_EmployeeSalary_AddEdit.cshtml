@@ -7,11 +7,11 @@
 @model Hostel_Management_System.Areas.MST_EmployeeSalary.Models.MST_EmployeeSalaryModel;
 
 <div class="pagetitle">
-	<h1>Employee Salary Add/Edit</h1>
+	<h1>Salary Add/Edit</h1>
 	<nav>
 		<ol class="breadcrumb">
 			<li class="breadcrumb-item"><a asp-controller="Home" asp-action="Index">Home</a></li>
-			<li class="breadcrumb-item"><a asp-controller="MST_EmployeeSalary" asp-action="Index">Employee Salary List</a></li>
+			<li class="breadcrumb-item"><a asp-controller="MST_EmployeeSalary" asp-action="Index">Staff Salary List</a></li>
 			<li class="breadcrumb-item active"><a asp-controller="MST_EmployeeSalary" asp-action="Add">Add Salary</a></li>
 		</ol>
 	</nav>
@@ -65,9 +65,9 @@
 
 			<div class="row my-2">
 				<div class="form-group col-8">
-					<label for="inputState"><span class="text-danger">*</span>Employee</label>
+					<label for="inputState"><span class="text-danger">*</span>Staff</label>
 					<select class="form-control" asp-for="EmployeeID" asp-items="@(new SelectList( ViewBag.EmployeeList,"EmployeeID","EmployeeName"))">
-						<option value="">Select Employee</option>
+						<option value="">Select Name</option>
 					</select>
 					<span asp-validation-for="EmployeeID" class="text-danger"></span>
 				</div>

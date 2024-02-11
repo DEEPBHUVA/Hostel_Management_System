@@ -71,17 +71,24 @@ namespace Hostel_Management_System.Areas.MST_Student.Controllers
         }
         #endregion
 
-
         #region Delete
         public IActionResult Delete(int StudentID)
         {
-            if (Convert.ToBoolean(dalMST_Student.PR_MST_Student_DeleteByPk(StudentID)))
+            try
             {
-                TempData["MST_Student_Delete_AlertMessage"] = "Record Deleted Successfully";
-                return RedirectToAction("GetAllStudent");
+                if (Convert.ToBoolean(dalMST_Student.PR_MST_Student_DeleteByPk(StudentID)))
+                {
+                    TempData["MST_Student_Delete_AlertMessage"] = "Record Deleted Successfully";
+                }
             }
+            catch (Exception ex)
+            {
+                TempData["MST_Student_Delete_AlertMessage"] = ex.Message;
+            }
+
             return RedirectToAction("GetAllStudent");
         }
+
         #endregion
 
         #region UpdateStatus
@@ -113,7 +120,7 @@ namespace Hostel_Management_System.Areas.MST_Student.Controllers
 
             List<MST_Course_DropdownModel> list1 = new List<MST_Course_DropdownModel>();
             foreach (DataRow dr in dt2.Rows)
-            {
+            {   
                 MST_Course_DropdownModel dlist = new MST_Course_DropdownModel();
                 dlist.CourseID = Convert.ToInt32(dr["CourseID"]);
                 dlist.CourseName = dr["CourseName"].ToString();
@@ -294,6 +301,7 @@ namespace Hostel_Management_System.Areas.MST_Student.Controllers
         }
         #endregion
 
+        #region ConvertInToList
         public List<MST_StudentModel> GetStudentModels()
         {
             List<MST_StudentModel> studentModels = new List<MST_StudentModel>();
@@ -328,8 +336,9 @@ namespace Hostel_Management_System.Areas.MST_Student.Controllers
                 return studentModels;
             }
         }
-         
+        #endregion
 
+        #region ExportStudentsToExcel
         public IActionResult ExportStudentsToExcel()
         {
            
@@ -369,7 +378,6 @@ namespace Hostel_Management_System.Areas.MST_Student.Controllers
                     worksheet.Cell(row, 7).Value = studentModel.CourseName;
                     worksheet.Cell(row, 8).Value = studentModel.isActive;
                     // Add other properties...
-
                     row++;
                 }
 
@@ -386,10 +394,9 @@ namespace Hostel_Management_System.Areas.MST_Student.Controllers
                 }
             }
         }
+        #endregion
 
-
-
-
+        #region CreatePdf
         public FileResult CreatePdf()
         {
             MemoryStream workStream = new MemoryStream();
@@ -402,7 +409,7 @@ namespace Hostel_Management_System.Areas.MST_Student.Controllers
 
             // Create PDF Table with 8 columns  
             PdfPTable tableLayout = new PdfPTable(8);
-            tableLayout.TotalWidth = PageSize.A4.Rotate().Width - 20; // Adjust total width based on margins
+            tableLayout.TotalWidth = PageSize.A4.Rotate().Width - 20;
             tableLayout.LockedWidth = true;
 
             // File will be created in this path  
@@ -456,11 +463,9 @@ namespace Hostel_Management_System.Areas.MST_Student.Controllers
             doc.Add(paragraph);
 
             List<MST_StudentModel> studentModels = GetStudentModels();
-            // Add Content to PDF   
             doc.Add(Add_Content_To_PDF(tableLayout, studentModels));
 
-
-            // Closing the document  
+            
             doc.Close();
 
             byte[] byteInfo = workStream.ToArray();
@@ -569,6 +574,7 @@ namespace Hostel_Management_System.Areas.MST_Student.Controllers
             });
         }
 
+    #endregion
     }
 }
 

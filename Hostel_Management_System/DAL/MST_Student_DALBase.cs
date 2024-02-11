@@ -1,6 +1,7 @@
 ﻿using Microsoft.Practices.EnterpriseLibrary.Data.Sql;
 using System.Data.Common;
 using System.Data;
+using System.Data.SqlClient;
 
 namespace Hostel_Management_System.DAL
 {
@@ -61,9 +62,16 @@ namespace Hostel_Management_System.DAL
                 int delete = sqlDB.ExecuteNonQuery(dbCMD);
                 return (delete == -1 ? false : true);
             }
-            catch (Exception e)
+            catch (Exception ex)
             {
-                return null;
+                if (ex is SqlException sqlException && sqlException.Number == 547)
+                {
+                    throw new Exception("Cannot delete student. Related records exist.", ex);
+                }
+                else
+                {
+                    throw;
+                }
             }
         }
         #endregion
@@ -269,7 +277,6 @@ namespace Hostel_Management_System.DAL
             }
         }
         #endregion
-
 
         #region PR_MST_Student_SeleckbyPkWithAllData
         public DataTable PR_MST_Student_SeleckbyPkWithAllData(int? StudentID)

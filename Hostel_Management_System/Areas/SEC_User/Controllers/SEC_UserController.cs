@@ -14,6 +14,7 @@ namespace Hostel_Management_System.Areas.SEC_User.Controllers
 	public class SEC_UserController : Controller
 	{
         SEC_User_DAL dal = new SEC_User_DAL();
+
         #region Configuration
         public IConfiguration Configuration;
 		public SEC_UserController(IConfiguration configuration)
@@ -62,7 +63,7 @@ namespace Hostel_Management_System.Areas.SEC_User.Controllers
 		}
         #endregion
 
-        #region
+        #region Login
         [HttpPost]
 		public IActionResult Login(SEC_UserModel modelSEC_User)
 		{
@@ -208,11 +209,27 @@ namespace Hostel_Management_System.Areas.SEC_User.Controllers
         #region Save(Insert/Update)
         public IActionResult Save(SEC_UserModel modelSEC_user)
         {
-            if (modelSEC_user.UserID== null)
+            if (modelSEC_user.UserID == null)
             {
-                DataTable dt = dal.PR_SEC_User_Insert((int)modelSEC_user.StudentID,modelSEC_user.FirstName,modelSEC_user.LastName,modelSEC_user.UserName,modelSEC_user.UserRole);
-                TempData["SEC_User_AlertMessage"] = "Record Inserted Successfully!!";
+                string resultMessage = "An error occurred while processing your request.";
+
+                DataTable dt = dal.PR_SEC_User_Insert((int)modelSEC_user.StudentID, modelSEC_user.FirstName, modelSEC_user.LastName, modelSEC_user.UserName, modelSEC_user.UserRole);
+
+                if (dt != null && dt.Rows.Count > 0)
+                {
+                    string result = dt.Rows[0]["Result"].ToString();
+                    if (result == "Success")
+                    {
+                        resultMessage = "Record Inserted Successfully!!";
+                    }
+                    else if (result == "UsernameExists")
+                    {
+                        resultMessage = "Username already exists.";
+                    }
+                }
+                TempData["SEC_User_AlertMessage"] = resultMessage;
             }
+
             else
             {
                 DataTable dt = dal.PE_SEC_User_Edit((int)modelSEC_user.UserID, (int)modelSEC_user.StudentID, modelSEC_user.FirstName, modelSEC_user.LastName, modelSEC_user.UserName, modelSEC_user.UserRole);
@@ -241,7 +258,7 @@ namespace Hostel_Management_System.Areas.SEC_User.Controllers
         }
         #endregion
 
-        #region Cancle
+        #region Change Password
         public IActionResult ChangePsw()
         {
             return View("ChangePassword");
@@ -283,8 +300,6 @@ namespace Hostel_Management_System.Areas.SEC_User.Controllers
             {
                 TempData["SEC_User_ChangePassword"] = "An unexpected error occurred.";
             }
-
-
             if (CV.UserRole() == "Admin")
             {
                 return RedirectToAction("Index", "Home");

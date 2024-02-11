@@ -150,11 +150,7 @@
                             <i class="fa-solid fa-circle"></i><span>Password List</span>
                         </a>
                     </li>
-                    <li>
-                        <a asp-area="MST_Course" asp-controller="MST_Course" asp-action="Index">
-                            <i class="fa-solid fa-circle"></i> <span>Course</span>
-                        </a>
-                    </li>
+                    
                 </ul>
             </li><!-- End Components Nav -->
 
@@ -173,16 +169,7 @@
                             <i class="fa-solid fa-circle"></i><span>Allocated List</span>
                         </a>
                     </li>
-                    <li>
-                        <a asp-area="MST_Room" asp-controller="MST_Room" asp-action="Add">
-                            <i class="fa-solid fa-circle"></i>Add Room
-                        </a>
-                    </li>
-                    <li>
-                        <a asp-area="MST_Room" asp-controller="MST_Room" asp-action="Index">
-                            <i class="fa-solid fa-circle"></i><span>Room List</span>
-                        </a>
-                    </li>
+                    
                 </ul>
             </li><!-- End Forms Nav -->
 
@@ -206,24 +193,20 @@
 
             <li class="nav-item">
                 <a class="nav-link collapsed" data-bs-toggle="collapse" href="#fees-nav">
-                    <i class="fa-solid fa-user-tie"></i> <span> Manage Employee</span><i class="bi bi-chevron-down ms-auto"></i>
+                    <i class="fa-solid fa-user-tie"></i> <span> Manage Staff</span><i class="bi bi-chevron-down ms-auto"></i>
                 </a>
                 <ul id="fees-nav" class="nav-content collapse" data-bs-parent="#sidebar-nav">
                     <li>
                         <a asp-area="MST_Employee" asp-controller="MST_Employee" asp-action="Add">
-                            <i class="fa-solid fa-circle"></i> Add Employee
+                            <i class="fa-solid fa-circle"></i> Add Staff
                         </a>
                     </li>
                     <li>
                         <a asp-area="MST_Employee" asp-controller="MST_Employee" asp-action="Index">
-                            <i class="fa-solid fa-circle"></i> <span>Employee List</span>
+                            <i class="fa-solid fa-circle"></i> <span>Staff List</span>
                         </a>
                     </li>
-                    <li>
-                        <a asp-area="MST_EmployeeType" asp-controller="MST_EmployeeType" asp-action="Index">
-                            <i class="fa-solid fa-circle"></i> <span>Employee Types</span>
-                        </a>
-                    </li>
+                    
                 </ul>
             </li><!-- End Fees Nav -->
 
@@ -234,7 +217,7 @@
                 <ul id="new-dropdown" class="nav-content collapse" data-bs-parent="#sidebar-nav">
                     <li>
                         <a asp-area="MST_EmployeeSalary" asp-controller="MST_EmployeeSalary" asp-action="Add">
-                            <i class="fa-solid fa-circle"></i> Add Employee`s Salary
+                            <i class="fa-solid fa-circle"></i> Pay Salary
                         </a>
                     </li>
                     <!-- Add more items as needed -->
@@ -254,24 +237,13 @@
                 </a>
                 <ul id="example-dropdown" class="nav-content collapse" data-bs-parent="#sidebar-nav">
                     <li>
-                        <a asp-area="MST_BillCalculation" asp-controller="MST_BillCalculation" asp-action="Index">
-                            <i class="fa-solid fa-circle"></i> Bill List
-                        </a>
-                    </li>
-                    <li>
                         <a asp-area="MST_BillCalculation" asp-controller="MST_BillCalculation" asp-action="Add">
                             <i class="fa-solid fa-circle"></i> Add Bill
                         </a>
                     </li>
                     <li>
-                        <a asp-area="MST_BillType" asp-controller="MST_BillType" asp-action="Index">
-                            <i class="fa-solid fa-circle"></i> BillTypes
-                        </a>
-                    </li>
-                    <!-- Add more items as needed -->
-                    <li>
-                        <a asp-area="MST_BillType" asp-controller="MST_BillType" asp-action="Add">
-                            <i class="fa-solid fa-circle"></i> Add BillType
+                        <a asp-area="MST_BillCalculation" asp-controller="MST_BillCalculation" asp-action="Index">
+                            <i class="fa-solid fa-circle"></i> Bill List
                         </a>
                     </li>
                 </ul>
@@ -283,34 +255,27 @@
                 </a>
                 <ul id="other-dropdown" class="nav-content collapse" data-bs-parent="#sidebar-nav">
                     <li>
-                        <a asp-area="MST_Visitor" asp-controller="MST_Visitor" asp-action="Index">
-                            <i class="fa-solid fa-circle"></i> Visitor List
-                        </a>
-                    </li>
-                    <li>
                         <a asp-area="MST_Visitor" asp-controller="MST_Visitor" asp-action="Add">
                             <i class="fa-solid fa-circle"></i> Add Visitor
                         </a>
                     </li>
-                    <!-- Add more sub-items as needed -->
+                    <li>
+                        <a asp-area="MST_Visitor" asp-controller="MST_Visitor" asp-action="Index">
+                            <i class="fa-solid fa-circle"></i> Visitor List
+                        </a>
+                    </li>                    
                 </ul>
             </li>
 
 
-            <li class="nav-item">
+           @*  <li class="nav-item">
                 <a class="nav-link collapsed" data-bs-target="#new-item-dropdown" data-bs-toggle="collapse" href="#">
-                    <i class="fa-solid fa-note-sticky"></i><span> Notice</span><i class="bi bi-chevron-down ms-auto"></i>
+                    <i class="fa-solid fa-note-sticky"></i><span> notice</span><i class="bi bi-chevron-down ms-auto"></i>
                 </a>
                 <ul id="new-item-dropdown" class="nav-content collapse" data-bs-parent="#sidebar-nav">
-                    <li>
-                        <a asp-area="MST_Notice" asp-controller="MST_Notice" asp-action="Add">
-                            <i class="fa-solid fa-circle"></i> Add Notice
-                        </a>
-                    </li>
-                   
-                    <!-- Add more sub-items as needed -->
+                    
                 </ul>
-            </li>
+            </li> *@
 
            
             <!-- New dropdown -->
@@ -319,12 +284,36 @@
                     <i class="fa-solid fa-gear"></i> <span> Account Setting</span><i class="bi bi-chevron-down ms-auto"></i>
                 </a>
                 <ul id="another-nav" class="nav-content collapse" data-bs-parent="#sidebar-nav">
+
                     <li>
-                        <a asp-area="YourArea" asp-controller="YourController" asp-action="YourAction">
-                            <i class="fa-solid fa-circle"></i> Your Link
+                        <a asp-area="MST_Room" asp-controller="MST_Room" asp-action="Index">
+                            <i class="fa-solid fa-circle"></i><span>Room List</span>
                         </a>
                     </li>
-                    <!-- Add more items as needed -->
+
+                    <li>
+                        <a asp-area="MST_Course" asp-controller="MST_Course" asp-action="Index">
+                            <i class="fa-solid fa-circle"></i> <span>Course List</span>
+                        </a>
+                    </li>
+                    
+                    <li>
+                        <a asp-area="MST_BillType" asp-controller="MST_BillType" asp-action="Index">
+                            <i class="fa-solid fa-circle"></i> Bill Types
+                        </a>
+                    </li>
+
+                    <li>
+                        <a asp-area="MST_EmployeeType" asp-controller="MST_EmployeeType" asp-action="Index">
+                            <i class="fa-solid fa-circle"></i> <span>Staff Types</span>
+                        </a>
+                    </li>
+
+                    <li>
+                        <a asp-area="MST_Notice" asp-controller="MST_Notice" asp-action="Add">
+                            <i class="fa-solid fa-circle"></i> Add Notice
+                        </a>
+                    </li>
                 </ul>
             </li>
         </ul>

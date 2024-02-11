@@ -216,25 +216,24 @@
                     </div>
                 </div>
 
-                <div class="col-xxl-2 col-md-6">
-                    <div class="card info-card revenue-card border-5 border-success border-top rounded">
+                
+                <div class="col-xxl-10">
+                    <div class="card info-card @((int)ViewBag.DashboardData["BedCount"] == (int)ViewBag.DashboardData["StudentCount"] ? "border-danger" : "border-success") border-5 border-start rounded">
                         <div class="card-body">
-                            <h5 class="card-title">Rooms <span>|</span></h5>
-                            <div class="d-flex align-items-center">
-                                <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
-                                    <i class="fa-solid fa-door-open"></i>
-                                </div>
-                                <div class="ps-3">
-                                    <h6>@ViewBag.DashboardData["RoomCount"]</h6>
-                                </div>
+                            <h5 class="card-title"><i class="fa-solid fa-comment"></i> Hostel Status</h5>
+                            <div class="">
+                                @if ((int)ViewBag.DashboardData["BedCount"] == (int)ViewBag.DashboardData["StudentCount"])
+                                {
+                                    <h6 class="text-danger ms-2">Admission closes! 😔</h6>
+                                }
+                                else
+                                {
+                                    <h6 class="text-success">🏠 Hostel Admission Open! 🌟</h6>
+                                }
                             </div>
-                            <hr class="border-success" />
-                            <a asp-area="MST_Room" asp-controller="MST_Room" asp-action="Index" class="text-end text-success">View Details <i class="bi bi-arrow-right-circle-fill"></i></a>
                         </div>
                     </div>
                 </div>
-
-               
                 
 
                 <!-- Add more cards as needed -->
@@ -242,6 +241,8 @@
         </div>
     </div>
 </section>
+
+
 
 <section class="section">
     <div class="row">
