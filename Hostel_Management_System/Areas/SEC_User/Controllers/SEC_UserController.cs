@@ -211,7 +211,7 @@ namespace Hostel_Management_System.Areas.SEC_User.Controllers
         {
             if (modelSEC_user.UserID == null)
             {
-                string resultMessage = "An error occurred while processing your request.";
+                TempData["InfoMessage"] = "An error occurred while processing your request.";
 
                 DataTable dt = dal.PR_SEC_User_Insert((int)modelSEC_user.StudentID, modelSEC_user.FirstName, modelSEC_user.LastName, modelSEC_user.UserName, modelSEC_user.UserRole);
 
@@ -220,20 +220,19 @@ namespace Hostel_Management_System.Areas.SEC_User.Controllers
                     string result = dt.Rows[0]["Result"].ToString();
                     if (result == "Success")
                     {
-                        resultMessage = "Record Inserted Successfully!!";
+                        TempData["SuccessMessage"] = "Record Inserted Successfully!!";
                     }
                     else if (result == "UsernameExists")
                     {
-                        resultMessage = "Username already exists.";
+                        TempData["InfoMessage"] = "Username already exists.";
                     }
                 }
-                TempData["SEC_User_AlertMessage"] = resultMessage;
             }
 
             else
             {
                 DataTable dt = dal.PE_SEC_User_Edit((int)modelSEC_user.UserID, (int)modelSEC_user.StudentID, modelSEC_user.FirstName, modelSEC_user.LastName, modelSEC_user.UserName, modelSEC_user.UserRole);
-                TempData["SEC_User_AlertMessage"] = "Record Updated Successfully!!";
+                TempData["SuccessMessage"] = "Record Updated Successfully!!";
             }
             return RedirectToAction("GetallUser");
         }
@@ -242,10 +241,17 @@ namespace Hostel_Management_System.Areas.SEC_User.Controllers
         #region Delete
         public IActionResult Delete(int UserID)
         {
-            if (Convert.ToBoolean(dal.PR_SEC_User_Delete(UserID)))
+            try
             {
-                TempData["SEC_User_Delete_AlertMessage"] = "Record Deleted Successfully";
-                return RedirectToAction("GetallUser");
+                if (Convert.ToBoolean(dal.PR_SEC_User_Delete(UserID)))
+                {
+                    TempData["DeleteSuccess"] = "Record Deleted Successfully";
+                    return RedirectToAction("GetallUser");
+                }
+            }
+            catch (Exception ex)
+            {
+                TempData["InfoMessage"] = ex.Message;
             }
             return RedirectToAction("GetallUser");
         }

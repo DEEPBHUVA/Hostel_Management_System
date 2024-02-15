@@ -101,12 +101,12 @@ namespace Hostel_Management_System.Areas.MST_Payment.Controllers
             if (modelMST_Payment.PaymentID == null)
             {
                 DataTable dt = dalMST_Payment.PR_MST_Payment_Insert(modelMST_Payment.StudentID, modelMST_Payment.PaymentDate, modelMST_Payment.MobileNo, modelMST_Payment.Amount,modelMST_Payment.Remark, modelMST_Payment.PaidBY,modelMST_Payment.BankName,modelMST_Payment.ChequeNo);
-                TempData["MST_Payment_AlertMessage"] = "Record Inserted Successfully!!";
+                TempData["SuccessMessage"] = "Record Inserted Successfully!!";
             }
             else
             {
                 DataTable dt = dalMST_Payment.PR_MST_Payment_Update((int)modelMST_Payment.PaymentID, modelMST_Payment.StudentID, modelMST_Payment.PaymentDate, modelMST_Payment.MobileNo, modelMST_Payment.Amount, modelMST_Payment.Remark, modelMST_Payment.PaidBY, modelMST_Payment.BankName, modelMST_Payment.ChequeNo);
-                TempData["MST_Payment_AlertMessage"] = "Record Updated Successfully!!";
+                TempData["SuccessMessage"] = "Record Updated Successfully!!";
             }
             return RedirectToAction("Index");
         }
@@ -115,10 +115,17 @@ namespace Hostel_Management_System.Areas.MST_Payment.Controllers
         #region Delete
         public IActionResult Delete(int PaymentID)
         {
-            if (Convert.ToBoolean(dalMST_Payment.PR_MST_Payment_Delete(PaymentID)))
+            try
             {
-                TempData["MST_Payment_Delete_AlertMessage"] = "Record Deleted Successfully";
-                return RedirectToAction("Index");
+                if (Convert.ToBoolean(dalMST_Payment.PR_MST_Payment_Delete(PaymentID)))
+                {
+                    TempData["DeleteSuccess"] = "Record Deleted Successfully";
+                    return RedirectToAction("Index");
+                }
+            }
+            catch (Exception ex)
+            {
+                TempData["InfoMessage"] = ex.Message;
             }
             return RedirectToAction("Index");
         }

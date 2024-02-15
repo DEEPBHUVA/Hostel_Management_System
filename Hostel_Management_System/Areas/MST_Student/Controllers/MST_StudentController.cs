@@ -78,12 +78,12 @@ namespace Hostel_Management_System.Areas.MST_Student.Controllers
             {
                 if (Convert.ToBoolean(dalMST_Student.PR_MST_Student_DeleteByPk(StudentID)))
                 {
-                    TempData["MST_Student_Delete_AlertMessage"] = "Record Deleted Successfully";
+                    TempData["DeleteSuccess"] = "Record Deleted Successfully";
                 }
             }
             catch (Exception ex)
             {
-                TempData["MST_Student_Delete_AlertMessage"] = ex.Message;
+                TempData["InfoMessage"] = ex.Message;
             }
 
             return RedirectToAction("GetAllStudent");
@@ -96,7 +96,7 @@ namespace Hostel_Management_System.Areas.MST_Student.Controllers
         {
             if (Convert.ToBoolean(dalMST_Student.PR_Mst_StudentUpdateStatus(StudentID)))
             {
-                TempData["MST_Student_Remove_AlertMessage"] = "Record removed form this list successfully!!";
+                TempData["DeleteSuccess"] = "Record removed form this list successfully!!";
                 return RedirectToAction("Index");
             }
             return RedirectToAction("Index");
@@ -211,7 +211,7 @@ namespace Hostel_Management_System.Areas.MST_Student.Controllers
                     modelMST_Student.Remarks,
                     modelMST_Student.PhotoPath
                 );
-                TempData["MST_Student_AlertMessage"] = "Record Inserted Successfully!!";
+                TempData["SuccessMessage"] = "Record Inserted Successfully!!";
             }
             else
             {
@@ -238,7 +238,7 @@ namespace Hostel_Management_System.Areas.MST_Student.Controllers
                     modelMST_Student.Remarks,
                     modelMST_Student.PhotoPath
                 );
-                TempData["MST_Student_AlertMessage"] = "Record Updated Successfully!!";
+                TempData["SuccessMessage"] = "Record Updated Successfully!!";
             }
             return RedirectToAction("Index");
         }

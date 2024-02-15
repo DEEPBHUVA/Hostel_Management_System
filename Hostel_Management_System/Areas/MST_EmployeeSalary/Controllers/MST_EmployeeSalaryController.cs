@@ -94,12 +94,12 @@ namespace Hostel_Management_System.Areas.MST_EmployeeSalary.Controllers
             if (modelMST_EmployeeModel.EmployeeSalaryID == null)
             {
                 DataTable dt = dalMST_EmployeeSalary.PR_MST_EmployeeSalary_Insert(modelMST_EmployeeModel.EmployeeID, modelMST_EmployeeModel.SalaryDate, modelMST_EmployeeModel.Salary, modelMST_EmployeeModel.Remark, modelMST_EmployeeModel.PaymentMode, modelMST_EmployeeModel.BankName, modelMST_EmployeeModel.ChequeNo,modelMST_EmployeeModel.Status);
-                TempData["MST_EmployeeSalary_AlertMessage"] = "Record Inserted Successfully!!";
+                TempData["SuccessMessage"] = "Record Inserted Successfully!!";
             }
             else
             {
                 DataTable dt = dalMST_EmployeeSalary.PR_MST_EmployeeSalary_Update((int)modelMST_EmployeeModel.EmployeeSalaryID, modelMST_EmployeeModel.EmployeeID, modelMST_EmployeeModel.SalaryDate, modelMST_EmployeeModel.Salary, modelMST_EmployeeModel.Remark, modelMST_EmployeeModel.PaymentMode, modelMST_EmployeeModel.BankName, modelMST_EmployeeModel.ChequeNo, modelMST_EmployeeModel.Status);
-                TempData["MST_EmployeeSalary_AlertMessage"] = "Record Updated Successfully!!";
+                TempData["SuccessMessage"] = "Record Updated Successfully!!";
             }
             return RedirectToAction("Index");
         }
@@ -108,10 +108,17 @@ namespace Hostel_Management_System.Areas.MST_EmployeeSalary.Controllers
         #region Delete
         public IActionResult Delete(int EmployeeSalaryID)
         {
-            if (Convert.ToBoolean(dalMST_EmployeeSalary.PR_MST_EmployeeSalary_Delete(EmployeeSalaryID)))
+            try
             {
-                TempData["MST_EmployeeSalary_Delete_AlertMessage"] = "Record Deleted Successfully";
-                return RedirectToAction("Index");
+                if (Convert.ToBoolean(dalMST_EmployeeSalary.PR_MST_EmployeeSalary_Delete(EmployeeSalaryID)))
+                {
+                    TempData["DeleteSuccess"] = "Record Deleted Successfully";
+                    return RedirectToAction("Index");
+                }
+            }
+            catch (Exception ex)
+            {
+                TempData["InfoMessage"] = ex.Message;
             }
             return RedirectToAction("Index");
         }

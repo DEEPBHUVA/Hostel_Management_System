@@ -90,21 +90,13 @@
                         </div>
                     </div>
                     <hr />
-                    @if (TempData["MST_Visitor_AlertMessage"] != null)
-                    {
-                        <div class="alert alert-success alert-dismissible fade show" role="alert">
-                            @TempData["MST_Visitor_AlertMessage"]
-                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                        </div>
-                    }
 
-                    @if (TempData["MST_Visitor_Delete_AlertMessage"] != null)
-                    {
-                        <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                            @TempData["MST_Visitor_Delete_AlertMessage"]
-                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <partial name="/Views/Error/_ShowAlert.cshtml" />
                         </div>
-                    }
+                    </div>
+
                     <form asp-action="MultipleDelete" method="post">
                     <table align="center" id="sample_1" class="table table-hover">
 

@@ -89,12 +89,12 @@ namespace Hostel_Management_System.Areas.MST_BillCalculation.Controllers
             if (model_MSTBillCalculation.BillID == null)
             {
                 DataTable dt = dal_MstBillCalculation.PR_MST_BillCalculation_Insert(model_MSTBillCalculation.BillTypeID, model_MSTBillCalculation.BillDate, model_MSTBillCalculation.Description, model_MSTBillCalculation.Amount);
-                TempData["MST_BillCalculation_AlertMessage"] = "Record Inserted Successfully!!";
+                TempData["SuccessMessage"] = "Record Inserted Successfully!!";
             }
             else
             {
                 DataTable dt = dal_MstBillCalculation.PR_MST_BillCalculation_Update((int)model_MSTBillCalculation.BillID, model_MSTBillCalculation.BillTypeID, model_MSTBillCalculation.BillDate, model_MSTBillCalculation.Description, model_MSTBillCalculation.Amount);
-                TempData["MST_BillCalculation_AlertMessage"] = "Record Updated Successfully!!";
+                TempData["SuccessMessage"] = "Record Updated Successfully!!";
             }
             return RedirectToAction("Index");
         }
@@ -103,10 +103,17 @@ namespace Hostel_Management_System.Areas.MST_BillCalculation.Controllers
         #region Delete
         public IActionResult Delete(int BillID)
         {
-            if (Convert.ToBoolean(dal_MstBillCalculation.PR_MST_BillCalculation_Delete(BillID)))
+            try
             {
-                TempData["MST_BillCalculation_Delete_AlertMessage"] = "Record Deleted Successfully";
-                return RedirectToAction("Index");
+                if (Convert.ToBoolean(dal_MstBillCalculation.PR_MST_BillCalculation_Delete(BillID)))
+                {
+                    TempData["DeleteSuccess"] = "Record Deleted Successfully";
+                    return RedirectToAction("Index");
+                }
+            }
+            catch (Exception ex)
+            {
+                TempData["InfoMessage"] = ex.Message;
             }
             return RedirectToAction("Index");
         }

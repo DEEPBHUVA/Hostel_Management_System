@@ -66,7 +66,7 @@ namespace Hostel_Management_System.DAL
             {
                 if (ex is SqlException sqlException && sqlException.Number == 547)
                 {
-                    throw new Exception("Cannot delete student. Related records exist.", ex);
+                    throw new Exception("Cannot Delete Record!!. Related records exist.", ex);
                 }
                 else
                 {

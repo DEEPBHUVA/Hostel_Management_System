@@ -58,12 +58,12 @@ namespace Hostel_Management_System.Areas.MST_BillType.Controllers
 			if (modelMST_BillType.BillTypeID == null)
 			{
 				DataTable dt = dal_MST_BillType.PR_MST_BillType_Insert(modelMST_BillType.BillType);
-				TempData["MST_BillType_AlertMessage"] = "Record Inserted Successfully!!";
+				TempData["SuccessMessage"] = "Record Inserted Successfully!!";
 			}
 			else
 			{
 				DataTable dt = dal_MST_BillType.PR_MST_BillType_Update((int)modelMST_BillType.BillTypeID, modelMST_BillType.BillType);
-				TempData["MST_BillType_AlertMessage"] = "Record Updated Successfully!!";
+				TempData["SuccessMessage"] = "Record Updated Successfully!!";
 			}
 			return RedirectToAction("Index");
 		}
@@ -72,12 +72,19 @@ namespace Hostel_Management_System.Areas.MST_BillType.Controllers
 		#region Delete
 		public IActionResult Delete(int BillTypeID)
 		{
-			if (Convert.ToBoolean(dal_MST_BillType.PR_MST_BillType_Delete(BillTypeID)))
-			{
-				TempData["MST_BillType_Delete_AlertMessage"] = "Record Deleted Successfully";
-				return RedirectToAction("Index");
-			}
-			return RedirectToAction("Index");
+            try
+            {
+                if (Convert.ToBoolean(dal_MST_BillType.PR_MST_BillType_Delete(BillTypeID)))
+                {
+                    TempData["DeleteSuccess"] = "Record Deleted Successfully";
+                    return RedirectToAction("Index");
+                }
+            }
+            catch (Exception ex)
+            {
+                TempData["InfoMessage"] = ex.Message;
+            }
+            return RedirectToAction("Index");
 		}
 		#endregion
 

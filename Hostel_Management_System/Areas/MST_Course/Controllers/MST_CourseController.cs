@@ -57,12 +57,12 @@ namespace Hostel_Management_System.Areas.MST_Course.Controllers
             if (modelMST_Course.CourseID == null)
             {
                 DataTable dt = dalMST_Course.PR_MST_Course_Insert(modelMST_Course.CourseName);
-                TempData["MST_Course_AlertMessage"] = "Record Inserted Successfully!!";
+                TempData["SuccessMessage"] = "Record Inserted Successfully!!";
             }
             else
             {
                 DataTable dt = dalMST_Course.PR_MST_COURSE_UPDATE((int)modelMST_Course.CourseID,modelMST_Course.CourseName);
-                TempData["MST_Course_AlertMessage"] = "Record Updated Successfully!!";
+                TempData["SuccessMessage"] = "Record Updated Successfully!!";
             }
             return RedirectToAction("Index");
         }
@@ -71,10 +71,17 @@ namespace Hostel_Management_System.Areas.MST_Course.Controllers
         #region Delete
         public IActionResult Delete(int CourseID)
         {
-            if (Convert.ToBoolean(dalMST_Course.PR_City_DeleteByPK(CourseID)))
+            try
             {
-                TempData["MST_Course_Delete_AlertMessage"] = "Record Deleted Successfully";
-                return RedirectToAction("Index");
+                if (Convert.ToBoolean(dalMST_Course.PR_City_DeleteByPK(CourseID)))
+                {
+                    TempData["DeleteSuccess"] = "Record Deleted Successfully";
+                    return RedirectToAction("Index");
+                }
+            }
+            catch (Exception ex)
+            {
+                TempData["InfoMessage"] = ex.Message;
             }
             return RedirectToAction("Index");
         }

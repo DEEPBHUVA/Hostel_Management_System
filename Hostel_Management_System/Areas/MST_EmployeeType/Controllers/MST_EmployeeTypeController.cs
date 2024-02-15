@@ -58,12 +58,12 @@ namespace Hostel_Management_System.Areas.MST_EmployeeType.Controllers
 			if (modelMST_EmployeeType.EmployeeTypeID== null)
 			{
 				DataTable dt = dalMST_EmployeeType.PR_MST_EmployeeType_Insert(modelMST_EmployeeType.EmployeeType);
-				TempData["MST_EmployeeType_AlertMessage"] = "Record Inserted Successfully!!";
+				TempData["SuccessMessage"] = "Record Inserted Successfully!!";
 			}
 			else
 			{
 				DataTable dt = dalMST_EmployeeType.PR_MST_EmployeeType_Update((int)modelMST_EmployeeType.EmployeeTypeID, modelMST_EmployeeType.EmployeeType);
-				TempData["MST_EmployeeType_AlertMessage"] = "Record Updated Successfully!!";
+				TempData["SuccessMessage"] = "Record Updated Successfully!!";
 			}
 			return RedirectToAction("Index");
 		}
@@ -72,12 +72,20 @@ namespace Hostel_Management_System.Areas.MST_EmployeeType.Controllers
 		#region Delete
 		public IActionResult Delete(int EmployeeTypeID)
 		{
-			if (Convert.ToBoolean(dalMST_EmployeeType.PR_MST_EmployeeType_Delete(EmployeeTypeID)))
-			{
-				TempData["MST_EmployeeType_Delete_AlertMessage"] = "Record Deleted Successfully";
-				return RedirectToAction("Index");
-			}
-			return RedirectToAction("Index");
+            try
+            {
+                if (Convert.ToBoolean(dalMST_EmployeeType.PR_MST_EmployeeType_Delete(EmployeeTypeID)))
+                {
+                    TempData["DeleteSuccess"] = "Record Deleted Successfully";
+                    return RedirectToAction("Index");
+                }
+            }
+            catch (Exception ex)
+            {
+                TempData["InfoMessage"] = ex.Message;
+            }
+
+            return RedirectToAction("Index");
 		}
 		#endregion
 

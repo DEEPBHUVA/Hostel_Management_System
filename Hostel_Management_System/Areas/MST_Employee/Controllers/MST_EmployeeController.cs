@@ -133,7 +133,7 @@ namespace Hostel_Management_System.Areas.MST_Employee.Controllers
                     modelMST_Employee.isActive,
                     modelMST_Employee.PhotoPath
                 );
-                TempData["MST_Employee_AlertMessage"] = "Record Inserted Successfully!!";
+                TempData["SuccessMessage"] = "Record Inserted Successfully!!";
             }
             else
             {
@@ -153,21 +153,26 @@ namespace Hostel_Management_System.Areas.MST_Employee.Controllers
                     modelMST_Employee.isActive,
                     modelMST_Employee.PhotoPath
                 );
-                TempData["MST_Employee_AlertMessage"] = "Record Updated Successfully!!";
+                TempData["SuccessMessage"] = "Record Updated Successfully!!";
             }
             return RedirectToAction("Index");
         }
         #endregion
 
-
-
         #region Delete
         public IActionResult Delete(int EmployeeID)
         {
-            if (Convert.ToBoolean(dalMST_Employee.PR_MST_Employee_Delete(EmployeeID)))
+            try
             {
-                TempData["MST_EmployeeDelete_AlertMessage"] = "Record Deleted Successfully";
-                return RedirectToAction("Index");
+                if (Convert.ToBoolean(dalMST_Employee.PR_MST_Employee_Delete(EmployeeID)))
+                {
+                    TempData["DeleteSuccess"] = "Record Deleted Successfully";
+                    return RedirectToAction("Index");
+                }
+            }
+            catch (Exception ex)
+            {
+                TempData["InfoMessage"] = ex.Message;
             }
             return RedirectToAction("Index");
         }

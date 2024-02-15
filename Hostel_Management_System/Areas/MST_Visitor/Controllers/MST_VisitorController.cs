@@ -69,16 +69,16 @@ namespace Hostel_Management_System.Areas.MST_Visitor.Controllers
             {
                 if (Convert.ToBoolean(dalMST_Visitor.PR_MST_Visitor_MultipleDelete(commaSeparatedIds)))
                 {
-                    TempData["MST_Visitor_Delete_AlertMessage"] = "Records Deleted Successfully";
+                    TempData["DeleteSuccess"] = "Records Deleted Successfully";
                 }
                 else
                 {
-                    TempData["MST_Visitor_Delete_AlertMessage"] = "Error deleting records";
+                    TempData["DeleteSuccess"] = "Error deleting records";
                 }
             }
             else
             {
-                TempData["MST_Visitor_Delete_AlertMessage"] = "No records selected for deletion";
+                TempData["InfoMessage"] = "No records selected for deletion";
             }
 
             return RedirectToAction("Index");
@@ -118,12 +118,12 @@ namespace Hostel_Management_System.Areas.MST_Visitor.Controllers
             if (modelMST_Visitor.VisitorID == null)
             {
                 DataTable dt = dalMST_Visitor.PR_MST_Visitor_Insert(modelMST_Visitor.VisitorName, modelMST_Visitor.MobileNo, modelMST_Visitor.Remark, modelMST_Visitor.DateIN, modelMST_Visitor.DateOUT);
-                TempData["MST_Visitor_AlertMessage"] = "Record Inserted Successfully!!";
+                TempData["SuccessMessage"] = "Record Inserted Successfully!!";
             }
             else
             {
                 DataTable dt = dalMST_Visitor.PR_MST_Visitor_Update((int)modelMST_Visitor.VisitorID, modelMST_Visitor.VisitorName, modelMST_Visitor.MobileNo, modelMST_Visitor.Remark, modelMST_Visitor.DateIN, modelMST_Visitor.DateOUT);
-                TempData["MST_Visitor_AlertMessage"] = "Record Updated Successfully!!";
+                TempData["SuccessMessage"] = "Record Updated Successfully!!";
             }
             return RedirectToAction("Index");
         }
@@ -132,10 +132,17 @@ namespace Hostel_Management_System.Areas.MST_Visitor.Controllers
         #region Delete
         public IActionResult Delete(int VisitorID)
         {
-            if (Convert.ToBoolean(dalMST_Visitor.PR_MST_Visitor_Delete(VisitorID)))
+            try
             {
-                TempData["MST_Visitor_Delete_AlertMessage"] = "Record Deleted Successfully";
-                return RedirectToAction("Index");
+                if (Convert.ToBoolean(dalMST_Visitor.PR_MST_Visitor_Delete(VisitorID)))
+                {
+                    TempData["DeleteSuccess"] = "Record Deleted Successfully";
+                    return RedirectToAction("Index");
+                }
+            }
+            catch (Exception ex)
+            {
+                TempData["InfoMessage"] = ex.Message;
             }
             return RedirectToAction("Index");
         }

@@ -1,3 +1,5 @@
+using Stripe;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -27,6 +29,9 @@ app.UseStaticFiles();
 
 app.UseRouting();
 
+//Stripe Payment
+StripeConfiguration.ApiKey = builder.Configuration.GetSection("Stripe:SecretKey").Get<string>();
+    
 app.UseAuthorization();
 
 app.MapControllerRoute(

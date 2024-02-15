@@ -111,12 +111,12 @@ namespace Hostel_Management_System.Areas.Room_Allocate.Controllers
             if (modelRoom_Allocate.RoomAllocateID == null)
             {
                 DataTable dt = dalRoom_Allocation.PR_RoomAllocationInsert(modelRoom_Allocate.StudentID,modelRoom_Allocate.RoomId);
-                TempData["RoomAllocation_AlertMessage"] = "Record Inserted Successfully!!";
+                TempData["SuccessMessage"] = "Record Inserted Successfully!!";
             }
             else
             {
                 DataTable dt = dalRoom_Allocation.PR_RoomAllocationUpdate((int)modelRoom_Allocate.RoomAllocateID,modelRoom_Allocate.StudentID, modelRoom_Allocate.RoomId);
-                TempData["RoomAllocation_AlertMessage"] = "Record Updated Successfully!!";
+                TempData["SuccessMessage"] = "Record Updated Successfully!!";
             }
             return RedirectToAction("Index");
         }
@@ -125,11 +125,19 @@ namespace Hostel_Management_System.Areas.Room_Allocate.Controllers
         #region Delete
         public IActionResult Delete(int RoomAllocateID)
         {
-            if (Convert.ToBoolean(dalRoom_Allocation.PR_RoomAllocationDelete(RoomAllocateID)))
+            try
             {
-                TempData["RoomAllocation_Delete_AlertMessage"] = "Record Deleted Successfully!!";
-                return RedirectToAction("Index");
+                if (Convert.ToBoolean(dalRoom_Allocation.PR_RoomAllocationDelete(RoomAllocateID)))
+                {
+                    TempData["DeleteSuccess"] = "Record Deleted Successfully!!";
+                    return RedirectToAction("Index");
+                }
             }
+            catch (Exception ex)
+            {
+                TempData["InfoMessage"] = ex.Message;
+            }
+
             return RedirectToAction("Index");
         }
         #endregion

@@ -327,7 +327,7 @@
 
                     @if (TempData["MST_Notice_AlertMessage"] != null)
                     {
-                        <div class="alert alert-success alert-dismissible fade show" role="alert">
+                        <div id="successAlert" class="alert alert-success alert-dismissible fade show" role="alert">
                             @TempData["MST_Notice_AlertMessage"]
                             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                         </div>
@@ -335,7 +335,7 @@
 
                     @if (TempData["MST_Notice_Delete_AlertMessage"] != null)
                     {
-                        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                        <div id="successAlert" class="alert alert-danger alert-dismissible fade show" role="alert">
                             @TempData["MST_Notice_Delete_AlertMessage"]
                             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                         </div>
@@ -563,4 +563,9 @@
             manipulate();
         });
     });
+
+    // Set timeout to hide the alert after 3 seconds
+    setTimeout(function () {
+        $('#successAlert').alert('close');
+    }, 3000);
 </script>

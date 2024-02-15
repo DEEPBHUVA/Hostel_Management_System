@@ -4,6 +4,8 @@ using System.Data;
 using Hostel_Management_System.Areas.MST_Room.Models;
 using Hostel_Management_System.DAL;
 using Hostel_Management_System.BAL;
+using DocumentFormat.OpenXml.Bibliography;
+using DocumentFormat.OpenXml.Spreadsheet;
 
 namespace Hostel_Management_System.Areas.MST_Room.Controllers
 {
@@ -56,12 +58,12 @@ namespace Hostel_Management_System.Areas.MST_Room.Controllers
             if (modelMST_Room.RoomId== null)
             {
                 DataTable dt = dalMST_Room.PR_MST_Room_Insert(modelMST_Room.RoomNo,modelMST_Room.Status,modelMST_Room.Capacity,modelMST_Room.SeatCount);
-                TempData["MST_Room_AlertMessage"] = "Record Inserted Successfully!!";
+                TempData["SuccessMessage"] = "Record Inserted Successfully!!";
             }
             else
             {
                 DataTable dt = dalMST_Room.PR_MST_Room_Update((int)modelMST_Room.RoomId,modelMST_Room.RoomNo, modelMST_Room.Status, modelMST_Room.Capacity, modelMST_Room.SeatCount);
-                TempData["MST_Room_AlertMessage"] = "Record Updated Successfully!!";
+                TempData["SuccessMessage"] = "Record Updated Successfully!!";
             }
             return RedirectToAction("Index");
         }
@@ -70,10 +72,17 @@ namespace Hostel_Management_System.Areas.MST_Room.Controllers
         #region Delete
         public IActionResult Delete(int RoomId) 
         {
-            if (Convert.ToBoolean(dalMST_Room.PR_MST_Room_DeleteByRoomId(RoomId)))
+            try
             {
-                TempData["MST_Room_DeleteAlertMessage"] = "Record Deleted Successfully";
-                return RedirectToAction("Index");
+                if (Convert.ToBoolean(dalMST_Room.PR_MST_Room_DeleteByRoomId(RoomId)))
+                {
+                    TempData["MST_Room_DeleteAlertMessage"] = "Record Deleted Successfully";
+                    return RedirectToAction("Index");
+                }
+            }
+            catch (Exception ex)
+            {
+                TempData["InfoMessage"] = ex.Message;
             }
             return RedirectToAction("Index");
         }
